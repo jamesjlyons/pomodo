@@ -19,10 +19,34 @@ export default function Pomodoro() {
     const [displayMessage, setDisplayMessage] = useState(false)
     const [timerStart, setTimerStart] = useState(false);
 
-  
     function handlePomodoroStart() {
+        // Set a fake timeout to get the highest timeout id, find a better way to do this
+        let highestTimeoutId = setTimeout(";");
+        for (var i = 0 ; i < highestTimeoutId ; i++) {
+            clearTimeout(i); 
+        }
+
         setTimerStart(!timerStart);
       console.log(timerStart)
+    }
+    
+    function handleReset() {
+        // Set a fake timeout to get the highest timeout id, find a better way to do this
+        let highestTimeoutId = setTimeout(";");
+        for (var i = 0 ; i < highestTimeoutId ; i++) {
+            clearTimeout(i); 
+        }
+
+        let minutes = timer.pomodoro
+        // let seconds = 59
+        let seconds = 3
+
+        // setTimerStart(false);
+        setSeconds(seconds)
+        setMinutes(minutes)
+        setDisplayMessage(false)
+        setpmdrCount(0)
+      console.log("timer reset")
     }
     
 
@@ -80,8 +104,9 @@ export default function Pomodoro() {
         </h1>
         <div className="controls">
             <button onClick={handlePomodoroStart}>Start/Pause</button>
+            <button onClick={handleReset}>Reset</button>
         </div>
-        <div className="pmdrCount">pmdrCount: {pmdrCount}</div>
+        <div className="pmdrCount" style={{ fontSize: 12,opacity: 0.5, marginTop: 16 }}>running: {timerStart && 'yes'}{!timerStart && 'no'}, pmdrCount: {pmdrCount}</div>
       </div>
     )
   }
