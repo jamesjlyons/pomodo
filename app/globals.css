@@ -24,6 +24,10 @@ a {
   box-sizing: border-box;
 }
 
+.timer {
+  font-variant-numeric: tabular-nums;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -31,5 +35,8 @@ a {
   body {
     color: white;
     background: black;
+    display: grid;
+    place-items: center;
+    height: 100vh;
   }
 }
