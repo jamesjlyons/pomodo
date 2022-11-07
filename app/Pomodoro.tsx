@@ -2,9 +2,20 @@
 import { useState, useEffect } from "react"
 
 export default function Pomodoro() {
-    const [minutes, setMinutes] = useState(25)
-    const [seconds, setSeconds] = useState(0)
-    const [shortCount, setShortCount] = useState(0)
+    let timer = {
+        // pomodoro: 25,
+        // shortBreak: 5,
+        // longBreak: 15,
+        // longBreakInterval: 4,
+        pomodoro: 1,
+        shortBreak: 1,
+        longBreak: 15,
+        longBreakInterval: 7,
+      };
+      
+    const [minutes, setMinutes] = useState(0)
+    const [seconds, setSeconds] = useState(2)
+    const [pmdrCount, setpmdrCount] = useState(0)
     const [displayMessage, setDisplayMessage] = useState(false)
     const [timerStart, setTimerStart] = useState(false);
 
@@ -13,6 +24,7 @@ export default function Pomodoro() {
         setTimerStart(!timerStart);
       console.log(timerStart)
     }
+    
 
     useEffect(() => {
         if (timerStart) {
@@ -21,15 +33,31 @@ export default function Pomodoro() {
         
                 if (seconds === 0) {
                 if (minutes !== 0) {
-                    setSeconds(59)
+                    // setSeconds(59)
+                    setSeconds(5)
+
                     setMinutes(minutes - 1)
                 } else {
-                    let minutes = displayMessage ? 24 : 4
-                    let seconds = 59
-        
-                    setSeconds(seconds)
-                    setMinutes(minutes)
-                    setDisplayMessage(!displayMessage)
+                    if (pmdrCount < timer.longBreakInterval) {
+                        let minutes = displayMessage ? (timer.pomodoro - 1) : (timer.shortBreak - 1)
+                        // let seconds = 59
+                        let seconds = 3
+            
+                        setSeconds(seconds)
+                        setMinutes(minutes)
+                        setDisplayMessage(!displayMessage)
+                        setpmdrCount(pmdrCount + 1)
+                    } else {
+                        let minutes = timer.longBreak - 1
+                        // let seconds = 59
+                        let seconds = 10
+            
+                        setSeconds(seconds)
+                        setMinutes(minutes)
+                        setDisplayMessage(!displayMessage)
+                        setpmdrCount(0)
+                    }
+                   
                 }
                 } else {
                 setSeconds(seconds - 1)
@@ -53,6 +81,7 @@ export default function Pomodoro() {
         <div className="controls">
             <button onClick={handlePomodoroStart}>Start/Pause</button>
         </div>
+        <div className="pmdrCount">pmdrCount: {pmdrCount}</div>
       </div>
     )
   }
