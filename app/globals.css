@@ -28,6 +28,11 @@ a {
   font-variant-numeric: tabular-nums;
 }
 
+.controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

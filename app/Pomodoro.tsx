@@ -3,18 +3,18 @@ import { useState, useEffect } from "react"
 
 export default function Pomodoro() {
     let timer = {
-        // pomodoro: 25,
-        // shortBreak: 5,
-        // longBreak: 15,
-        // longBreakInterval: 4,
-        pomodoro: 1,
-        shortBreak: 1,
+        pomodoro: 25,
+        shortBreak: 5,
         longBreak: 15,
         longBreakInterval: 7,
+        // pomodoro: 1,
+        // shortBreak: 1,
+        // longBreak: 15,
+        // longBreakInterval: 7,
       };
       
-    const [minutes, setMinutes] = useState(0)
-    const [seconds, setSeconds] = useState(2)
+    const [minutes, setMinutes] = useState(timer.pomodoro);
+    const [seconds, setSeconds] = useState(0)
     const [pmdrCount, setpmdrCount] = useState(0)
     const [displayMessage, setDisplayMessage] = useState(false)
     const [timerStart, setTimerStart] = useState(false);
@@ -57,15 +57,15 @@ export default function Pomodoro() {
         
                 if (seconds === 0) {
                 if (minutes !== 0) {
-                    // setSeconds(59)
-                    setSeconds(5)
+                    setSeconds(59)
+                    // setSeconds(5)
 
                     setMinutes(minutes - 1)
                 } else {
                     if (pmdrCount < timer.longBreakInterval) {
                         let minutes = displayMessage ? (timer.pomodoro - 1) : (timer.shortBreak - 1)
-                        // let seconds = 59
-                        let seconds = 3
+                        let seconds = 59
+                        // let seconds = 3
             
                         setSeconds(seconds)
                         setMinutes(minutes)
@@ -73,8 +73,8 @@ export default function Pomodoro() {
                         setpmdrCount(pmdrCount + 1)
                     } else {
                         let minutes = timer.longBreak - 1
-                        // let seconds = 59
-                        let seconds = 10
+                        let seconds = 59
+                        // let seconds = 10
             
                         setSeconds(seconds)
                         setMinutes(minutes)
