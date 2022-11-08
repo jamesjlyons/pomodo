@@ -38,7 +38,7 @@ export default function Pomodoro() {
         badIntervalClear();
 
         let minutes = timer.pomodoro;
-        let seconds = 59;
+        let seconds = 00;
         // let seconds = 3
 
         // setTimerStart(false);
