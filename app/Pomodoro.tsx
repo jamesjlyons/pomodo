@@ -16,7 +16,7 @@ export default function Pomodoro() {
     const [minutes, setMinutes] = useState(timer.pomodoro);
     const [seconds, setSeconds] = useState(0);
     const [pmdrCount, setpmdrCount] = useState(0);
-    const [breakMessage, setbreakMessage] = useState(false);
+    const [breakTime, setbreakTime] = useState(false);
     const [timerStart, setTimerStart] = useState(false);
 
     function badIntervalClear() {
@@ -44,7 +44,7 @@ export default function Pomodoro() {
         // setTimerStart(false);
         setSeconds(seconds);
         setMinutes(minutes);
-        setbreakMessage(false);
+        setbreakTime(false);
         setpmdrCount(0);
         console.log("timer reset");
     }
@@ -82,7 +82,7 @@ export default function Pomodoro() {
                         setMinutes(minutes - 1);
                     } else {
                         if (pmdrCount < timer.longBreakInterval) {
-                            let minutes = breakMessage
+                            let minutes = breakTime
                                 ? timer.pomodoro - 1
                                 : timer.shortBreak - 1;
                             let seconds = 59;
@@ -90,7 +90,7 @@ export default function Pomodoro() {
 
                             setSeconds(seconds);
                             setMinutes(minutes);
-                            setbreakMessage(!breakMessage);
+                            setbreakTime(!breakTime);
                             setpmdrCount(pmdrCount + 1);
                         } else {
                             let minutes = timer.longBreak - 1;
@@ -99,7 +99,7 @@ export default function Pomodoro() {
 
                             setSeconds(seconds);
                             setMinutes(minutes);
-                            setbreakMessage(!breakMessage);
+                            setbreakTime(!breakTime);
                             setpmdrCount(0);
                         }
                     }
@@ -118,9 +118,9 @@ export default function Pomodoro() {
 
     return (
         <div className="pomodoro">
-            <div className="message">{breakMessage && <div>Break:</div>}</div>
+            
             <h1 className="timer">
-                {timerMinutes}:{timerSeconds}
+                {timerMinutes}:{timerSeconds}<span className="message" style={{ opacity: 0.3, marginTop: 16 }}>{breakTime && " Break"} {!breakTime && " Work"}</span>
             </h1>
             <div className="controls">
                 <button onClick={handlePomodoroStart}>Start/Pause</button>
