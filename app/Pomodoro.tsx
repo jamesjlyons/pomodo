@@ -142,6 +142,8 @@ export default function Pomodoro() {
       let interval = setInterval(() => {
         clearInterval(interval);
 
+        document.title = 'Work';
+
         if (seconds === 0) {
           if (minutes !== 0) {
             setSeconds(59);
@@ -162,8 +164,10 @@ export default function Pomodoro() {
               setpmdrCount(pmdrCount + 1);
               if (breakTime) {
                 spawnNotification('Pomodo', 'Work time');
+                document.title = 'Work';
               } else {
                 spawnNotification('Pomodo', 'Break time');
+                document.title = 'Break';
               }
             } else {
               let minutes = timer.longBreak - 1;
@@ -175,6 +179,7 @@ export default function Pomodoro() {
               setbreakTime(true);
               setpmdrCount(-1);
               spawnNotification('Pomodo', 'Long break time');
+              document.title = 'Break';
             }
           }
         } else {
