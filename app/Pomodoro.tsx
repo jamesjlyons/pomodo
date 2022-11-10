@@ -213,7 +213,7 @@ export default function Pomodoro() {
         </button>
         <button onClick={handleAdd}>+1</button>
       </div>
-      <div className="controls2">
+      <div className="controls2" style={{ marginTop: 8 }}>
         {notifPerm !== 'granted' && (
           <button onClick={handleNotifPermissions}>Enable notifications</button>
         )}
