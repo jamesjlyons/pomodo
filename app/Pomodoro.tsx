@@ -6,11 +6,11 @@ export default function Pomodoro() {
     pomodoro: 25,
     shortBreak: 5,
     longBreak: 15,
-    longBreakInterval: 7,
+    longBreakInterval: 6,
     // pomodoro: 1,
     // shortBreak: 1,
     // longBreak: 15,
-    // longBreakInterval: 7,
+    // longBreakInterval: 6,
   };
 
   const [minutes, setMinutes] = useState(timer.pomodoro);
@@ -18,6 +18,7 @@ export default function Pomodoro() {
   const [pmdrCount, setpmdrCount] = useState(0);
   const [breakTime, setbreakTime] = useState(false);
   const [timerStart, setTimerStart] = useState(false);
+  const [notifPerm, setNotifPerm] = useState('default');
 
   function badIntervalClear() {
     // Set a fake timeout to get the highest timeout id, find a better way to do this
@@ -26,6 +27,70 @@ export default function Pomodoro() {
       clearTimeout(i);
     }
   }
+
+  //   Notifications
+
+  function checkNotificationPromise() {
+    try {
+      Notification.requestPermission().then();
+    } catch (e) {
+      return false;
+    }
+
+    return true;
+  }
+
+  function handleNotifPermissions() {
+    // function to actually ask the permissions
+    function handlePermission(permission: string) {
+      // set the button to shown or hidden, depending on what the user answers
+      //   notificationBtn.style.display =
+      //     Notification.permission === 'granted' ? 'none' : 'block';
+      let perm = permission;
+      setNotifPerm(perm);
+    }
+
+    // Let's check if the browser supports notifications
+    if (!('Notification' in window)) {
+      console.log('This browser does not support notifications.');
+    } else if (checkNotificationPromise()) {
+      Notification.requestPermission().then((permission) => {
+        handlePermission(permission);
+      });
+    } else {
+      Notification.requestPermission((permission) => {
+        handlePermission(permission);
+      });
+    }
+  }
+
+  function spawnNotification(body: string, title: string) {
+    const notification = new Notification(title, { body });
+  }
+
+  useEffect(() => {
+    const onPageLoad = () => {
+      //   check notification permissions;
+      if (Notification.permission !== 'granted') {
+        setNotifPerm('denied');
+      } else if (Notification.permission == 'granted') {
+        setNotifPerm('granted');
+      } else {
+        setNotifPerm('unknown');
+      }
+    };
+
+    // Check if the page has already loaded
+    if (document.readyState === 'complete') {
+      onPageLoad();
+    } else {
+      window.addEventListener('load', onPageLoad);
+      // Remove the event listener when component unmounts
+      return () => window.removeEventListener('load', onPageLoad);
+    }
+  }, []);
+
+  //   end notifications
 
   function handlePomodoroStart() {
     badIntervalClear();
@@ -39,7 +104,6 @@ export default function Pomodoro() {
 
     let minutes = timer.pomodoro;
     let seconds = 0;
-    // let seconds = 3
 
     // setTimerStart(false);
     setSeconds(seconds);
@@ -77,7 +141,7 @@ export default function Pomodoro() {
         if (seconds === 0) {
           if (minutes !== 0) {
             setSeconds(59);
-            // setSeconds(5)
+            // setSeconds(5);
 
             setMinutes(minutes - 1);
           } else {
@@ -86,21 +150,27 @@ export default function Pomodoro() {
                 ? timer.pomodoro - 1
                 : timer.shortBreak - 1;
               let seconds = 59;
-              // let seconds = 3
+              //   let seconds = 3;
 
               setSeconds(seconds);
               setMinutes(minutes);
               setbreakTime(!breakTime);
               setpmdrCount(pmdrCount + 1);
+              if (breakTime) {
+                spawnNotification('Pomodo', 'Work time');
+              } else {
+                spawnNotification('Pomodo', 'Break time');
+              }
             } else {
               let minutes = timer.longBreak - 1;
               let seconds = 59;
-              // let seconds = 10
+              //   let seconds = 10;
 
               setSeconds(seconds);
               setMinutes(minutes);
-              setbreakTime(!breakTime);
-              setpmdrCount(0);
+              setbreakTime(true);
+              setpmdrCount(-1);
+              spawnNotification('Pomodo', 'Long break time');
             }
           }
         } else {
@@ -129,12 +199,17 @@ export default function Pomodoro() {
         <button onClick={handleSubtract}>-1</button>
         <button onClick={handleAdd}>+1</button>
       </div>
+      <div className="controls2">
+        {notifPerm !== 'granted' && (
+          <button onClick={handleNotifPermissions}>Enable notifications</button>
+        )}
+      </div>
       <div
         className="pmdrCount"
         style={{ fontSize: 12, opacity: 0.5, marginTop: 16 }}
       >
         running: {timerStart && 'yes'}
-        {!timerStart && 'no'}, pmdrCount: {pmdrCount}
+        {!timerStart && 'no'}, pmdrCount: {pmdrCount}, notification: {notifPerm}
       </div>
     </div>
   );
