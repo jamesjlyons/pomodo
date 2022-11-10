@@ -124,8 +124,12 @@ export default function Pomodoro() {
   }
 
   function handleSubtract() {
-    let subtract = minutes - 1;
-    setMinutes(subtract);
+    if (minutes !== 0) {
+      let subtract = minutes - 1;
+      setMinutes(subtract);
+    } else {
+      return;
+    }
   }
 
   function handleAdd() {
@@ -196,7 +200,12 @@ export default function Pomodoro() {
         <button onClick={handlePomodoroStart}>Start/Pause</button>
         <button onClick={handleReset}>Reset</button>
         <button onClick={handleSkip}>Skip</button>
-        <button onClick={handleSubtract}>-1</button>
+        <button
+          onClick={handleSubtract}
+          disabled={minutes === 0 ? true : false}
+        >
+          -1
+        </button>
         <button onClick={handleAdd}>+1</button>
       </div>
       <div className="controls2">
