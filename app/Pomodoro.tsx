@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import NotificationButton from './NotificationButton';
 
 export default function Pomodoro() {
   let timer = {
@@ -18,7 +19,7 @@ export default function Pomodoro() {
   const [pmdrCount, setpmdrCount] = useState(0);
   const [breakTime, setbreakTime] = useState(false);
   const [timerStart, setTimerStart] = useState(false);
-  const [notifPerm, setNotifPerm] = useState('default');
+  //   const [notifPerm, setNotifPerm] = useState('unknown');
 
   function badIntervalClear() {
     // Set a fake timeout to get the highest timeout id, find a better way to do this
@@ -27,70 +28,6 @@ export default function Pomodoro() {
       clearTimeout(i);
     }
   }
-
-  //   Notifications
-
-  function checkNotificationPromise() {
-    try {
-      Notification.requestPermission().then();
-    } catch (e) {
-      return false;
-    }
-
-    return true;
-  }
-
-  function handleNotifPermissions() {
-    // function to actually ask the permissions
-    function handlePermission(permission: string) {
-      // set the button to shown or hidden, depending on what the user answers
-      //   notificationBtn.style.display =
-      //     Notification.permission === 'granted' ? 'none' : 'block';
-      let perm = permission;
-      setNotifPerm(perm);
-    }
-
-    // Let's check if the browser supports notifications
-    if (!('Notification' in window)) {
-      console.log('This browser does not support notifications.');
-    } else if (checkNotificationPromise()) {
-      Notification.requestPermission().then((permission) => {
-        handlePermission(permission);
-      });
-    } else {
-      Notification.requestPermission((permission) => {
-        handlePermission(permission);
-      });
-    }
-  }
-
-  function spawnNotification(body: string, title: string) {
-    const notification = new Notification(title, { body });
-  }
-
-  useEffect(() => {
-    const onPageLoad = () => {
-      //   check notification permissions;
-      if (Notification.permission !== 'granted') {
-        setNotifPerm('denied');
-      } else if (Notification.permission == 'granted') {
-        setNotifPerm('granted');
-      } else {
-        setNotifPerm('unknown');
-      }
-    };
-
-    // Check if the page has already loaded
-    if (document.readyState === 'complete') {
-      onPageLoad();
-    } else {
-      window.addEventListener('load', onPageLoad);
-      // Remove the event listener when component unmounts
-      return () => window.removeEventListener('load', onPageLoad);
-    }
-  }, []);
-
-  //   end notifications
 
   function handlePomodoroStart() {
     badIntervalClear();
@@ -135,6 +72,10 @@ export default function Pomodoro() {
   function handleAdd() {
     let add = minutes + 1;
     setMinutes(add);
+  }
+
+  function spawnNotification(body: string, title: string) {
+    const notification = new Notification(title, { body });
   }
 
   useEffect(() => {
@@ -213,17 +154,13 @@ export default function Pomodoro() {
         </button>
         <button onClick={handleAdd}>+1</button>
       </div>
-      <div className="controls2" style={{ marginTop: 8 }}>
-        {notifPerm !== 'granted' && (
-          <button onClick={handleNotifPermissions}>Enable notifications</button>
-        )}
-      </div>
+      <NotificationButton />
       <div
         className="pmdrCount"
         style={{ fontSize: 12, opacity: 0.5, marginTop: 16 }}
       >
         running: {timerStart && 'yes'}
-        {!timerStart && 'no'}, pmdrCount: {pmdrCount}, notification: {notifPerm}
+        {!timerStart && 'no'}, pmdrCount: {pmdrCount}
       </div>
     </div>
   );
