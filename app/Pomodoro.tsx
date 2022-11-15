@@ -178,18 +178,25 @@ export default function Pomodoro() {
         </button>
         <button onClick={handleAdd}>+1</button>
       </div>
-      <NotificationButton />
-      <form>
-        <label>
+      <form
+        style={{
+          fontSize: 13,
+          marginTop: 16,
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <input
+          name="sound"
+          type="checkbox"
+          checked={sound}
+          onChange={() => setSound(!sound)}
+        />
+        <label htmlFor="sound" style={{ marginLeft: 4, opacity: 0.5 }}>
           Sound
-          <input
-            name="sound"
-            type="checkbox"
-            checked={sound}
-            onChange={() => setSound(!sound)}
-          />
         </label>
       </form>
+      <NotificationButton />
       <div
         className="pmdrCount"
         style={{ fontSize: 12, opacity: 0.5, marginTop: 16 }}
