@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import * as Tone from 'tone';
 import NotificationButton from './NotificationButton';
 
 export default function Pomodoro() {
@@ -19,6 +20,7 @@ export default function Pomodoro() {
   const [pmdrCount, setpmdrCount] = useState(0);
   const [breakTime, setbreakTime] = useState(false);
   const [timerStart, setTimerStart] = useState(false);
+  const [sound, setSound] = useState(true);
   //   const [notifPerm, setNotifPerm] = useState('unknown');
 
   function badIntervalClear() {
@@ -33,7 +35,6 @@ export default function Pomodoro() {
     badIntervalClear();
 
     setTimerStart(!timerStart);
-    console.log(timerStart);
   }
 
   function handleReset() {
@@ -79,6 +80,19 @@ export default function Pomodoro() {
   }
 
   useEffect(() => {
+    // sound functions
+    //create a synth and connect it to the main output (your speakers)
+    const synth = new Tone.Synth().toDestination();
+    //  play passed sound parameters if sound is enabled
+    const playSound = async (note: string, duration: string, when: any) => {
+      if (sound) {
+        await Tone.start();
+        synth.triggerAttackRelease(note, duration, when);
+      }
+    };
+
+    // timer functions
+
     if (timerStart) {
       let interval = setInterval(() => {
         clearInterval(interval);
@@ -97,7 +111,7 @@ export default function Pomodoro() {
                 ? timer.pomodoro - 1
                 : timer.shortBreak - 1;
               let seconds = 59;
-              //   let seconds = 3;
+              // let seconds = 3;
 
               setSeconds(seconds);
               setMinutes(minutes);
@@ -106,14 +120,20 @@ export default function Pomodoro() {
               if (breakTime) {
                 spawnNotification('Pomodo', 'Work time');
                 document.title = 'Work';
+                playSound('C4', '8n', Tone.now());
+                playSound('F4', '8n', Tone.now() + 0.15);
+                playSound('E4', '8n', Tone.now() + 0.3);
               } else {
                 spawnNotification('Pomodo', 'Break time');
                 document.title = 'Break';
+                playSound('C4', '8n', Tone.now());
+                playSound('A4', '8n', Tone.now() + 0.15);
+                playSound('B4', '8n', Tone.now() + 0.3);
               }
             } else {
               let minutes = timer.longBreak - 1;
               let seconds = 59;
-              //   let seconds = 10;
+              // let seconds = 10;
 
               setSeconds(seconds);
               setMinutes(minutes);
@@ -121,6 +141,10 @@ export default function Pomodoro() {
               setpmdrCount(-1);
               spawnNotification('Pomodo', 'Long break time');
               document.title = 'Break';
+              playSound('C4', '8n', Tone.now());
+              playSound('E4', '8n', Tone.now() + 0.15);
+              playSound('G4', '8n', Tone.now() + 0.3);
+              playSound('B4', '8n', Tone.now() + 0.45);
             }
           }
         } else {
@@ -154,6 +178,24 @@ export default function Pomodoro() {
         </button>
         <button onClick={handleAdd}>+1</button>
       </div>
+      <form
+        style={{
+          fontSize: 13,
+          marginTop: 16,
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <input
+          name="sound"
+          type="checkbox"
+          checked={sound}
+          onChange={() => setSound(!sound)}
+        />
+        <label htmlFor="sound" style={{ marginLeft: 4, opacity: 0.5 }}>
+          Sound
+        </label>
+      </form>
       <NotificationButton />
       <div
         className="pmdrCount"
