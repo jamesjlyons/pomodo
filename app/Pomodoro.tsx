@@ -5,14 +5,14 @@ import NotificationButton from './NotificationButton';
 
 export default function Pomodoro() {
   let timer = {
-    pomodoro: 25,
-    shortBreak: 5,
-    longBreak: 15,
-    longBreakInterval: 6,
-    // pomodoro: 1,
-    // shortBreak: 1,
+    // pomodoro: 25,
+    // shortBreak: 5,
     // longBreak: 15,
     // longBreakInterval: 6,
+    pomodoro: 1,
+    shortBreak: 1,
+    longBreak: 15,
+    longBreakInterval: 6,
   };
 
   const [minutes, setMinutes] = useState(timer.pomodoro);
@@ -101,8 +101,8 @@ export default function Pomodoro() {
 
         if (seconds === 0) {
           if (minutes !== 0) {
-            setSeconds(59);
-            // setSeconds(5);
+            // setSeconds(59);
+            setSeconds(5);
 
             setMinutes(minutes - 1);
           } else {
@@ -110,41 +110,41 @@ export default function Pomodoro() {
               let minutes = breakTime
                 ? timer.pomodoro - 1
                 : timer.shortBreak - 1;
-              let seconds = 59;
-              // let seconds = 3;
+              // let seconds = 59;
+              let seconds = 3;
 
               setSeconds(seconds);
               setMinutes(minutes);
               setbreakTime(!breakTime);
               setpmdrCount(pmdrCount + 1);
               if (breakTime) {
-                spawnNotification('Pomodo', 'Work time');
                 document.title = 'Work';
                 playSound('C4', '8n', Tone.now());
                 playSound('F4', '8n', Tone.now() + 0.15);
                 playSound('E4', '8n', Tone.now() + 0.3);
+                spawnNotification('Pomodo', 'Work time');
               } else {
-                spawnNotification('Pomodo', 'Break time');
                 document.title = 'Break';
                 playSound('C4', '8n', Tone.now());
                 playSound('A4', '8n', Tone.now() + 0.15);
                 playSound('B4', '8n', Tone.now() + 0.3);
+                spawnNotification('Pomodo', 'Break time');
               }
             } else {
               let minutes = timer.longBreak - 1;
-              let seconds = 59;
-              // let seconds = 10;
+              // let seconds = 59;
+              let seconds = 10;
 
               setSeconds(seconds);
               setMinutes(minutes);
               setbreakTime(true);
               setpmdrCount(-1);
-              spawnNotification('Pomodo', 'Long break time');
               document.title = 'Break';
               playSound('C4', '8n', Tone.now());
               playSound('E4', '8n', Tone.now() + 0.15);
               playSound('G4', '8n', Tone.now() + 0.3);
               playSound('B4', '8n', Tone.now() + 0.45);
+              spawnNotification('Pomodo', 'Long break time');
             }
           }
         } else {
