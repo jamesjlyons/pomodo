@@ -80,20 +80,20 @@ export default function Pomodoro() {
   }
 
   useEffect(() => {
+    // sound functions
+    //create a synth and connect it to the main output (your speakers)
+    const synth = new Tone.Synth().toDestination();
+    //  play passed sound parameters if sound is enabled
+    const playSound = async (note: string, duration: string, when: any) => {
+      if (sound) {
+        await Tone.start();
+        synth.triggerAttackRelease(note, duration, when);
+      }
+    };
+
     // timer functions
 
     if (timerStart) {
-      // sound functions
-      //create a synth and connect it to the main output (your speakers)
-      const synth = new Tone.Synth().toDestination();
-      //  play passed sound parameters if sound is enabled
-      const playSound = async (note: string, duration: string, when: any) => {
-        if (sound) {
-          await Tone.start();
-          synth.triggerAttackRelease(note, duration, when);
-        }
-      };
-
       let interval = setInterval(() => {
         clearInterval(interval);
 
