@@ -5,14 +5,14 @@ import NotificationButton from './NotificationButton';
 
 export default function Pomodoro() {
   let timer = {
-    pomodoro: 25,
-    shortBreak: 5,
-    longBreak: 15,
-    longBreakInterval: 6,
-    // pomodoro: 1,
-    // shortBreak: 1,
+    // pomodoro: 25,
+    // shortBreak: 5,
     // longBreak: 15,
     // longBreakInterval: 6,
+    pomodoro: 1,
+    shortBreak: 1,
+    longBreak: 15,
+    longBreakInterval: 6,
   };
 
   const [minutes, setMinutes] = useState(timer.pomodoro);
@@ -80,20 +80,20 @@ export default function Pomodoro() {
   }
 
   useEffect(() => {
-    // sound functions
-    //create a synth and connect it to the main output (your speakers)
-    const synth = new Tone.Synth().toDestination();
-    //  play passed sound parameters if sound is enabled
-    const playSound = async (note: string, duration: string, when: any) => {
-      if (sound) {
-        await Tone.start();
-        synth.triggerAttackRelease(note, duration, when);
-      }
-    };
-
     // timer functions
 
     if (timerStart) {
+      // sound functions
+      //create a synth and connect it to the main output (your speakers)
+      const synth = new Tone.Synth().toDestination();
+      //  play passed sound parameters if sound is enabled
+      const playSound = async (note: string, duration: string, when: any) => {
+        if (sound) {
+          await Tone.start();
+          synth.triggerAttackRelease(note, duration, when);
+        }
+      };
+
       let interval = setInterval(() => {
         clearInterval(interval);
 
@@ -101,8 +101,8 @@ export default function Pomodoro() {
 
         if (seconds === 0) {
           if (minutes !== 0) {
-            setSeconds(59);
-            // setSeconds(5);
+            // setSeconds(59);
+            setSeconds(5);
 
             setMinutes(minutes - 1);
           } else {
@@ -110,8 +110,8 @@ export default function Pomodoro() {
               let minutes = breakTime
                 ? timer.pomodoro - 1
                 : timer.shortBreak - 1;
-              let seconds = 59;
-              // let seconds = 3;
+              // let seconds = 59;
+              let seconds = 3;
 
               setSeconds(seconds);
               setMinutes(minutes);
@@ -132,8 +132,8 @@ export default function Pomodoro() {
               }
             } else {
               let minutes = timer.longBreak - 1;
-              let seconds = 59;
-              // let seconds = 10;
+              // let seconds = 59;
+              let seconds = 10;
 
               setSeconds(seconds);
               setMinutes(minutes);
