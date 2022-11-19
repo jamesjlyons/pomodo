@@ -118,17 +118,17 @@ export default function Pomodoro() {
               setbreakTime(!breakTime);
               setpmdrCount(pmdrCount + 1);
               if (breakTime) {
-                spawnNotification('Pomodo', 'Work time');
                 document.title = 'Work';
                 playSound('C4', '8n', Tone.now());
                 playSound('F4', '8n', Tone.now() + 0.15);
                 playSound('E4', '8n', Tone.now() + 0.3);
+                spawnNotification('Pomodo', 'Work time');
               } else {
-                spawnNotification('Pomodo', 'Break time');
                 document.title = 'Break';
                 playSound('C4', '8n', Tone.now());
                 playSound('A4', '8n', Tone.now() + 0.15);
                 playSound('B4', '8n', Tone.now() + 0.3);
+                spawnNotification('Pomodo', 'Break time');
               }
             } else {
               let minutes = timer.longBreak - 1;
@@ -139,12 +139,12 @@ export default function Pomodoro() {
               setMinutes(minutes);
               setbreakTime(true);
               setpmdrCount(-1);
-              spawnNotification('Pomodo', 'Long break time');
               document.title = 'Break';
               playSound('C4', '8n', Tone.now());
               playSound('E4', '8n', Tone.now() + 0.15);
               playSound('G4', '8n', Tone.now() + 0.3);
               playSound('B4', '8n', Tone.now() + 0.45);
+              spawnNotification('Pomodo', 'Long break time');
             }
           }
         } else {
