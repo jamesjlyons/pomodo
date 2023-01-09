@@ -8,4 +8,8 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = {
+  experimental: {
+    nextScriptWorkers: true,
+  },
+};
