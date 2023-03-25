@@ -5,14 +5,14 @@ import NotificationButton from './NotificationButton';
 
 export default function Pomodoro() {
   let timer = {
-    // pomodoro: 25,
-    // shortBreak: 5,
-    // longBreak: 15,
-    // longBreakInterval: 6,
-    pomodoro: 1,
-    shortBreak: 1,
+    pomodoro: 25,
+    shortBreak: 5,
     longBreak: 15,
     longBreakInterval: 6,
+    // pomodoro: 1,
+    // shortBreak: 1,
+    // longBreak: 15,
+    // longBreakInterval: 6,
   };
 
   const [minutes, setMinutes] = useState(timer.pomodoro);
@@ -20,76 +20,34 @@ export default function Pomodoro() {
   const [pmdrCount, setpmdrCount] = useState(0);
   const [breakTime, setbreakTime] = useState(false);
   const [timerStart, setTimerStart] = useState(false);
-  const [timerPause, setTimerPause] = useState(false);
-  const [isRunning, setIsRunning] = useState(false);
   const [sound, setSound] = useState(true);
-  //   const [notifPerm, setNotifPerm] = useState('unknown');
-  // const [interval, setInterval] = useState({});
-  // const [minutes, setMinutes] = useState(0);
-  // const [seconds, setSeconds] = useState(0);
 
-  function badIntervalClear() {
-    // Set a fake timeout to get the highest timeout id, find a better way to do this
-    let highestTimeoutId = setTimeout(';');
-    for (var i = 0; i < highestTimeoutId; i++) {
-      clearTimeout(i);
+  function handleStart() {
+    if (!timerStart) {
+      setTimerStart(!timerStart);
+      console.log('timer start');
+    }
+    else {
+      setTimerStart(!timerStart);
+      console.log('timer paused');
     }
   }
 
-  // function changeTimeLeft(minutes: number, seconds: number) {
-  //   setMinutes(minutes);
-  //   setSeconds(seconds);
-  // }
-
-  function handlePomodoroStart() {
-    // badIntervalClear();
-
-    setTimerStart(!timerStart);
-    // setTimerStart(true);
-    // setTimerPause(false);
-  }
-
-  // function handlePause() {
-  //   // setTimerPause(true);
-  //   setTimerStart(false);
-  // }
 
   function handleReset() {
-    badIntervalClear();
-
-    let minutes = timer.pomodoro;
-    let seconds = 0;
-
-    // setTimerStart(false);
-    setSeconds(seconds);
-    setMinutes(minutes);
-    setbreakTime(false);
-    setpmdrCount(0);
-    console.log('timer reset');
+    console.log('reset');
   }
 
   function handleSkip() {
-    badIntervalClear();
-
-    let minutes = 0;
-    let seconds = 0;
-    setSeconds(seconds);
-    setMinutes(minutes);
     console.log('skip');
   }
 
   function handleSubtract() {
-    if (minutes !== 0) {
-      let subtract = minutes - 1;
-      setMinutes(subtract);
-    } else {
-      return;
-    }
+    console.log('subtract')
   }
 
   function handleAdd() {
-    let add = minutes + 1;
-    setMinutes(add);
+    console.log('add')
   }
 
   function spawnNotification(body: string, title: string) {
@@ -109,33 +67,57 @@ export default function Pomodoro() {
     };
 
     // timer functions
-    // const timerWorker = new Worker('/timer-worker.js');
-    const timerWorker = new Worker('/second-counter-worker.js');
+    const timerWorker = new Worker('./freshworker.js');
 
     if (timerStart) {
-      //send message start
-      timerWorker.postMessage({ action: 'start' });
-      // setTimerStart(false);
-      // setIsRunning(true);
-      console.log('start posted to worker');
-
-      document.title = 'Work';
+      timerWorker.postMessage('start');
+      console.log('client post start');
     } else {
-      //send message pause
-      timerWorker.postMessage({ action: 'pause' });
-      // setTimerPause(false);
-      // setIsRunning(false);
-      console.log('pause posted to worker');
+      timerWorker.postMessage('pause');
+      console.log('paused');
     }
 
-    // timerWorker.onmessage = (response) => {
-    //   console.log(response.data);
+    // timerWorker.onmessage = (event) => {
+    //   if (event.data.type === 'tick') {
+    //     console.log('tock');
+    //     if (seconds === 0) {
+    //       if (minutes !== 0) {
+    //         setSeconds(59);
+    //         // setSeconds(5);
+    //         setMinutes(minutes - 1);
+    //       }
+    //     } else {
+    //       setSeconds(seconds - 1);
+    //     }
+    //   }
     // };
     timerWorker.onmessage = (event) => {
-      console.log(event.data); // { session: "work", duration: 24 }
-      // changeTimeLeft(event.data.minutes, event.data.seconds);
+      if (event.data.type === 'tick') {
+        console.log('tock');
+        setSeconds((prevSeconds) => {
+          if (prevSeconds === 0) {
+            setMinutes((prevMinutes) => {
+              if (prevMinutes !== 0) {
+                return prevMinutes - 1;
+              } else {
+                // Handle the case when the timer reaches 0 minutes and 0 seconds
+                // For example, reset the timer or switch to a break time
+                return prevMinutes;
+              }
+            });
+            return 59;
+          } else {
+            return prevSeconds - 1;
+          }
+        });
+      }
     };
-  }, [timerStart, seconds]);
+
+    // Clean up the timerWorker when the component is unmounted
+    return () => {
+      timerWorker.terminate();
+    };
+  }, [timerStart]); // Remove 'seconds' from the dependency array
 
   //   add 0 to minutes and seconds if less than 10
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
@@ -150,9 +132,7 @@ export default function Pomodoro() {
         </span>
       </h1>
       <div className="controls">
-        {/* {!isRunning && <button onClick={handlePomodoroStart}>Start</button>}
-        {isRunning && <button onClick={handlePause}>Pause</button>} */}
-        <button onClick={handlePomodoroStart}>Start/Pause</button>
+        <button onClick={handleStart}>Start/Pause</button>
         <button onClick={handleReset}>Reset</button>
         <button onClick={handleSkip}>Skip</button>
         <button

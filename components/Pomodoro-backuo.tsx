@@ -20,13 +20,8 @@ export default function Pomodoro() {
   const [pmdrCount, setpmdrCount] = useState(0);
   const [breakTime, setbreakTime] = useState(false);
   const [timerStart, setTimerStart] = useState(false);
-  const [timerPause, setTimerPause] = useState(false);
-  const [isRunning, setIsRunning] = useState(false);
   const [sound, setSound] = useState(true);
   //   const [notifPerm, setNotifPerm] = useState('unknown');
-  // const [interval, setInterval] = useState({});
-  // const [minutes, setMinutes] = useState(0);
-  // const [seconds, setSeconds] = useState(0);
 
   function badIntervalClear() {
     // Set a fake timeout to get the highest timeout id, find a better way to do this
@@ -36,23 +31,11 @@ export default function Pomodoro() {
     }
   }
 
-  // function changeTimeLeft(minutes: number, seconds: number) {
-  //   setMinutes(minutes);
-  //   setSeconds(seconds);
-  // }
-
   function handlePomodoroStart() {
-    // badIntervalClear();
+    badIntervalClear();
 
     setTimerStart(!timerStart);
-    // setTimerStart(true);
-    // setTimerPause(false);
   }
-
-  // function handlePause() {
-  //   // setTimerPause(true);
-  //   setTimerStart(false);
-  // }
 
   function handleReset() {
     badIntervalClear();
@@ -109,32 +92,66 @@ export default function Pomodoro() {
     };
 
     // timer functions
-    // const timerWorker = new Worker('/timer-worker.js');
-    const timerWorker = new Worker('/second-counter-worker.js');
 
     if (timerStart) {
-      //send message start
-      timerWorker.postMessage({ action: 'start' });
-      // setTimerStart(false);
-      // setIsRunning(true);
-      console.log('start posted to worker');
+      let interval = setInterval(() => {
+        clearInterval(interval);
 
-      document.title = 'Work';
-    } else {
-      //send message pause
-      timerWorker.postMessage({ action: 'pause' });
-      // setTimerPause(false);
-      // setIsRunning(false);
-      console.log('pause posted to worker');
+        document.title = 'Work';
+
+        if (seconds === 0) {
+          if (minutes !== 0) {
+            // setSeconds(59);
+            setSeconds(5);
+
+            setMinutes(minutes - 1);
+          } else {
+            if (pmdrCount < timer.longBreakInterval) {
+              let minutes = breakTime
+                ? timer.pomodoro - 1
+                : timer.shortBreak - 1;
+              // let seconds = 59;
+              let seconds = 3;
+
+              setSeconds(seconds);
+              setMinutes(minutes);
+              setbreakTime(!breakTime);
+              setpmdrCount(pmdrCount + 1);
+              if (breakTime) {
+                document.title = 'Work';
+                playSound('C4', '8n', Tone.now());
+                playSound('F4', '8n', Tone.now() + 0.15);
+                playSound('E4', '8n', Tone.now() + 0.3);
+                spawnNotification('Pomodo', 'Work time');
+              } else {
+                document.title = 'Break';
+                playSound('C4', '8n', Tone.now());
+                playSound('A4', '8n', Tone.now() + 0.15);
+                playSound('B4', '8n', Tone.now() + 0.3);
+                spawnNotification('Pomodo', 'Break time');
+              }
+            } else {
+              let minutes = timer.longBreak - 1;
+              // let seconds = 59;
+              let seconds = 10;
+
+              setSeconds(seconds);
+              setMinutes(minutes);
+              setbreakTime(true);
+              setpmdrCount(-1);
+              document.title = 'Break';
+              playSound('C4', '8n', Tone.now());
+              playSound('E4', '8n', Tone.now() + 0.15);
+              playSound('G4', '8n', Tone.now() + 0.3);
+              playSound('B4', '8n', Tone.now() + 0.45);
+              spawnNotification('Pomodo', 'Long break time');
+            }
+          }
+        } else {
+          setSeconds(seconds - 1);
+        }
+      }, 1000);
     }
-
-    // timerWorker.onmessage = (response) => {
-    //   console.log(response.data);
-    // };
-    timerWorker.onmessage = (event) => {
-      console.log(event.data); // { session: "work", duration: 24 }
-      // changeTimeLeft(event.data.minutes, event.data.seconds);
-    };
   }, [timerStart, seconds]);
 
   //   add 0 to minutes and seconds if less than 10
@@ -150,8 +167,6 @@ export default function Pomodoro() {
         </span>
       </h1>
       <div className="controls">
-        {/* {!isRunning && <button onClick={handlePomodoroStart}>Start</button>}
-        {isRunning && <button onClick={handlePause}>Pause</button>} */}
         <button onClick={handlePomodoroStart}>Start/Pause</button>
         <button onClick={handleReset}>Reset</button>
         <button onClick={handleSkip}>Skip</button>
