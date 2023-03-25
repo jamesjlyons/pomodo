@@ -67,7 +67,7 @@ export default function Pomodoro() {
     };
 
     // timer functions
-    const timerWorker = new Worker('./freshworker.js');
+    const timerWorker = new Worker('./gptworker.js');
 
     if (timerStart) {
       timerWorker.postMessage('start');
@@ -81,45 +81,33 @@ export default function Pomodoro() {
     const shortBreakDuration = timer.shortBreak;
     const longBreakDuration = timer.longBreak;
 
-    const updateTimer = () => {
-      setpmdrCount((prevPmdrCount) => {
-        const newPmdrCount = prevPmdrCount + 1;
-        if (newPmdrCount % 8 === 0) {
-          setMinutes(longBreakDuration);
-          setbreakTime(true);
-        } else if (newPmdrCount % 2 === 0) {
-          setMinutes(shortBreakDuration);
-          setbreakTime(true);
-        } else {
-          setMinutes(workDuration);
-          setbreakTime(false);
-        }
-        return newPmdrCount;
-      });
-    };
+    // const updateTimer = () => {
+    //   setpmdrCount((prevPmdrCount) => {
+    //     const newPmdrCount = prevPmdrCount + 1;
+    //     if (newPmdrCount % 8 === 0) {
+    //       setMinutes(longBreakDuration);
+    //       setbreakTime(true);
+    //     } else if (newPmdrCount % 2 === 0) {
+    //       setMinutes(shortBreakDuration);
+    //       setbreakTime(true);
+    //     } else {
+    //       setMinutes(workDuration);
+    //       setbreakTime(false);
+    //     }
+    //     return newPmdrCount;
+    //   });
+    // };
+
 
     timerWorker.onmessage = (event) => {
       if (event.data.type === 'tick') {
-        console.log('tock');
-        setSeconds((prevSeconds) => {
-          if (prevSeconds === 0) {
-            setMinutes((prevMinutes) => {
-              if (prevMinutes !== 0) {
-                return prevMinutes - 1;
-              } else {
-                // Handle the case when the timer reaches 0 minutes and 0 seconds
-                updateTimer();
-                return 0;
-              }
-            });
-            return 59;
-            // return 5;
-          } else {
-            return prevSeconds - 1;
-          }
-        });
+        console.log(event.data);
+        setMinutes(event.data.minutes);
+        setSeconds(event.data.seconds);
+        setpmdrCount(event.data.pmdrCount);
       }
     };
+
 
     // Clean up the timerWorker when the component is unmounted
     return () => {
