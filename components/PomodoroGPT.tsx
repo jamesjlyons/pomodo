@@ -22,45 +22,20 @@ export default function Pomodoro() {
   const [timerStart, setTimerStart] = useState(false);
   const [sound, setSound] = useState(true);
 
-  const timerWorkerRef = useRef(null);
+  const timerWorkerRef = useRef<Worker | null>();
 
   function handleStart() {
     if (!timerStart) {
-      setTimerStart(!timerStart);
-      console.log('timer start');
+      setTimerStart(true);
+      timerWorkerRef.current?.postMessage({
+        action: 'start',
+        minutes: minutes,
+        seconds: seconds,
+      });
     } else {
-      setTimerStart(!timerStart);
-      console.log('timer paused');
+      setTimerStart(false);
+      timerWorkerRef.current?.postMessage({ action: 'pause' });
     }
-  }
-
-
-  function handleReset() {
-    timerWorkerRef.current.postMessage({
-      action: 'reset',
-    });
-    console.log('reset');
-  }
-
-  function handleSkip() {
-    timerWorkerRef.current.postMessage({
-      action: 'skip',
-    });
-    console.log('skip');
-  }
-
-  function handleSubtract() {
-    timerWorkerRef.current.postMessage({
-      action: 'subtract',
-    });
-    console.log('subtract');
-  }
-
-  function handleAdd() {
-    timerWorkerRef.current.postMessage({
-      action: 'add',
-    });
-    console.log('add');
   }
 
   function spawnNotification(body: string, title: string) {
@@ -81,63 +56,60 @@ export default function Pomodoro() {
 
     // timer functions
     const timerWorker = new Worker('./gptworker.js');
+    timerWorkerRef.current = timerWorker;
+    timerWorker.postMessage({
+      action: 'init',
+      data: { minutes: timer.pomodoro, seconds: 0 },
+    });
 
-    if (timerStart) {
-      timerWorker.postMessage({
-        action: 'start',
-        minutes: minutes,
-        seconds: seconds,
-      });
-      console.log('client post start');
-    } else {
-      timerWorker.postMessage({
-        action: 'pause',
-      });
-      console.log('paused');
-    }
 
-    const workDuration = timer.pomodoro;
-    const shortBreakDuration = timer.shortBreak;
-    const longBreakDuration = timer.longBreak;
+    const handleReset = () => {
+      timerWorker.postMessage({ action: 'reset' });
+      console.log('reset');
+    };
 
-    // const updateTimer = () => {
-    //   setpmdrCount((prevPmdrCount) => {
-    //     const newPmdrCount = prevPmdrCount + 1;
-    //     if (newPmdrCount % 8 === 0) {
-    //       setMinutes(longBreakDuration);
-    //       setbreakTime(true);
-    //     } else if (newPmdrCount % 2 === 0) {
-    //       setMinutes(shortBreakDuration);
-    //       setbreakTime(true);
-    //     } else {
-    //       setMinutes(workDuration);
-    //       setbreakTime(false);
-    //     }
-    //     return newPmdrCount;
-    //   });
-    // };
+    const handleSkip = () => {
+      timerWorker.postMessage({ action: 'skip' });
+      console.log('skip');
+    };
+
+    const handleSubtract = () => {
+      timerWorker.postMessage({ action: 'subtract' });
+      console.log('subtract');
+    };
+
+    const handleAdd = () => {
+      timerWorker.postMessage({ action: 'add' });
+      console.log('add');
+    };
+
+    // if (timerStart) {
+    //   timerWorker.postMessage({ action: 'start' });
+    //   console.log('client post start');
+    // } else {
+    //   timerWorker.postMessage({ action: 'pause' });
+    //   console.log('paused');
+    // }
 
     timerWorker.onmessage = (event) => {
       if (event.data.type === 'tick') {
+        console.log(event.data);
         setMinutes(event.data.minutes);
         setSeconds(event.data.seconds);
         setpmdrCount(event.data.pmdrCount);
       } else if (event.data.type === 'reset') {
-        setTimerStart(false); // Set the timer to the paused state
-        setMinutes(timer.pomodoro); // Reset the minutes
-        setSeconds(0); // Reset the seconds
-        setpmdrCount(1); // Reset the pmdrCount
+        setMinutes(timer.pomodoro);
+        setSeconds(0);
+        setTimerStart(false);
+        setpmdrCount(1);
       }
     };
-
-    timerWorkerRef.current = timerWorker;
-
 
     // Clean up the timerWorker when the component is unmounted
     return () => {
       timerWorker.terminate();
     };
-  }, [timerStart]); // Remove 'seconds' from the dependency array
+  }, []); // Remove 'seconds' and 'timerStart' from the dependency array
 
   //   add 0 to minutes and seconds if less than 10
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
@@ -153,15 +125,16 @@ export default function Pomodoro() {
       </h1>
       <div className="controls">
         <button onClick={handleStart}>Start/Pause</button>
-        <button onClick={handleReset}>Reset</button>
-        <button onClick={handleSkip}>Skip</button>
+        <button onClick={() => timerWorkerRef.current?.postMessage({ action: 'reset' })}>Reset</button>
+        <button onClick={() => timerWorkerRef.current?.postMessage({ action: 'skip' })}>Skip</button>
         <button
-          onClick={handleSubtract}
+          onClick={() => timerWorkerRef.current?.postMessage({ action: 'subtract' })}
           disabled={minutes === 0 ? true : false}
         >
           -1
         </button>
-        <button onClick={handleAdd}>+1</button>
+        <button onClick={() => timerWorkerRef.current?.postMessage({ action: 'add' })}>+1</button>
+
       </div>
       <form
         style={{

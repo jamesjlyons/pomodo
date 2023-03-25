@@ -103,10 +103,15 @@ const tick = () => {
 //   }
 // };
 self.onmessage = (event) => {
-  switch (event.data.action) {
+  const { data } = event;
+  switch (data.action) {
+    case 'init':
+      minutes = data.minutes;
+      seconds = data.seconds;
+      break;
     case 'start':
-      minutes = event.data.minutes;
-      seconds = event.data.seconds;
+      minutes = data.minutes;
+      seconds = data.seconds;
       intervalId = setInterval(tick, 1000);
       break;
     case 'pause':
