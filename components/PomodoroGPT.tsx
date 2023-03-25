@@ -9,9 +9,9 @@ export default function Pomodoro() {
     shortBreak: 5,
     longBreak: 15,
     longBreakInterval: 6,
-    // pomodoro: 1,
-    // shortBreak: 1,
-    // longBreak: 15,
+    // pomodoro: 0,
+    // shortBreak: 0,
+    // longBreak: 1,
     // longBreakInterval: 6,
   };
 
@@ -77,20 +77,27 @@ export default function Pomodoro() {
       console.log('paused');
     }
 
-    // timerWorker.onmessage = (event) => {
-    //   if (event.data.type === 'tick') {
-    //     console.log('tock');
-    //     if (seconds === 0) {
-    //       if (minutes !== 0) {
-    //         setSeconds(59);
-    //         // setSeconds(5);
-    //         setMinutes(minutes - 1);
-    //       }
-    //     } else {
-    //       setSeconds(seconds - 1);
-    //     }
-    //   }
-    // };
+    const workDuration = timer.pomodoro;
+    const shortBreakDuration = timer.shortBreak;
+    const longBreakDuration = timer.longBreak;
+
+    const updateTimer = () => {
+      setpmdrCount((prevPmdrCount) => {
+        const newPmdrCount = prevPmdrCount + 1;
+        if (newPmdrCount % 8 === 0) {
+          setMinutes(longBreakDuration);
+          setbreakTime(true);
+        } else if (newPmdrCount % 2 === 0) {
+          setMinutes(shortBreakDuration);
+          setbreakTime(true);
+        } else {
+          setMinutes(workDuration);
+          setbreakTime(false);
+        }
+        return newPmdrCount;
+      });
+    };
+
     timerWorker.onmessage = (event) => {
       if (event.data.type === 'tick') {
         console.log('tock');
@@ -101,11 +108,12 @@ export default function Pomodoro() {
                 return prevMinutes - 1;
               } else {
                 // Handle the case when the timer reaches 0 minutes and 0 seconds
-                // For example, reset the timer or switch to a break time
-                return prevMinutes;
+                updateTimer();
+                return 0;
               }
             });
             return 59;
+            // return 5;
           } else {
             return prevSeconds - 1;
           }
