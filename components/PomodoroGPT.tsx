@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
 import NotificationButton from './NotificationButton';
 
@@ -17,17 +17,18 @@ export default function Pomodoro() {
 
   const [minutes, setMinutes] = useState(timer.pomodoro);
   const [seconds, setSeconds] = useState(0);
-  const [pmdrCount, setpmdrCount] = useState(0);
+  const [pmdrCount, setpmdrCount] = useState(1);
   const [breakTime, setbreakTime] = useState(false);
   const [timerStart, setTimerStart] = useState(false);
   const [sound, setSound] = useState(true);
+
+  const timerWorkerRef = useRef(null);
 
   function handleStart() {
     if (!timerStart) {
       setTimerStart(!timerStart);
       console.log('timer start');
-    }
-    else {
+    } else {
       setTimerStart(!timerStart);
       console.log('timer paused');
     }
@@ -35,19 +36,31 @@ export default function Pomodoro() {
 
 
   function handleReset() {
+    timerWorkerRef.current.postMessage({
+      action: 'reset',
+    });
     console.log('reset');
   }
 
   function handleSkip() {
+    timerWorkerRef.current.postMessage({
+      action: 'skip',
+    });
     console.log('skip');
   }
 
   function handleSubtract() {
-    console.log('subtract')
+    timerWorkerRef.current.postMessage({
+      action: 'subtract',
+    });
+    console.log('subtract');
   }
 
   function handleAdd() {
-    console.log('add')
+    timerWorkerRef.current.postMessage({
+      action: 'add',
+    });
+    console.log('add');
   }
 
   function spawnNotification(body: string, title: string) {
@@ -70,10 +83,16 @@ export default function Pomodoro() {
     const timerWorker = new Worker('./gptworker.js');
 
     if (timerStart) {
-      timerWorker.postMessage('start');
+      timerWorker.postMessage({
+        action: 'start',
+        minutes: minutes,
+        seconds: seconds,
+      });
       console.log('client post start');
     } else {
-      timerWorker.postMessage('pause');
+      timerWorker.postMessage({
+        action: 'pause',
+      });
       console.log('paused');
     }
 
@@ -98,15 +117,20 @@ export default function Pomodoro() {
     //   });
     // };
 
-
     timerWorker.onmessage = (event) => {
       if (event.data.type === 'tick') {
-        console.log(event.data);
         setMinutes(event.data.minutes);
         setSeconds(event.data.seconds);
         setpmdrCount(event.data.pmdrCount);
+      } else if (event.data.type === 'reset') {
+        setTimerStart(false); // Set the timer to the paused state
+        setMinutes(timer.pomodoro); // Reset the minutes
+        setSeconds(0); // Reset the seconds
+        setpmdrCount(1); // Reset the pmdrCount
       }
     };
+
+    timerWorkerRef.current = timerWorker;
 
 
     // Clean up the timerWorker when the component is unmounted
