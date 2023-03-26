@@ -18,12 +18,10 @@ export default function Pomodoro() {
   const [minutes, setMinutes] = useState(timer.pomodoro);
   const [seconds, setSeconds] = useState(0);
   const [pmdrCount, setpmdrCount] = useState(1);
-  // const [breakTime, setbreakTime] = useState(false);
   const [sessionType, setSessionType] = useState('work');
   const [timerStart, setTimerStart] = useState(false);
   const [sound, setSound] = useState(true);
-  const [prevSessionType, setPrevSessionType] = useState();
-  // const [soundPlayed, setSoundPlayed] = useState(false);
+  const [prevSessionType, setPrevSessionType] = useState('work');
 
 
   const timerWorkerRef = useRef<Worker | null>();
