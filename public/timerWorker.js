@@ -3,6 +3,7 @@ let pmdrCount = 1;
 let minutes;
 let seconds;
 let sessionType;
+let timeoutId;
 
 // Timer configurations
 const pomodoro = 25;
@@ -105,6 +106,11 @@ self.onmessage = (event) => {
       break;
     case 'skip':
       clearInterval(intervalId);
+
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
       if (sessionType === 'work') {
         if ((pmdrCount + 1) % longBreakInterval === 0) {
           sessionType = 'longBreak';
@@ -128,8 +134,9 @@ self.onmessage = (event) => {
         pmdrCount: pmdrCount,
         sessionType: sessionType,
       });
-      setTimeout(() => {
-        tick(); // Call the tick function immediately, but after a delay of 1s to show full time like MM:00
+
+      timeoutId = setTimeout(() => {
+        tick(); // Call the tick function immediately
         intervalId = setInterval(tick, 1000);
       }, 1000);
       break;
