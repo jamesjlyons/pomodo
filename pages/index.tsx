@@ -3,7 +3,7 @@
 import Head from 'next/head';
 // import Script from 'next/script';
 
-import PomodoroGPT from 'components/PomodoroGPT';
+import Pomodoro from 'components/Pomodoro';
 
 
 function HomePage() {
@@ -16,7 +16,7 @@ function HomePage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <Script src="/timer-worker.js" strategy="worker" /> */}
-      <PomodoroGPT />
+      <Pomodoro />
     </div>
   );
 }

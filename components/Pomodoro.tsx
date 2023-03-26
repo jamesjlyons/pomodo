@@ -93,7 +93,7 @@ export default function Pomodoro() {
 
   useEffect(() => {
     // timer functions
-    const timerWorker = new Worker('./gptworker.js');
+    const timerWorker = new Worker('./timerWorker.js');
     timerWorkerRef.current = timerWorker;
     timerWorker.postMessage({
       action: 'init',
