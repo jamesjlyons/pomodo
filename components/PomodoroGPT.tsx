@@ -18,9 +18,13 @@ export default function Pomodoro() {
   const [minutes, setMinutes] = useState(timer.pomodoro);
   const [seconds, setSeconds] = useState(0);
   const [pmdrCount, setpmdrCount] = useState(1);
-  const [breakTime, setbreakTime] = useState(false);
+  // const [breakTime, setbreakTime] = useState(false);
+  const [sessionType, setSessionType] = useState('work');
   const [timerStart, setTimerStart] = useState(false);
   const [sound, setSound] = useState(true);
+  const [prevSessionType, setPrevSessionType] = useState();
+  // const [soundPlayed, setSoundPlayed] = useState(false);
+
 
   const timerWorkerRef = useRef<Worker | null>();
 
@@ -54,6 +58,31 @@ export default function Pomodoro() {
       }
     };
 
+    const playSoundForSessionType = (sessionType: String) => {
+      if (sessionType === 'work') {
+        playSound('C4', '8n', Tone.now());
+        playSound('F4', '8n', Tone.now() + 0.15);
+        playSound('E4', '8n', Tone.now() + 0.3);
+      } else if (sessionType === 'shortBreak') {
+        playSound('C4', '8n', Tone.now());
+        playSound('A4', '8n', Tone.now() + 0.15);
+        playSound('B4', '8n', Tone.now() + 0.3);
+      } else if (sessionType === 'longBreak') {
+        playSound('C4', '8n', Tone.now());
+        playSound('E4', '8n', Tone.now() + 0.15);
+        playSound('G4', '8n', Tone.now() + 0.3);
+        playSound('B4', '8n', Tone.now() + 0.45);
+      }
+    };
+
+    if (sessionType !== prevSessionType) {
+      playSoundForSessionType(sessionType);
+      setPrevSessionType(sessionType);
+    }
+
+  }, [sound, sessionType, prevSessionType]);
+
+  useEffect(() => {
     // timer functions
     const timerWorker = new Worker('./gptworker.js');
     timerWorkerRef.current = timerWorker;
@@ -93,10 +122,12 @@ export default function Pomodoro() {
 
     timerWorker.onmessage = (event) => {
       if (event.data.type === 'tick') {
-        console.log(event.data);
+        // console.log(event.data);
         setMinutes(event.data.minutes);
         setSeconds(event.data.seconds);
         setpmdrCount(event.data.pmdrCount);
+        setSessionType(event.data.sessionType);
+
       } else if (event.data.type === 'reset') {
         setMinutes(timer.pomodoro);
         setSeconds(0);
@@ -120,7 +151,9 @@ export default function Pomodoro() {
       <h1 className="timer">
         {timerMinutes}:{timerSeconds}
         <span className="message" style={{ opacity: 0.3, marginTop: 16 }}>
-          {breakTime && ' Break'} {!breakTime && ' Work'}
+          {sessionType === 'work' && ' Work'}
+          {sessionType === 'shortBreak' && ' Break'}
+          {sessionType === 'longBreak' && ' Long Break'}
         </span>
       </h1>
       <div className="controls">

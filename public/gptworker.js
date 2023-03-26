@@ -53,9 +53,19 @@ const tick = () => {
     } else {
       minutes--;
       seconds = 59;
+      // seconds = 5;
     }
   } else {
     seconds--;
+  }
+
+  let sessionType;
+  if (pmdrCount % 8 === 0) {
+    sessionType = 'longBreak';
+  } else if (pmdrCount % 2 === 0) {
+    sessionType = 'shortBreak';
+  } else {
+    sessionType = 'work';
   }
 
   self.postMessage({
@@ -63,45 +73,10 @@ const tick = () => {
     minutes,
     seconds,
     pmdrCount,
+    sessionType,
   });
 };
 
-// self.onmessage = (event) => {
-//   if (event.data.action === 'start') {
-//     minutes = event.data.minutes;
-//     seconds = event.data.seconds;
-//     intervalId = setInterval(tick, 1000);
-//   } else if (event.data === 'pause') {
-//     clearInterval(intervalId);
-//   } else if (event.data === 'reset') {
-//     clearInterval(intervalId);
-//     resetTimer();
-//   } else if (event.data === 'skip') {
-//     skipSession();
-//   } else if (event.data === 'add') {
-//     addMinute();
-//   } else if (event.data === 'subtract') {
-//     subtractMinute();
-//   }
-// };
-
-// self.onmessage = (event) => {
-//   if (event.data.action === 'start') {
-//     intervalId = setInterval(tick, 1000);
-//   } else if (event.data === 'pause') {
-//     clearInterval(intervalId);
-//   } else if (event.data === 'reset') {
-//     clearInterval(intervalId);
-//     resetTimer();
-//     self.postMessage({ type: 'reset' }); // Send reset message back to the main thread
-//   } else if (event.data === 'skip') {
-//     skipSession();
-//   } else if (event.data === 'add') {
-//     addMinute();
-//   } else if (event.data === 'subtract') {
-//     subtractMinute();
-//   }
-// };
 self.onmessage = (event) => {
   const { data } = event;
   switch (data.action) {
