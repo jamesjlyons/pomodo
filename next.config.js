@@ -4,8 +4,12 @@ const nextConfig = {
   swcMinify: true,
   experimental: {
     // Required:
-    appDir: true,
+    appDir: false,
   },
 };
 
-module.exports = nextConfig;
+module.exports = {
+  experimental: {
+    nextScriptWorkers: true,
+  },
+};
