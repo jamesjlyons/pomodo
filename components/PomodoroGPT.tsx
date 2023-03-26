@@ -45,7 +45,7 @@ export default function Pomodoro() {
   }
 
   useEffect(() => {
-    // sound functions
+    // sound and notificasion functions
     //create a synth and connect it to the main output (your speakers)
     const synth = new Tone.Synth().toDestination();
     //  play passed sound parameters if sound is enabled
@@ -73,8 +73,19 @@ export default function Pomodoro() {
       }
     };
 
+    const notifyForSessionType = (sessionType: String) => {
+      if (sessionType === 'work') {
+        spawnNotification('Pomodo', 'Work time');
+      } else if (sessionType === 'shortBreak') {
+        spawnNotification('Pomodo', 'Break time');
+      } else if (sessionType === 'longBreak') {
+        spawnNotification('Pomodo', 'Long break time');
+      }
+    };
+
     if (sessionType !== prevSessionType) {
       playSoundForSessionType(sessionType);
+      notifyForSessionType(sessionType);
       setPrevSessionType(sessionType);
     }
 
