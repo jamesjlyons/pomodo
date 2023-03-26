@@ -7,7 +7,7 @@ export default function Pomodoro() {
   let timer = {
     pomodoro: 25,
     shortBreak: 5,
-    longBreak: 15,
+    longBreak: 30,
     longBreakInterval: 6,
     // pomodoro: 0,
     // shortBreak: 0,
@@ -39,6 +39,26 @@ export default function Pomodoro() {
       timerWorkerRef.current?.postMessage({ action: 'pause' });
     }
   }
+
+  const handleSkip = () => {
+    timerWorkerRef.current?.postMessage({ action: 'skip' });
+  };
+
+  const handleSubtract = () => {
+    if (minutes > 0) {
+      timerWorkerRef.current?.postMessage({ action: 'subtract' });
+
+      // Update the minutes immediately
+      setMinutes((prevMinutes) => prevMinutes - 1);
+    }
+  };
+
+  const handleAdd = () => {
+    timerWorkerRef.current?.postMessage({ action: 'add' });
+
+    // Update the minutes immediately
+    setMinutes((prevMinutes) => prevMinutes + 1);
+  };
 
   function spawnNotification(body: string, title: string) {
     const notification = new Notification(title, { body });
@@ -100,35 +120,6 @@ export default function Pomodoro() {
       data: { minutes: timer.pomodoro, seconds: 0 },
     });
 
-
-    const handleReset = () => {
-      timerWorker.postMessage({ action: 'reset' });
-      console.log('reset');
-    };
-
-    const handleSkip = () => {
-      timerWorker.postMessage({ action: 'skip' });
-      console.log('skip');
-    };
-
-    const handleSubtract = () => {
-      timerWorker.postMessage({ action: 'subtract' });
-      console.log('subtract');
-    };
-
-    const handleAdd = () => {
-      timerWorker.postMessage({ action: 'add' });
-      console.log('add');
-    };
-
-    // if (timerStart) {
-    //   timerWorker.postMessage({ action: 'start' });
-    //   console.log('client post start');
-    // } else {
-    //   timerWorker.postMessage({ action: 'pause' });
-    //   console.log('paused');
-    // }
-
     timerWorker.onmessage = (event) => {
       if (event.data.type === 'tick') {
         // console.log(event.data);
@@ -167,15 +158,9 @@ export default function Pomodoro() {
       </h1>
       <div className="controls">
         <button onClick={handleStart}>Start/Pause</button>
-        <button onClick={() => timerWorkerRef.current?.postMessage({ action: 'reset' })}>Reset</button>
-        <button onClick={() => timerWorkerRef.current?.postMessage({ action: 'skip' })}>Skip</button>
-        <button
-          onClick={() => timerWorkerRef.current?.postMessage({ action: 'subtract' })}
-          disabled={minutes === 0 ? true : false}
-        >
-          -1
-        </button>
-        <button onClick={() => timerWorkerRef.current?.postMessage({ action: 'add' })}>+1</button>
+        <button onClick={handleSkip}>Skip</button>
+        <button onClick={handleSubtract} disabled={minutes === 0 ? true : false}>-1</button>
+        <button onClick={handleAdd}>+1</button>
 
       </div>
       <form

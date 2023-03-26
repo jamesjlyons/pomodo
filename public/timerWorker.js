@@ -2,13 +2,18 @@ let intervalId;
 let pmdrCount = 1;
 let minutes;
 let seconds;
+let sessionType;
+
+// Timer configurations
+const pomodoro = 25;
+const shortBreak = 5;
+const longBreak = 30;
+const longBreakInterval = 8;
 
 const setInitialTime = () => {
-  minutes = 25;
+  minutes = pomodoro;
   seconds = 0;
 };
-
-setInitialTime();
 
 // 1.	The  pmdrCount  variable is incremented by one.
 // 2.	An  if  statement checks if the  pmdrCount  is divisible by 8, and if so, sets the  minutes  variable to 30.
@@ -18,11 +23,11 @@ setInitialTime();
 const updateTimer = () => {
   pmdrCount++;
   if (pmdrCount % 8 === 0) {
-    minutes = 30;
+    minutes = longBreak;
   } else if (pmdrCount % 2 === 0) {
-    minutes = 5;
+    minutes = shortBreak;
   } else {
-    minutes = 25;
+    minutes = pomodoro;
   }
   seconds = 0;
 };
@@ -59,7 +64,7 @@ const tick = () => {
     seconds--;
   }
 
-  let sessionType;
+  // let sessionType;
   if (pmdrCount % 8 === 0) {
     sessionType = 'longBreak';
   } else if (pmdrCount % 2 === 0) {
@@ -99,7 +104,34 @@ self.onmessage = (event) => {
       console.log('reset received'); // Add this line
       break;
     case 'skip':
-      skipSession();
+      clearInterval(intervalId);
+      if (sessionType === 'work') {
+        if ((pmdrCount + 1) % longBreakInterval === 0) {
+          sessionType = 'longBreak';
+          minutes = longBreak;
+          seconds = 0;
+        } else {
+          sessionType = 'shortBreak';
+          minutes = shortBreak;
+          seconds = 0;
+        }
+      } else if (sessionType === 'shortBreak' || sessionType === 'longBreak') {
+        sessionType = 'work';
+        minutes = pomodoro;
+        seconds = 0;
+      }
+      pmdrCount += 1;
+      postMessage({
+        type: 'tick',
+        minutes: minutes,
+        seconds: seconds,
+        pmdrCount: pmdrCount,
+        sessionType: sessionType,
+      });
+      setTimeout(() => {
+        tick(); // Call the tick function immediately, but after a delay of 1s to show full time like MM:00
+        intervalId = setInterval(tick, 1000);
+      }, 1000);
       break;
     case 'add':
       addMinute();
