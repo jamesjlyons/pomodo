@@ -37,9 +37,13 @@ export default function NotificationControls({ notifEnabled, setNotifEnabled }: 
     }
   }
 
-  function toggleNotifications() {
-    setNotifEnabled((prevNotifEnabled) => !prevNotifEnabled);
-  }
+  // function toggleNotifications() {
+  //   setNotifEnabled((prevNotifEnabled) => !prevNotifEnabled);
+  // }
+
+  const toggleNotifications = () => {
+    setNotifEnabled(!notifEnabled);
+  };
 
   useEffect(() => {
     const onPageLoad = () => {

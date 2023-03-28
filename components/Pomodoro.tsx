@@ -22,7 +22,7 @@ export default function Pomodoro() {
   const [timerStart, setTimerStart] = useState(false);
   const [sound, setSound] = useState(true);
   const [prevSessionType, setPrevSessionType] = useState('work');
-  const [notifEnabled, setNotifEnabled] = useState(false);
+  const [notifEnabled, setNotifEnabled] = useState<boolean>(false);
 
   const timerWorkerRef = useRef<Worker | null>();
 
