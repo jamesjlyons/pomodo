@@ -1,7 +1,11 @@
-'use client';
 import { useState, useEffect } from 'react';
 
-export default function NotificationControls({ notifEnabled, setNotifEnabled }) {
+type NotificationControlsProps = {
+  notifEnabled: boolean;
+  setNotifEnabled: (enabled: boolean) => void;
+};
+
+export default function NotificationControls({ notifEnabled, setNotifEnabled }: NotificationControlsProps) {
   const [notifPerm, setNotifPerm] = useState('unknown');
 
   function setNotifPermState(value: string) {
@@ -65,7 +69,13 @@ export default function NotificationControls({ notifEnabled, setNotifEnabled }) 
         </button>
       )}
       {notifPerm === 'granted' && (
-        <form>
+        <form
+          style={{
+            fontSize: 13,
+            marginTop: 16,
+            display: 'flex',
+            alignItems: 'center',
+          }}>
           <input
             name="notifications"
             type="checkbox"

@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
-import NotificationControls from './NotificationControls';
+import NotificationControls from 'components/NotificationControls';
 
 export default function Pomodoro() {
   let timer = {
