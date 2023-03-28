@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-export default function Pomodoro() {
+export default function NotificationControls({ notifEnabled, setNotifEnabled }) {
   const [notifPerm, setNotifPerm] = useState('unknown');
 
   function setNotifPermState(value: string) {
@@ -33,6 +33,10 @@ export default function Pomodoro() {
     }
   }
 
+  function toggleNotifications() {
+    setNotifEnabled((prevNotifEnabled) => !prevNotifEnabled);
+  }
+
   useEffect(() => {
     const onPageLoad = () => {
       checkNotificationPermission();
@@ -61,9 +65,17 @@ export default function Pomodoro() {
         </button>
       )}
       {notifPerm === 'granted' && (
-        <span style={{ fontSize: 12, opacity: 0.5 }}>
-          Notifications are enabled
-        </span>
+        <form>
+          <input
+            name="notifications"
+            type="checkbox"
+            checked={notifEnabled}
+            onChange={toggleNotifications}
+          />
+          <label htmlFor="notifications" style={{ marginLeft: 4, opacity: 0.5 }}>
+            Enable notifications
+          </label>
+        </form>
       )}
       {notifPerm === 'denied' && (
         <span style={{ fontSize: 12, opacity: 0.5 }}>

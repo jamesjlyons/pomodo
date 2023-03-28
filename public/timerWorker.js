@@ -9,11 +9,15 @@ let timeoutId;
 const pomodoro = 25;
 const shortBreak = 5;
 const longBreak = 30;
+// const pomodoro = 1;
+// const shortBreak = 2;
+// const longBreak = 3;
 const longBreakInterval = 8;
 
 const setInitialTime = () => {
   minutes = pomodoro;
-  seconds = 0;
+  // seconds = 0;
+  seconds = 5;
 };
 
 // 1.	The  pmdrCount  variable is incremented by one.

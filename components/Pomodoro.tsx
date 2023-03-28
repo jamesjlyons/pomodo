@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
-import NotificationButton from './NotificationButton';
+import NotificationControls from './NotificationControls';
 
 export default function Pomodoro() {
   let timer = {
@@ -22,7 +22,7 @@ export default function Pomodoro() {
   const [timerStart, setTimerStart] = useState(false);
   const [sound, setSound] = useState(true);
   const [prevSessionType, setPrevSessionType] = useState('work');
-
+  const [notifEnabled, setNotifEnabled] = useState(false);
 
   const timerWorkerRef = useRef<Worker | null>();
 
@@ -66,7 +66,12 @@ export default function Pomodoro() {
   };
 
   function spawnNotification(body: string, title: string) {
-    const notification = new Notification(title, { body });
+    if (notifEnabled) {
+      const notification = new Notification(title, { body });
+    }
+    else {
+      return
+    }
   }
 
   useEffect(() => {
@@ -187,7 +192,8 @@ export default function Pomodoro() {
           Sound
         </label>
       </form>
-      <NotificationButton />
+      <NotificationControls notifEnabled={notifEnabled}
+        setNotifEnabled={setNotifEnabled} />
       <div
         className="pmdrCount"
         style={{ fontSize: 12, opacity: 0.5, marginTop: 16 }}
