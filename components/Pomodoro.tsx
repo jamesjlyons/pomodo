@@ -44,6 +44,11 @@ export default function Pomodoro() {
     timerWorkerRef.current?.postMessage({ action: 'skip' });
   };
 
+  const handleReset = () => {
+    timerWorkerRef.current?.postMessage({ action: 'reset' });
+  };
+
+
   const handleSubtract = () => {
     if (minutes > 0) {
       timerWorkerRef.current?.postMessage({ action: 'subtract' });
@@ -159,6 +164,7 @@ export default function Pomodoro() {
       <div className="controls">
         <button onClick={handleStart}>Start/Pause</button>
         <button onClick={handleSkip}>Skip</button>
+        <button onClick={handleReset}>Reset</button>
         <button onClick={handleSubtract} disabled={minutes === 0 ? true : false}>-1</button>
         <button onClick={handleAdd}>+1</button>
 
