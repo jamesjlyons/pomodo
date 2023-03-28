@@ -75,6 +75,41 @@ export default function Pomodoro() {
   }
 
   useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      console.log(event.code); // Add this line to log the events
+
+      switch (event.code) {
+        case "Space":
+          handleStart();
+          break;
+        case "ArrowRight":
+          handleSkip();
+          break;
+        case "ArrowLeft":
+          handleReset();
+          break;
+        case "ArrowUp":
+          handleAdd();
+          break;
+        case "ArrowDown":
+          handleSubtract();
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleStart, handleSkip, handleReset, handleAdd, handleSubtract]);
+
+
+
+
+  useEffect(() => {
     // sound and notificasion functions
     //create a synth and connect it to the main output (your speakers)
     const synth = new Tone.Synth().toDestination();
@@ -200,6 +235,13 @@ export default function Pomodoro() {
       >
         running: {timerStart && 'yes'}
         {!timerStart && 'no'}, pmdrCount: {pmdrCount}
+      </div>
+      <div
+        className="shortcuts"
+        style={{ fontSize: 12, opacity: 0.5, marginTop: 16 }}
+      >
+        Start/Pause: space | Skip: ArrowRight <br />
+        +1: ArrowLeft | -1: ArrowRight
       </div>
     </div>
   );
