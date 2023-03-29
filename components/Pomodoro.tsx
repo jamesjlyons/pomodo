@@ -2,6 +2,9 @@
 import { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
 import NotificationControls from 'components/NotificationControls';
+import * as Switch from '@radix-ui/react-switch';
+import * as Toast from '@radix-ui/react-toast';
+
 
 export default function Pomodoro() {
   let timer = {
@@ -23,8 +26,11 @@ export default function Pomodoro() {
   const [sound, setSound] = useState(true);
   const [prevSessionType, setPrevSessionType] = useState('work');
   const [notifEnabled, setNotifEnabled] = useState<boolean>(false);
+  const [toastContent, setToastContent] = useState('');
+  const [toastOpen, setToastOpen] = useState(false);
 
   const timerWorkerRef = useRef<Worker | null>();
+  const toastTimeRef = useRef(0);
 
   function handleStart() {
     if (!timerStart) {
@@ -74,6 +80,16 @@ export default function Pomodoro() {
     }
   }
 
+  const showToast = (title: any) => {
+    setToastContent(title);
+    setToastOpen(true);
+    window.clearTimeout(toastTimeRef.current);
+    toastTimeRef.current = window.setTimeout(() => {
+      setToastOpen(true);
+      // setToastContent('');
+    }, 100);
+  };
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       console.log(event.code); // Add this line to log the events
@@ -81,22 +97,34 @@ export default function Pomodoro() {
       switch (event.code) {
         case "Space":
           handleStart();
+          if (timerStart) {
+            showToast("Timer Paused");
+          } else {
+            showToast("Timer Started");
+          }
           break;
         case "ArrowRight":
           handleSkip();
+          showToast("Skipped");
           break;
         case "ArrowLeft":
           handleReset();
+          showToast("Reset");
           break;
         case "ArrowUp":
           handleAdd();
+          showToast("Minute Added");
           break;
         case "ArrowDown":
           handleSubtract();
+          showToast("Minute Subtracted");
           break;
         default:
           break;
       }
+
+      // clear toastTime
+      return () => clearTimeout(toastTimeRef.current);
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -104,7 +132,8 @@ export default function Pomodoro() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [handleStart, handleSkip, handleReset, handleAdd, handleSubtract]);
+
+  }, [handleStart, handleSkip, handleReset, handleAdd, handleSubtract, toastOpen]);
 
 
 
@@ -209,24 +238,23 @@ export default function Pomodoro() {
         <button onClick={handleAdd}>+1</button>
 
       </div>
-      <form
-        style={{
-          fontSize: 13,
-          marginTop: 16,
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <input
-          name="sound"
-          type="checkbox"
-          checked={sound}
-          onChange={() => setSound(!sound)}
-        />
-        <label htmlFor="sound" style={{ marginLeft: 4, opacity: 0.5 }}>
-          Sound
-        </label>
+      <form style={{
+        fontSize: 13,
+        marginTop: 16,
+        display: 'flex',
+        alignItems: 'center',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <label className="Label" htmlFor="sound" style={{ opacity: 0.5, paddingRight: 16 }}>
+            Sound
+          </label>
+          <Switch.Root className="SwitchRoot" id="sound" onCheckedChange={() => setSound(!sound)}>
+            <Switch.Thumb className="SwitchThumb" />
+          </Switch.Root>
+        </div>
       </form>
+
+
       <NotificationControls notifEnabled={notifEnabled}
         setNotifEnabled={setNotifEnabled} />
       <div
@@ -243,6 +271,13 @@ export default function Pomodoro() {
         Start/Pause: space | Skip: ArrowRight <br />
         +1: ArrowLeft | -1: ArrowRight
       </div>
-    </div>
+
+      <Toast.Provider duration={1000} >
+        <Toast.Root className="ToastRoot" open={toastOpen} onOpenChange={setToastOpen}>
+          <Toast.Title>{toastContent}</Toast.Title>
+        </Toast.Root>
+        <Toast.Viewport />
+      </Toast.Provider>
+    </div >
   );
 }

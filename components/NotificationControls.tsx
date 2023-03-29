@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import * as Switch from '@radix-ui/react-switch';
 
 type NotificationControlsProps = {
   notifEnabled: boolean;
@@ -73,23 +74,41 @@ export default function NotificationControls({ notifEnabled, setNotifEnabled }: 
         </button>
       )}
       {notifPerm === 'granted' && (
-        <form
-          style={{
+        <div>
+          {/* <form
+            style={{
+              fontSize: 13,
+              marginTop: 16,
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+            <input
+              name="notifications"
+              type="checkbox"
+              checked={notifEnabled}
+              onChange={toggleNotifications}
+            />
+            <label htmlFor="notifications" style={{ marginLeft: 4, opacity: 0.5 }}>
+              Enable notifications
+            </label>
+          </form> */}
+
+          <form style={{
             fontSize: 13,
             marginTop: 16,
             display: 'flex',
             alignItems: 'center',
           }}>
-          <input
-            name="notifications"
-            type="checkbox"
-            checked={notifEnabled}
-            onChange={toggleNotifications}
-          />
-          <label htmlFor="notifications" style={{ marginLeft: 4, opacity: 0.5 }}>
-            Enable notifications
-          </label>
-        </form>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <label className="Label" htmlFor="notifications" style={{ paddingRight: 16, opacity: 0.5 }}>
+                Notifications
+              </label>
+              <Switch.Root className="SwitchRoot" id="sound" onCheckedChange={() => toggleNotifications}>
+                <Switch.Thumb className="SwitchThumb" />
+              </Switch.Root>
+            </div>
+          </form>
+        </div>
       )}
       {notifPerm === 'denied' && (
         <span style={{ fontSize: 12, opacity: 0.5 }}>
