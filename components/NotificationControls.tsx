@@ -103,7 +103,7 @@ export default function NotificationControls({ notifEnabled, setNotifEnabled }: 
               <label className="Label" htmlFor="notifications" style={{ paddingRight: 16, opacity: 0.5 }}>
                 Notifications
               </label>
-              <Switch.Root className="SwitchRoot" id="sound" onCheckedChange={() => toggleNotifications}>
+              <Switch.Root className="SwitchRoot" id="notifications" checked={notifEnabled} onCheckedChange={() => setNotifEnabled(!notifEnabled)}>
                 <Switch.Thumb className="SwitchThumb" />
               </Switch.Root>
             </div>
