@@ -104,7 +104,9 @@ a {
  position: absolute;
  bottom: 8px;
  right: 8px ;
-  background-color: #191724;
+  background-color: black;
+  color: white;
+  border: 1px solid gray;
   border-radius: 6px;
   padding: 15px;
   list-style: none;
