@@ -240,7 +240,7 @@ export default function Pomodoro() {
       </div>
       <form style={{
         fontSize: 13,
-        marginTop: 16,
+        marginTop: 44,
         display: 'flex',
         alignItems: 'center',
       }}>
