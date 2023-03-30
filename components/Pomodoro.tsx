@@ -248,7 +248,7 @@ export default function Pomodoro() {
           <label className="Label" htmlFor="sound" style={{ opacity: 0.5, paddingRight: 16 }}>
             Sound
           </label>
-          <Switch.Root className="SwitchRoot" id="sound" onCheckedChange={() => setSound(!sound)}>
+          <Switch.Root className="SwitchRoot" id="sound" checked={sound} onCheckedChange={() => setSound(!sound)}>
             <Switch.Thumb className="SwitchThumb" />
           </Switch.Root>
         </div>
