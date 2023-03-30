@@ -257,19 +257,20 @@ export default function Pomodoro() {
 
       <NotificationControls notifEnabled={notifEnabled}
         setNotifEnabled={setNotifEnabled} />
-      <div
+      {/* <div
         className="pmdrCount"
         style={{ fontSize: 12, opacity: 0.5, marginTop: 16 }}
       >
         running: {timerStart && 'yes'}
         {!timerStart && 'no'}, pmdrCount: {pmdrCount}
-      </div>
+      </div> */}
       <div
         className="shortcuts"
-        style={{ fontSize: 12, opacity: 0.5, marginTop: 16 }}
+        style={{ fontSize: 12, opacity: 0.5, marginTop: 48, lineHeight: 1.6 }}
       >
-        Start/Pause: space | Skip: ArrowRight <br />
-        +1: ArrowLeft | -1: ArrowRight
+        <h4 style={{ marginBottom: -8 }}>Keyboard shortcuts</h4>
+        <p>Start/Pause: space  <br />
+          Skip: → <br /> Add minute: ↑ <br /> Subtract minute: ↓</p>
       </div>
 
       <Toast.Provider duration={1000} >
