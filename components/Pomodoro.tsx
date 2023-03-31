@@ -319,8 +319,6 @@ export default function Pomodoro() {
           <span
             className="message"
             style={{
-              fontFamily: 'Inter',
-              fontStyle: 'normal',
               fontWeight: 400,
               fontSize: 13,
               /* identical to box height */
