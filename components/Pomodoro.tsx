@@ -241,9 +241,8 @@ export default function Pomodoro() {
       <form style={{
         fontSize: 13,
         marginTop: 44,
-        display: 'flex',
-        alignItems: 'center',
       }}>
+        <h4 style={{ fontSize: 12, opacity: 0.5 }}>Settings</h4>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <label className="Label" htmlFor="sound" style={{ opacity: 0.5, paddingRight: 16 }}>
             Sound
