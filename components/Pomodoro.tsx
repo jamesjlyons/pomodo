@@ -79,13 +79,13 @@ export default function Pomodoro() {
       console.log(event.code); // Add this line to log the events
 
       switch (event.code) {
-        case "Space":
+        case "Space" || "KeyP":
           handleStart();
           break;
-        case "ArrowRight":
+        case "ArrowRight" || "KeyS":
           handleSkip();
           break;
-        case "ArrowLeft":
+        case "ArrowLeft" || "KeyR":
           handleReset();
           break;
         case "ArrowUp":
