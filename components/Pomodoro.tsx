@@ -491,6 +491,7 @@ export default function Pomodoro() {
         <h4 style={{ marginBottom: -8 }}>Keyboard shortcuts</h4>
         <p>
           Start/Pause: space <br />
+          Reset: ← <br />
           Skip: → <br /> Add minute: ↑ <br /> Subtract minute: ↓
         </p>
       </div>
