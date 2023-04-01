@@ -101,11 +101,27 @@ export default function Pomodoro() {
             showToast('Timer Started');
           }
           break;
+        case 'KeyP':
+          handleStart();
+          if (timerRunning) {
+            showToast('Timer Paused');
+          } else {
+            showToast('Timer Started');
+          }
+          break;
         case 'ArrowRight':
           handleSkip();
           showToast('Skipped');
           break;
+        case 'KeyS':
+          handleSkip();
+          showToast('Skipped');
+          break;
         case 'ArrowLeft':
+          handleReset();
+          showToast('Reset');
+          break;
+        case 'KeyR':
           handleReset();
           showToast('Reset');
           break;
