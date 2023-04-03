@@ -48,7 +48,11 @@ export default function Pomodoro() {
   }
 
   const handleSkip = () => {
+    if (!timerRunning) {
+      timerWorkerRef.current?.postMessage({ action: 'skipPaused' });
+    } else {
       timerWorkerRef.current?.postMessage({ action: 'skip' });
+    }
   };
 
   const handleReset = () => {

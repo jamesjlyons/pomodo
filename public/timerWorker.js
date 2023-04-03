@@ -139,6 +139,42 @@ self.onmessage = (event) => {
         sessionType: sessionType,
       });
 
+      // timeoutId = setTimeout(() => {
+      //   tick(); // Call the tick function immediately
+      //   intervalId = setInterval(tick, 1000);
+      // }, 1000);
+      break;
+      case 'skipPaused':
+      clearInterval(intervalId);
+
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      if (sessionType === 'work') {
+        if ((pmdrCount + 1) % longBreakInterval === 0) {
+          sessionType = 'longBreak';
+          minutes = longBreak;
+          seconds = 0;
+        } else {
+          sessionType = 'shortBreak';
+          minutes = shortBreak;
+          seconds = 0;
+        }
+      } else if (sessionType === 'shortBreak' || sessionType === 'longBreak') {
+        sessionType = 'work';
+        minutes = pomodoro;
+        seconds = 0;
+      }
+      pmdrCount += 1;
+      postMessage({
+        type: 'tick',
+        minutes: minutes,
+        seconds: seconds,
+        pmdrCount: pmdrCount,
+        sessionType: sessionType,
+      });
+
       timeoutId = setTimeout(() => {
         tick(); // Call the tick function immediately
         intervalId = setInterval(tick, 1000);
