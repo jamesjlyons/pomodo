@@ -212,7 +212,7 @@ export default function Pomodoro() {
     timerWorkerRef.current = timerWorker;
     timerWorker.postMessage({
       action: 'init',
-      data: { minutes: timer.pomodoro, seconds: 0 },
+      data: { sessionType: sessionType, minutes: timer.pomodoro, seconds: 0 },
     });
 
     timerWorker.onmessage = (event) => {

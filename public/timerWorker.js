@@ -91,6 +91,7 @@ self.onmessage = (event) => {
   const { data } = event;
   switch (data.action) {
     case 'init':
+      sessionType = 'work';
       minutes = data.minutes;
       seconds = data.seconds;
       break;
@@ -139,18 +140,12 @@ self.onmessage = (event) => {
         sessionType: sessionType,
       });
 
-      // timeoutId = setTimeout(() => {
-      //   tick(); // Call the tick function immediately
-      //   intervalId = setInterval(tick, 1000);
-      // }, 1000);
+      timeoutId = setTimeout(() => {
+        tick(); // Call the tick function immediately
+        intervalId = setInterval(tick, 1000);
+      }, 1000);
       break;
-      case 'skipPaused':
-      clearInterval(intervalId);
-
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-
+    case 'skipPaused':
       if (sessionType === 'work') {
         if ((pmdrCount + 1) % longBreakInterval === 0) {
           sessionType = 'longBreak';
@@ -174,11 +169,6 @@ self.onmessage = (event) => {
         pmdrCount: pmdrCount,
         sessionType: sessionType,
       });
-
-      timeoutId = setTimeout(() => {
-        tick(); // Call the tick function immediately
-        intervalId = setInterval(tick, 1000);
-      }, 1000);
       break;
     case 'add':
       addMinute();
