@@ -93,14 +93,9 @@ export default function NotificationControls({ notifEnabled, setNotifEnabled }: 
             </label>
           </form> */}
 
-          <form style={{
-            fontSize: 13,
-            marginTop: 16,
-            display: 'flex',
-            alignItems: 'center',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <label className="Label" htmlFor="notifications" style={{ paddingRight: 16, opacity: 0.5 }}>
+          <form>
+            <div>
+              <label className="Label" htmlFor="notifications">
                 Notifications
               </label>
               <Switch.Root className="SwitchRoot" id="notifications" checked={notifEnabled} onCheckedChange={() => setNotifEnabled(!notifEnabled)}>
@@ -111,12 +106,12 @@ export default function NotificationControls({ notifEnabled, setNotifEnabled }: 
         </div>
       )}
       {notifPerm === 'denied' && (
-        <span style={{ fontSize: 12, opacity: 0.5 }}>
+        <span>
           Notifications are disabled
         </span>
       )}
       {notifPerm === 'not supported' && (
-        <span style={{ fontSize: 12, opacity: 0.5 }}>
+        <span>
           Notifications are not supported in this browser
         </span>
       )}

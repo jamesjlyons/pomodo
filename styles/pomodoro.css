@@ -51,6 +51,10 @@
 /* media query screen size under 450px */
 @media (max-width: 450px) {
   .container-inner {
-    width:  90vw;
+    min-width:  90vw;
   }
+
+  .time {
+    gap: 16px;
+  }  
 }
