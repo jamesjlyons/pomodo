@@ -93,6 +93,26 @@ export default function Pomodoro() {
     }, 100);
   };
 
+  const updateDials = (pmdrCount: number, progress: number) => {
+    if (pmdrCount % timer.longBreakInterval === 0) {
+      for (let i = 1; i <= 4; i++) {
+        const dial = document.getElementById(`dial${i}`);
+        if (dial) {
+          dial.setAttribute('data-active', 'false');
+          dial.style.background = `conic-gradient(var(--gray3) 0%, var(--gray3) 100%)`;
+        }
+      }
+    } else {
+      const dialIndex = Math.ceil(pmdrCount / 2);
+      const dial = document.getElementById(`dial${dialIndex}`);
+
+      if (dial) {
+        dial.setAttribute('data-active', 'true');
+        dial.style.background = `conic-gradient(hsl(129deg, 66%, 47%, 1) ${progress}%, hsl(129deg, 66%, 47%, 0) ${progress}%)`;
+      }
+    }
+  };
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       console.log(event.code); // Add this line to log the events
@@ -228,6 +248,14 @@ export default function Pomodoro() {
         setTimerRunning(false);
         setpmdrCount(1);
       }
+      if (event.data.type === 'tick' && event.data.sessionType === 'work') {
+        const progress =
+          100 -
+          ((event.data.minutes * 60 + event.data.seconds) /
+            (timer.pomodoro * 60)) *
+            100;
+        updateDials(event.data.pmdrCount, progress);
+      }
     };
 
     // Clean up the timerWorker when the component is unmounted
@@ -242,14 +270,10 @@ export default function Pomodoro() {
 
   return (
     <div className="pomodoro">
-      <div
-        className="container-outer"
-      >
-        <div
-          className="container-inner"
-        >
+      <div className="container-outer">
+        <div className="container-inner">
           <div className="session">
-            <div className='time'>
+            <div className="time">
               <IconButton
                 onClick={handleSubtract}
                 disabled={minutes === 0 ? true : false}
@@ -400,6 +424,13 @@ export default function Pomodoro() {
             />
           </div>
         </div>
+      </div>
+
+      <div className="dials-container">
+        <div className="dial" id="dial1"></div>
+        <div className="dial" id="dial2"></div>
+        <div className="dial" id="dial3"></div>
+        <div className="dial" id="dial4"></div>
       </div>
 
       <form>

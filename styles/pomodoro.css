@@ -7,7 +7,7 @@
 .container-inner {
   border: 1px solid var(--gray3);
   border-radius: 24px;
-  min-width:  430px;
+  min-width: 430px;
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -40,7 +40,7 @@
   color: var(--gray12);
 }
 
-.message{
+.message {
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
@@ -48,13 +48,37 @@
   color: var(--gray9);
 }
 
+.dials-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  display: flex;
+  margin-top: 40px;
+}
+
+.dial {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: conic-gradient(var(--gray3) 0%, var(--gray3) 100%);
+}
+
+.dial[data-active='true'] {
+  background: conic-gradient(
+    hsl(129deg, 66%, 47%, 1) 0%,
+    hsl(129deg, 66%, 47%, 0)
+  );
+  box-shadow: 0px 0px 8px 3px rgba(72, 212, 94, 0.25);
+  border: 1px solid #48d45e;
+}
+
 /* media query screen size under 450px */
 @media (max-width: 450px) {
   .container-inner {
-    min-width:  90vw;
+    min-width: 90vw;
   }
 
   .time {
     gap: 16px;
-  }  
+  }
 }
