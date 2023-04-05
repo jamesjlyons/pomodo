@@ -8,8 +8,12 @@ const nextConfig = {
   },
 };
 
-module.exports = {
+const withPWA = require('next-pwa')({
+  dest: 'public'
+})
+
+module.exports = withPWA({
   experimental: {
     nextScriptWorkers: true,
   },
-};
+});
