@@ -5,6 +5,7 @@
   justify-content: space-between;
   place-items: center;
   height: 96vh;
+  height: 100dvh;
   padding-top: 25vh;
 }
 
@@ -88,8 +89,8 @@
   padding: 4px 16px 4px 8px;
   gap: 5px;
 
-  background: var(--gray4);
-  color: var(--gray10);
+  background: var(--gray1);
+  color: var(--gray9);
   border: none;
   border-radius: 24px;
   font-size: 16px;
