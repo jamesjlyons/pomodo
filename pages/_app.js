@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import { Inter } from 'next/font/google'
-const inter = Inter({ subsets: ['latin'] })
 import '../styles/globals.css';
 
 function printAsciiArt() {
@@ -18,9 +16,5 @@ export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     printAsciiArt();
   }, []);
-  return (
-    <main className={inter.className}>
-      <Component {...pageProps} />
-    </main>
-  )
+  return <Component {...pageProps} />;
 }
