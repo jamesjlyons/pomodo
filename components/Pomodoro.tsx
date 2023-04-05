@@ -27,6 +27,7 @@ export default function Pomodoro() {
   const [timerRunning, setTimerRunning] = useState(false);
   const [sound, setSound] = useState(true);
   const [prevSessionType, setPrevSessionType] = useState('work');
+  const [newSession, setNewSession] = useState(true);
   const [notifEnabled, setNotifEnabled] = useState<boolean>(false);
   const [toastContent, setToastContent] = useState('');
   const [toastOpen, setToastOpen] = useState(false);
@@ -42,6 +43,10 @@ export default function Pomodoro() {
         minutes: minutes,
         seconds: seconds,
       });
+      if (newSession) {
+        // update dial styles immediately on new session. This is to prevent the first dial not showing in progress until the first 'tick' is recieved from the worker a second later.
+        updateDials(pmdrCount, 0);
+      }
     } else {
       setTimerRunning(false);
       timerWorkerRef.current?.postMessage({ action: 'pause' });
@@ -259,6 +264,7 @@ export default function Pomodoro() {
         setSeconds(event.data.seconds);
         setpmdrCount(event.data.pmdrCount);
         setSessionType(event.data.sessionType);
+        setNewSession(event.data.newSession);
         setTotalPomodoros(event.data.totalPomodoros);
       } else if (event.data.type === 'reset') {
         setMinutes(timer.pomodoro);
@@ -266,6 +272,7 @@ export default function Pomodoro() {
         setTimerRunning(false);
         setpmdrCount(1);
         setTotalPomodoros(event.data.totalPomodoros);
+        setNewSession(event.data.newSession);
         resetDials();
       }
       if (event.data.type === 'tick' && event.data.sessionType === 'work') {
