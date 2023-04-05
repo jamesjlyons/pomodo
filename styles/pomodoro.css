@@ -72,6 +72,7 @@
   height: 12px;
   border-radius: 50%;
   background: conic-gradient(var(--gray3) 0%, var(--gray3) 100%);
+  transition: border 0.15s ease-out, box-shadow 0.15s ease-out;
 }
 
 .dial[data-active='true'] {
