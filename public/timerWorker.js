@@ -4,6 +4,8 @@ let minutes;
 let seconds;
 let sessionType;
 let timeoutId;
+let newSession;
+let totalPomodoros = 0;
 
 // Timer configurations
 const pomodoro = 25;
@@ -78,12 +80,17 @@ const tick = () => {
     sessionType = 'work';
   }
 
+  const progress =
+    ((pomodoro * 60 - (minutes * 60 + seconds)) / (pomodoro * 60)) * 100;
+
   self.postMessage({
     type: 'tick',
     minutes,
     seconds,
     pmdrCount,
     sessionType,
+    progress,
+    totalPomodoros,
   });
 };
 
@@ -131,13 +138,23 @@ self.onmessage = (event) => {
         minutes = pomodoro;
         seconds = 0;
       }
-      pmdrCount += 1;
+      // if pmdrCount is larger than 8, reset it to 1
+      if (pmdrCount === 8) {
+        pmdrCount = 1;
+        newSession = true;
+        totalPomodoros += 1;
+      } else {
+        pmdrCount += 1;
+        newSession = false;
+      }
       postMessage({
         type: 'tick',
         minutes: minutes,
         seconds: seconds,
         pmdrCount: pmdrCount,
         sessionType: sessionType,
+        newSession: newSession,
+        totalPomodoros: totalPomodoros,
       });
 
       timeoutId = setTimeout(() => {
@@ -161,13 +178,22 @@ self.onmessage = (event) => {
         minutes = pomodoro;
         seconds = 0;
       }
-      pmdrCount += 1;
+      if (pmdrCount === 8) {
+        pmdrCount = 1;
+        newSession = true;
+        totalPomodoros += 1;
+      } else {
+        pmdrCount += 1;
+        newSession = false;
+      }
       postMessage({
         type: 'tick',
         minutes: minutes,
         seconds: seconds,
         pmdrCount: pmdrCount,
         sessionType: sessionType,
+        newSession: newSession,
+        totalPomodoros: totalPomodoros,
       });
       break;
     case 'add':

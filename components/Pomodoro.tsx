@@ -22,6 +22,7 @@ export default function Pomodoro() {
   const [minutes, setMinutes] = useState(timer.pomodoro);
   const [seconds, setSeconds] = useState(0);
   const [pmdrCount, setpmdrCount] = useState(1);
+  const [totalPomodoros, setTotalPomodoros] = useState(0);
   const [sessionType, setSessionType] = useState('work');
   const [timerRunning, setTimerRunning] = useState(false);
   const [sound, setSound] = useState(true);
@@ -258,11 +259,13 @@ export default function Pomodoro() {
         setSeconds(event.data.seconds);
         setpmdrCount(event.data.pmdrCount);
         setSessionType(event.data.sessionType);
+        setTotalPomodoros(event.data.totalPomodoros);
       } else if (event.data.type === 'reset') {
         setMinutes(timer.pomodoro);
         setSeconds(0);
         setTimerRunning(false);
         setpmdrCount(1);
+        setTotalPomodoros(event.data.totalPomodoros);
         resetDials();
       }
       if (event.data.type === 'tick' && event.data.sessionType === 'work') {
@@ -272,6 +275,9 @@ export default function Pomodoro() {
             (timer.pomodoro * 60)) *
             100;
         updateDials(event.data.pmdrCount, progress);
+      }
+      if (event.data.newSession) {
+        resetDials();
       }
     };
 
@@ -471,13 +477,7 @@ export default function Pomodoro() {
         notifEnabled={notifEnabled}
         setNotifEnabled={setNotifEnabled}
       />
-      {/* <div
-        className="pmdrCount"
-        style={{ fontSize: 12, opacity: 0.5, marginTop: 16 }}
-      >
-        running: {timerRunning && 'yes'}
-        {!timerRunning && 'no'}, pmdrCount: {pmdrCount}
-      </div> */}
+
       <div className="shortcuts">
         <h4>Keyboard shortcuts</h4>
         <p>
@@ -485,6 +485,15 @@ export default function Pomodoro() {
           Reset: ← <br />
           Skip: → <br /> Add minute: ↑ <br /> Subtract minute: ↓
         </p>
+      </div>
+
+      <div
+        className="pmdrCount"
+        style={{ fontSize: 12, opacity: 0.5, marginTop: 16 }}
+      >
+        running: {timerRunning && 'yes'}
+        {!timerRunning && 'no'}, <br /> pmdrCount: {pmdrCount} <br />
+        total pomodoros: {totalPomodoros}
       </div>
 
       <Toast.Provider duration={1000}>
