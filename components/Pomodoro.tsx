@@ -94,7 +94,13 @@ export default function Pomodoro() {
   };
 
   const updateDials = (pmdrCount: number, progress: number) => {
-    if (pmdrCount % timer.longBreakInterval === 0) {
+    if (
+      // This code checks if the pmdrCount is a multiple of the longBreakInterval.
+      // If it is a multiple, it will return true.
+      // This is used to determine if the user has completed the long break interval.
+      pmdrCount % timer.longBreakInterval ===
+      0
+    ) {
       for (let i = 1; i <= 4; i++) {
         const dial = document.getElementById(`dial${i}`);
         if (dial) {
@@ -109,6 +115,16 @@ export default function Pomodoro() {
       if (dial) {
         dial.setAttribute('data-active', 'true');
         dial.style.background = `conic-gradient(hsl(129deg, 66%, 47%, 1) ${progress}%, hsl(129deg, 66%, 47%, 0) ${progress}%)`;
+      }
+    }
+  };
+
+  const resetDials = () => {
+    for (let i = 1; i <= 4; i++) {
+      const dial = document.getElementById(`dial${i}`);
+      if (dial) {
+        dial.setAttribute('data-active', 'false');
+        dial.style.background = `conic-gradient(var(--gray3) 0%, var(--gray3) 100%)`;
       }
     }
   };
@@ -247,6 +263,7 @@ export default function Pomodoro() {
         setSeconds(0);
         setTimerRunning(false);
         setpmdrCount(1);
+        resetDials();
       }
       if (event.data.type === 'tick' && event.data.sessionType === 'work') {
         const progress =
