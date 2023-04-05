@@ -88,6 +88,7 @@
   align-items: center;
   padding: 4px 16px 4px 8px;
   gap: 5px;
+  margin-bottom: 48px;
 
   background: var(--gray1);
   color: var(--gray9);
@@ -109,5 +110,9 @@
 
   .time {
     gap: 16px;
+  }
+
+  .settingsButton {
+    margin-bottom: 24px;
   }
 }
