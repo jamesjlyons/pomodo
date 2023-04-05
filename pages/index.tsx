@@ -19,9 +19,6 @@ function HomePage() {
         <meta name="description" content="⏲️" />
         <link rel="icon" href="/favicon.ico" />
 
-        <link rel="preconnect" href="https://rsms.me/" />
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-
         <meta name="application-name" content="Pomodo" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
