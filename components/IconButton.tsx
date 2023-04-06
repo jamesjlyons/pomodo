@@ -31,7 +31,7 @@ const IconButton: React.FC<IconButtonProps> = ({
         cursor: disabled ? 'not-allowed' : 'pointer',
         padding: 8,
         opacity: disabled ? 0.5 : 1,
-          color: unset,
+          color: 'unset',
       }}
       disabled={disabled}
     >
