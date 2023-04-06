@@ -121,7 +121,7 @@ export default function Pomodoro() {
 
       if (dial) {
         dial.setAttribute('data-active', 'true');
-        dial.style.background = `conic-gradient(hsl(129deg, 66%, 47%, 1) ${progress}%, hsl(129deg, 66%, 47%, 0) ${progress}%)`;
+        dial.style.background = `conic-gradient(var(--gray100) ${progress}%, var(--grayA0) ${progress}%)`;
       }
     }
   };
