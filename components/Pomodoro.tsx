@@ -295,6 +295,28 @@ export default function Pomodoro() {
     };
   }, []); // Remove 'seconds' and 'timerRunning' from the dependency array
 
+  useEffect(() => {
+    // update container on while timer is running
+    const container = document.getElementById('container');
+    if (timerRunning) {
+      if (container) {
+        // if (sessionType === 'work') {
+        //   container.style.background = 'var(--gray100)';
+        // } else if (sessionType === 'shortBreak') {
+        //   container.style.background = 'var(--green100)';
+        // } else if (sessionType === 'longBreak') {
+        //   container.style.background = 'var(--blue100)';
+        // }
+
+        container.classList.add('active');
+      }
+    } else {
+      if (container) {
+        container.classList.remove('active');
+      }
+    }
+  }, [timerRunning]);
+
   //   add 0 to minutes and seconds if less than 10
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -302,7 +324,7 @@ export default function Pomodoro() {
   return (
     <div className="pomodoro">
       <div className="top">
-        <div className="container-outer">
+        <div className="container-outer" id="container">
           <div className="container-inner">
             <div className="session">
               <div className="time">
