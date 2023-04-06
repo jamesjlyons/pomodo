@@ -72,13 +72,17 @@
   height: 12px;
   border-radius: 50%;
   background: conic-gradient(var(--gray3) 0%, var(--gray3) 100%);
-  transition: border 0.15s ease-out, box-shadow 0.15s ease-out;
+  scale: 1;
+  transition: border 0.15s ease-out, box-shadow 0.15s ease-out,
+    scale 0.15s ease-out;
+  will-change: border, box-shadow, scale;
 }
 
 .dial[data-active='true'] {
   background: conic-gradient(var(--gray100) 0%, var(--grayA0));
   box-shadow: 0px 0px 8px 3px var(--glow);
   border: 1px solid var(--gray100);
+  scale: 1.1;
 }
 
 .settingsButton {
