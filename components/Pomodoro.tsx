@@ -488,6 +488,42 @@ export default function Pomodoro() {
         </div>
       </div>
 
+      {settingsOpen && (
+        <div className="settings">
+          <div>
+            <form>
+              <div className="switch">
+                <label className="Label" htmlFor="sound">
+                  Sound
+                </label>
+                <Switch.Root
+                  className="SwitchRoot"
+                  id="sound"
+                  checked={sound}
+                  onCheckedChange={() => setSound(!sound)}
+                >
+                  <Switch.Thumb className="SwitchThumb" />
+                </Switch.Root>
+              </div>
+            </form>
+
+            <NotificationControls
+              notifEnabled={notifEnabled}
+              setNotifEnabled={setNotifEnabled}
+            />
+          </div>
+
+          <div className="shortcuts">
+            <h4>Keyboard shortcuts</h4>
+            <p>
+              Start/Pause: space <br />
+              Reset: ← <br />
+              Skip: → <br /> Add minute: ↑ <br /> Subtract minute: ↓
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="bottom">
         <button
           className="settingsButton"
@@ -511,41 +547,6 @@ export default function Pomodoro() {
           </svg>
           Settings
         </button>
-
-        {settingsOpen && (
-          <div>
-            <h4>Settings</h4>
-            <form>
-              <div>
-                <label className="Label" htmlFor="sound">
-                  Sound
-                </label>
-                <Switch.Root
-                  className="SwitchRoot"
-                  id="sound"
-                  checked={sound}
-                  onCheckedChange={() => setSound(!sound)}
-                >
-                  <Switch.Thumb className="SwitchThumb" />
-                </Switch.Root>
-              </div>
-            </form>
-
-            <NotificationControls
-              notifEnabled={notifEnabled}
-              setNotifEnabled={setNotifEnabled}
-            />
-
-            <div className="shortcuts">
-              <h4>Keyboard shortcuts</h4>
-              <p>
-                Start/Pause: space <br />
-                Reset: ← <br />
-                Skip: → <br /> Add minute: ↑ <br /> Subtract minute: ↓
-              </p>
-            </div>
-          </div>
-        )}
 
         {/* <div
         className="pmdrCount"

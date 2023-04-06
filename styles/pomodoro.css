@@ -151,6 +151,31 @@
   border-radius: 24px;
   font-size: 16px;
   font-weight: 400;
+  cursor: pointer;
+}
+
+.settings {
+  color: var(--gray11);
+  background-color: var(--grayA3);
+  border: 1px solid var(--grayA4);
+  backdrop-filter: blur(10px);
+  padding: 16px;
+  border-radius: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  position: fixed;
+  bottom: 88px;
+}
+
+.shortcuts > h4 {
+  margin: 0;
+}
+
+.switch {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 /* media query screen size under 450px */

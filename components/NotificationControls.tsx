@@ -6,7 +6,10 @@ type NotificationControlsProps = {
   setNotifEnabled: (enabled: boolean) => void;
 };
 
-export default function NotificationControls({ notifEnabled, setNotifEnabled }: NotificationControlsProps) {
+export default function NotificationControls({
+  notifEnabled,
+  setNotifEnabled,
+}: NotificationControlsProps) {
   const [notifPerm, setNotifPerm] = useState('unknown');
 
   function setNotifPermState(value: string) {
@@ -94,26 +97,25 @@ export default function NotificationControls({ notifEnabled, setNotifEnabled }: 
           </form> */}
 
           <form>
-            <div>
+            <div className="switch">
               <label className="Label" htmlFor="notifications">
                 Notifications
               </label>
-              <Switch.Root className="SwitchRoot" id="notifications" checked={notifEnabled} onCheckedChange={() => setNotifEnabled(!notifEnabled)}>
+              <Switch.Root
+                className="SwitchRoot"
+                id="notifications"
+                checked={notifEnabled}
+                onCheckedChange={() => setNotifEnabled(!notifEnabled)}
+              >
                 <Switch.Thumb className="SwitchThumb" />
               </Switch.Root>
             </div>
           </form>
         </div>
       )}
-      {notifPerm === 'denied' && (
-        <span>
-          Notifications are disabled
-        </span>
-      )}
+      {notifPerm === 'denied' && <span>Notifications are disabled</span>}
       {notifPerm === 'not supported' && (
-        <span>
-          Notifications are not supported in this browser
-        </span>
+        <span>Notifications are not supported in this browser</span>
       )}
     </div>
   );
