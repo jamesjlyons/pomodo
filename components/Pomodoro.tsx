@@ -328,10 +328,38 @@ export default function Pomodoro() {
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
+  //framer
+  const dialRow = {
+    visible: {
+      opacity: 1,
+      transition: {
+        when: 'beforeChildren',
+        staggerChildren: 0.1,
+      },
+    },
+    hidden: {
+      opacity: 0,
+      transition: {
+        when: 'afterChildren',
+      },
+    },
+  };
+
+  const dialItems = {
+    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: 8 },
+  };
+
   return (
     <div className="pomodoro">
       <div className="top">
-        <div className="container-outer" id="container">
+        <motion.div
+          className="container-outer"
+          id="container"
+          initial={{ opacity: 0, scale: 0.97, y: 16 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+        >
           <div className="container-inner">
             <div className="session">
               <div className="time">
@@ -485,14 +513,35 @@ export default function Pomodoro() {
               />
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="dials-container">
-          <div className="dial" id="dial1"></div>
-          <div className="dial" id="dial2"></div>
-          <div className="dial" id="dial3"></div>
-          <div className="dial" id="dial4"></div>
-        </div>
+        <motion.div
+          className="dials-container"
+          initial="hidden"
+          animate="visible"
+          variants={dialRow}
+        >
+          <motion.div
+            className="dial"
+            id="dial1"
+            variants={dialItems}
+          ></motion.div>
+          <motion.div
+            className="dial"
+            id="dial2"
+            variants={dialItems}
+          ></motion.div>
+          <motion.div
+            className="dial"
+            id="dial3"
+            variants={dialItems}
+          ></motion.div>
+          <motion.div
+            className="dial"
+            id="dial4"
+            variants={dialItems}
+          ></motion.div>
+        </motion.div>
       </div>
       <AnimatePresence>
         {settingsOpen && (
@@ -543,6 +592,9 @@ export default function Pomodoro() {
           onClick={() => setSettingsOpen(!settingsOpen)}
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.9 }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
         >
           <svg
             width="24"
