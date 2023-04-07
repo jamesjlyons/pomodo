@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import NotificationControls from 'components/NotificationControls';
 import * as Switch from '@radix-ui/react-switch';
 import * as Toast from '@radix-ui/react-toast';
@@ -494,42 +494,48 @@ export default function Pomodoro() {
           <div className="dial" id="dial4"></div>
         </div>
       </div>
+      <AnimatePresence>
+        {settingsOpen && (
+          <motion.div
+            className="settings"
+            initial={{ y: 16, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 16, opacity: 0 }}
+          >
+            <div>
+              <form>
+                <div className="switch">
+                  <label className="Label" htmlFor="sound">
+                    Sound
+                  </label>
+                  <Switch.Root
+                    className="SwitchRoot"
+                    id="sound"
+                    checked={sound}
+                    onCheckedChange={() => setSound(!sound)}
+                  >
+                    <Switch.Thumb className="SwitchThumb" />
+                  </Switch.Root>
+                </div>
+              </form>
 
-      {settingsOpen && (
-        <div className="settings">
-          <div>
-            <form>
-              <div className="switch">
-                <label className="Label" htmlFor="sound">
-                  Sound
-                </label>
-                <Switch.Root
-                  className="SwitchRoot"
-                  id="sound"
-                  checked={sound}
-                  onCheckedChange={() => setSound(!sound)}
-                >
-                  <Switch.Thumb className="SwitchThumb" />
-                </Switch.Root>
-              </div>
-            </form>
+              <NotificationControls
+                notifEnabled={notifEnabled}
+                setNotifEnabled={setNotifEnabled}
+              />
+            </div>
 
-            <NotificationControls
-              notifEnabled={notifEnabled}
-              setNotifEnabled={setNotifEnabled}
-            />
-          </div>
-
-          <div className="shortcuts">
-            <h4>Keyboard shortcuts</h4>
-            <p>
-              Start/Pause: space <br />
-              Reset: ← <br />
-              Skip: → <br /> Add minute: ↑ <br /> Subtract minute: ↓
-            </p>
-          </div>
-        </div>
-      )}
+            <div className="shortcuts">
+              <h4>Keyboard shortcuts</h4>
+              <p>
+                Start/Pause: space <br />
+                Reset: ← <br />
+                Skip: → <br /> Add minute: ↑ <br /> Subtract minute: ↓
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="bottom">
         <motion.button
