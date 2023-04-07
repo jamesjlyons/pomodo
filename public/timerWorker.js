@@ -113,8 +113,8 @@ self.onmessage = (event) => {
     case 'reset':
       clearInterval(intervalId);
       resetTimer();
-      self.postMessage({ type: 'reset' });
-      console.log('reset received'); // Add this line
+      self.postMessage({ type: 'reset', newSession: true });
+
       break;
     case 'skip':
       clearInterval(intervalId);

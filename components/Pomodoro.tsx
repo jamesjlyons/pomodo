@@ -64,6 +64,7 @@ export default function Pomodoro() {
 
   const handleReset = () => {
     timerWorkerRef.current?.postMessage({ action: 'reset' });
+    console.log('reset');
   };
 
   const handleSubtract = () => {
