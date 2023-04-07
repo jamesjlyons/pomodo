@@ -57,6 +57,11 @@ export default function Pomodoro() {
   const handleSkip = () => {
     if (!timerRunning) {
       timerWorkerRef.current?.postMessage({ action: 'skipPaused' });
+      if (sessionType === 'work') {
+        const progress =
+          100 - ((minutes * 60 + seconds) / (timer.pomodoro * 60)) * 100;
+        updateDials(pmdrCount, progress);
+      }
     } else {
       timerWorkerRef.current?.postMessage({ action: 'skip' });
     }
