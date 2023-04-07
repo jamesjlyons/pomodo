@@ -69,7 +69,6 @@ export default function Pomodoro() {
 
   const handleReset = () => {
     timerWorkerRef.current?.postMessage({ action: 'reset' });
-    console.log('reset');
   };
 
   const handleSubtract = () => {
@@ -148,6 +147,7 @@ export default function Pomodoro() {
 
       switch (event.code) {
         case 'Space':
+          event.preventDefault();
           handleStart();
           if (timerRunning) {
             showToast('Timer Paused');
