@@ -160,18 +160,25 @@
   background-color: var(--grayA3);
   border: 1px solid var(--grayA4);
   backdrop-filter: blur(10px);
-  padding: 16px;
+  padding: 16px 20px;
   border-radius: 24px;
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 32px;
   position: fixed;
   bottom: 88px;
   z-index: 5;
 }
 
-.shortcuts > h4 {
+.shortcuts > h4,
+.soundAndNotif > h4 {
   margin: 0;
+}
+
+.soundAndNotif {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .switch {

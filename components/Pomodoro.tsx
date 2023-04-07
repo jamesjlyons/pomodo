@@ -551,7 +551,8 @@ export default function Pomodoro() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 16, opacity: 0 }}
           >
-            <div>
+            <div className="soundAndNotif">
+              <h4>Sound/Notifications</h4>
               <form>
                 <div className="switch">
                   <label className="Label" htmlFor="sound">
@@ -594,7 +595,7 @@ export default function Pomodoro() {
           whileTap={{ scale: 0.9 }}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          // transition={{ duration: 0.5, delay: 0.5 }}
         >
           <svg
             width="24"

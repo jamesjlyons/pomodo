@@ -113,9 +113,9 @@ a {
   position: absolute;
   bottom: 8px;
   right: 8px;
-  background-color: black;
-  color: white;
-  border: 1px solid gray;
+  background-color: var(--gray1);
+  color: var(--gray12);
+  border: 1px solid var(--gray3);
   border-radius: 6px;
   padding: 15px;
   list-style: none;
