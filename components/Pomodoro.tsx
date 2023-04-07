@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
+import { motion } from 'framer-motion';
 import NotificationControls from 'components/NotificationControls';
 import * as Switch from '@radix-ui/react-switch';
 import * as Toast from '@radix-ui/react-toast';
@@ -531,9 +532,11 @@ export default function Pomodoro() {
       )}
 
       <div className="bottom">
-        <button
+        <motion.button
           className="settingsButton"
           onClick={() => setSettingsOpen(!settingsOpen)}
+          whileHover={{ scale: 1.01 }}
+          whileTap={{ scale: 0.9 }}
         >
           <svg
             width="24"
@@ -552,7 +555,7 @@ export default function Pomodoro() {
             </g>
           </svg>
           Settings
-        </button>
+        </motion.button>
 
         {/* <div
         className="pmdrCount"
