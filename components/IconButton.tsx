@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 type IconButtonProps = {
   onClick: () => void;
@@ -16,7 +17,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   disabled = false,
 }) => {
   return (
-    <button
+    <motion.button
       type="button"
       onClick={onClick}
       title={title}
@@ -31,12 +32,14 @@ const IconButton: React.FC<IconButtonProps> = ({
         cursor: disabled ? 'not-allowed' : 'pointer',
         padding: 8,
         opacity: disabled ? 0.5 : 1,
-          color: 'unset',
+        color: 'unset',
       }}
       disabled={disabled}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
     >
       {icon}
-    </button>
+    </motion.button>
   );
 };
 
