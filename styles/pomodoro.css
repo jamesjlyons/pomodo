@@ -11,8 +11,8 @@
 
 .container-outer {
   border: 1px solid var(--gray2);
-  padding: 8px;
-  border-radius: 32px;
+  padding: 4px;
+  border-radius: 28px;
   background-color: var(--grayA1);
   -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
 }
