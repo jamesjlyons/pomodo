@@ -34,6 +34,8 @@ export default function Pomodoro() {
   const [toastOpen, setToastOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [brownNoise, setBrownNoise] = useState(false);
+  const [bnVolume, setBnVolume] = useState(-20); // The initial volume in decibels
+  const noiseVolume = useRef<Tone.Volume | null>(null);
 
   const timerWorkerRef = useRef<Worker | null>();
   const toastTimeRef = useRef(0);
@@ -326,7 +328,9 @@ export default function Pomodoro() {
   }, [timerRunning]);
 
   useEffect(() => {
-    const noise = new Tone.Noise('brown').toDestination();
+    const noise = new Tone.Noise('brown');
+    noiseVolume.current = new Tone.Volume(bnVolume).toDestination();
+    noise.connect(noiseVolume.current);
 
     async function startNoise() {
       await Tone.start();
@@ -342,7 +346,15 @@ export default function Pomodoro() {
     return () => {
       noise.stop();
     };
-  }, [brownNoise]);
+  }, [brownNoise, noiseVolume]);
+
+  function handleVolumeChange(event: { target: { value: string } }) {
+    const newVolume = parseFloat(event.target.value);
+    setBnVolume(newVolume);
+    if (noiseVolume.current) {
+      noiseVolume.current.volume.value = newVolume;
+    }
+  }
 
   //   add 0 to minutes and seconds if less than 10
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
@@ -599,6 +611,18 @@ export default function Pomodoro() {
                   >
                     <Switch.Thumb className="SwitchThumb" />
                   </Switch.Root>
+                </div>
+                <div className="volume-control">
+                  <label htmlFor="volume">Volume</label>
+                  <input
+                    type="range"
+                    id="volume"
+                    min="-60"
+                    max="0"
+                    step="1"
+                    value={bnVolume}
+                    onChange={handleVolumeChange}
+                  />
                 </div>
               </form>
 
