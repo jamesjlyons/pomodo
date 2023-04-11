@@ -33,6 +33,7 @@ export default function Pomodoro() {
   const [toastContent, setToastContent] = useState('');
   const [toastOpen, setToastOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [brownNoise, setBrownNoise] = useState(false);
 
   const timerWorkerRef = useRef<Worker | null>();
   const toastTimeRef = useRef(0);
@@ -324,6 +325,25 @@ export default function Pomodoro() {
     }
   }, [timerRunning]);
 
+  useEffect(() => {
+    const noise = new Tone.Noise('brown').toDestination();
+
+    async function startNoise() {
+      await Tone.start();
+      noise.start();
+    }
+
+    if (brownNoise) {
+      startNoise();
+    } else {
+      noise.stop();
+    }
+
+    return () => {
+      noise.stop();
+    };
+  }, [brownNoise]);
+
   //   add 0 to minutes and seconds if less than 10
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -563,6 +583,19 @@ export default function Pomodoro() {
                     id="sound"
                     checked={sound}
                     onCheckedChange={() => setSound(!sound)}
+                  >
+                    <Switch.Thumb className="SwitchThumb" />
+                  </Switch.Root>
+                </div>
+                <div className="switch">
+                  <label className="Label" htmlFor="brown">
+                    Brown Noise
+                  </label>
+                  <Switch.Root
+                    className="SwitchRoot"
+                    id="sound"
+                    checked={brownNoise}
+                    onCheckedChange={() => setBrownNoise(!brownNoise)}
                   >
                     <Switch.Thumb className="SwitchThumb" />
                   </Switch.Root>
