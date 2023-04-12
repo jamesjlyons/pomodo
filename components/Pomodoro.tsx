@@ -6,6 +6,7 @@ import NotificationControls from 'components/NotificationControls';
 import * as Switch from '@radix-ui/react-switch';
 import * as Toast from '@radix-ui/react-toast';
 import * as Slider from '@radix-ui/react-slider';
+import * as Popover from '@radix-ui/react-popover';
 import * as Accordion from '@radix-ui/react-accordion';
 import IconButton from './IconButton';
 
@@ -575,112 +576,120 @@ export default function Pomodoro() {
           ></motion.div>
         </motion.div>
       </div>
-      <AnimatePresence>
-        {settingsOpen && (
-          <motion.div
-            className="settings"
-            initial={{ y: 16, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 16, opacity: 0 }}
-          >
-            <div className="soundAndNotif">
-              <h4>Sound/Notifications</h4>
-              <form>
-                <div className="switch">
-                  <label className="Label" htmlFor="sound">
-                    Notification Sound
-                  </label>
-                  <Switch.Root
-                    className="SwitchRoot"
-                    id="sound"
-                    checked={sound}
-                    onCheckedChange={() => setSound(!sound)}
-                  >
-                    <Switch.Thumb className="SwitchThumb" />
-                  </Switch.Root>
-                </div>
-                <div className="switch">
-                  <label className="Label" htmlFor="brown">
-                    Brown Noise
-                  </label>
-                  <Switch.Root
-                    className="SwitchRoot"
-                    id="sound"
-                    checked={brownNoise}
-                    onCheckedChange={() => setBrownNoise(!brownNoise)}
-                  >
-                    <Switch.Thumb className="SwitchThumb" />
-                  </Switch.Root>
-                </div>
-                <div className="volume-control">
-                  <label htmlFor="volume">Noise Volume</label>
-                  <Slider.Root
-                    className="SliderRoot"
-                    id="volume"
-                    defaultValue={[-20]}
-                    min={-50}
-                    max={0}
-                    step={1}
-                    onValueChange={(values) => {
-                      const newVolume = values[0];
-                      handleVolumeChange(newVolume);
-                    }}
-                    aria-label="Volume"
-                  >
-                    <Slider.Track className="SliderTrack">
-                      <Slider.Range className="SliderRange" />
-                    </Slider.Track>
-                    <Slider.Thumb className="SliderThumb" />
-                  </Slider.Root>
-                </div>
-              </form>
-
-              <NotificationControls
-                notifEnabled={notifEnabled}
-                setNotifEnabled={setNotifEnabled}
-              />
-            </div>
-
-            <div className="shortcuts">
-              <h4>Keyboard shortcuts</h4>
-              <p>
-                Start/Pause: space <br />
-                Reset: ← <br />
-                Skip: → <br /> Add minute: ↑ <br /> Subtract minute: ↓
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <div className="bottom">
-        <motion.button
-          className="settingsButton"
-          onClick={() => setSettingsOpen(!settingsOpen)}
-          whileHover={{ scale: 1.01 }}
-          whileTap={{ scale: 0.9 }}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          // transition={{ duration: 0.5, delay: 0.5 }}
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g opacity="0.33">
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M9.99618 2.86888C10.3581 2.32605 10.9673 2 11.6197 2H12.3803C13.0327 2 13.6419 2.32605 14.0038 2.86888L15.145 4.58067L16.894 4.17706C17.5495 4.02578 18.2367 4.22288 18.7125 4.69859L19.3014 5.28754C19.7771 5.76326 19.9742 6.45048 19.8229 7.10601L19.4193 8.85498L21.1311 9.99618C21.674 10.3581 22 10.9673 22 11.6197V12.3803C22 13.0327 21.674 13.6419 21.1311 14.0038L19.4193 15.145L19.8229 16.894C19.9742 17.5495 19.7771 18.2367 19.3014 18.7125L18.7125 19.3014C18.2367 19.7771 17.5495 19.9742 16.894 19.8229L15.145 19.4193L14.0038 21.1311C13.6419 21.674 13.0327 22 12.3803 22H11.6197C10.9673 22 10.3581 21.674 9.99618 21.1311L8.85498 19.4193L7.10601 19.8229C6.45048 19.9742 5.76326 19.7771 5.28754 19.3014L4.69859 18.7125C4.22288 18.2367 4.02578 17.5495 4.17706 16.894L4.58067 15.145L2.86888 14.0038C2.32605 13.6419 2 13.0327 2 12.3803V11.6197C2 10.9673 2.32605 10.3581 2.86888 9.99618L4.58067 8.85498L4.17706 7.10601C4.02578 6.45048 4.22288 5.76326 4.69859 5.28754L5.28754 4.69859C5.76326 4.22288 6.45048 4.02578 7.10601 4.17706L8.85498 4.58067L9.99618 2.86888ZM8.5 12C8.5 10.067 10.067 8.5 12 8.5C13.933 8.5 15.5 10.067 15.5 12C15.5 13.933 13.933 15.5 12 15.5C10.067 15.5 8.5 13.933 8.5 12Z"
-                fill="currentColor"
-              />
-            </g>
-          </svg>
-          Settings
-        </motion.button>
+        <Popover.Root onOpenChange={() => setSettingsOpen(!settingsOpen)}>
+          <Popover.Trigger asChild>
+            <motion.button
+              className="settingsButton"
+              // onClick={() => setSettingsOpen(!settingsOpen)}
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.9 }}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              // transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g opacity="0.33">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M9.99618 2.86888C10.3581 2.32605 10.9673 2 11.6197 2H12.3803C13.0327 2 13.6419 2.32605 14.0038 2.86888L15.145 4.58067L16.894 4.17706C17.5495 4.02578 18.2367 4.22288 18.7125 4.69859L19.3014 5.28754C19.7771 5.76326 19.9742 6.45048 19.8229 7.10601L19.4193 8.85498L21.1311 9.99618C21.674 10.3581 22 10.9673 22 11.6197V12.3803C22 13.0327 21.674 13.6419 21.1311 14.0038L19.4193 15.145L19.8229 16.894C19.9742 17.5495 19.7771 18.2367 19.3014 18.7125L18.7125 19.3014C18.2367 19.7771 17.5495 19.9742 16.894 19.8229L15.145 19.4193L14.0038 21.1311C13.6419 21.674 13.0327 22 12.3803 22H11.6197C10.9673 22 10.3581 21.674 9.99618 21.1311L8.85498 19.4193L7.10601 19.8229C6.45048 19.9742 5.76326 19.7771 5.28754 19.3014L4.69859 18.7125C4.22288 18.2367 4.02578 17.5495 4.17706 16.894L4.58067 15.145L2.86888 14.0038C2.32605 13.6419 2 13.0327 2 12.3803V11.6197C2 10.9673 2.32605 10.3581 2.86888 9.99618L4.58067 8.85498L4.17706 7.10601C4.02578 6.45048 4.22288 5.76326 4.69859 5.28754L5.28754 4.69859C5.76326 4.22288 6.45048 4.02578 7.10601 4.17706L8.85498 4.58067L9.99618 2.86888ZM8.5 12C8.5 10.067 10.067 8.5 12 8.5C13.933 8.5 15.5 10.067 15.5 12C15.5 13.933 13.933 15.5 12 15.5C10.067 15.5 8.5 13.933 8.5 12Z"
+                    fill="currentColor"
+                  />
+                </g>
+              </svg>
+              {!settingsOpen && ' Settings'}
+              {settingsOpen && ' Close'}
+            </motion.button>
+          </Popover.Trigger>
+          <Popover.Portal>
+            <Popover.Content side="top" align="center" sideOffset={16} asChild>
+              <motion.div
+                className="settings"
+                initial={{ y: 16, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 16, opacity: 0 }}
+              >
+                <div className="soundAndNotif">
+                  <h4>Sound/Notifications</h4>
+                  <form>
+                    <div className="switch">
+                      <label className="Label" htmlFor="sound">
+                        Notification Sound
+                      </label>
+                      <Switch.Root
+                        className="SwitchRoot"
+                        id="sound"
+                        checked={sound}
+                        onCheckedChange={() => setSound(!sound)}
+                      >
+                        <Switch.Thumb className="SwitchThumb" />
+                      </Switch.Root>
+                    </div>
+                    <div className="switch">
+                      <label className="Label" htmlFor="brown">
+                        Brown Noise
+                      </label>
+                      <Switch.Root
+                        className="SwitchRoot"
+                        id="sound"
+                        checked={brownNoise}
+                        onCheckedChange={() => setBrownNoise(!brownNoise)}
+                      >
+                        <Switch.Thumb className="SwitchThumb" />
+                      </Switch.Root>
+                    </div>
+                    <div className="volume-control">
+                      <label htmlFor="volume">Noise Volume</label>
+                      <Slider.Root
+                        className="SliderRoot"
+                        id="volume"
+                        defaultValue={[-20]}
+                        min={-50}
+                        max={0}
+                        step={1}
+                        onValueChange={(values) => {
+                          const newVolume = values[0];
+                          handleVolumeChange(newVolume);
+                        }}
+                        aria-label="Volume"
+                      >
+                        <Slider.Track className="SliderTrack">
+                          <Slider.Range className="SliderRange" />
+                        </Slider.Track>
+                        <Slider.Thumb className="SliderThumb" />
+                      </Slider.Root>
+                    </div>
+                  </form>
+
+                  <NotificationControls
+                    notifEnabled={notifEnabled}
+                    setNotifEnabled={setNotifEnabled}
+                  />
+                </div>
+
+                <div className="shortcuts">
+                  <h4>Keyboard shortcuts</h4>
+                  <p>
+                    Start/Pause: space <br />
+                    Reset: ← <br />
+                    Skip: → <br /> Add minute: ↑ <br /> Subtract minute: ↓
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* <Popover.Close />
+              <Popover.Arrow /> */}
+            </Popover.Content>
+          </Popover.Portal>
+        </Popover.Root>
 
         {/* <div
         className="pmdrCount"

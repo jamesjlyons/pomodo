@@ -165,9 +165,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 32px;
-  position: fixed;
-  bottom: 88px;
-  z-index: 5;
 }
 
 .shortcuts > h4,
