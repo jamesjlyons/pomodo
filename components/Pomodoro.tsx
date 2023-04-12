@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import NotificationControls from 'components/NotificationControls';
 import * as Switch from '@radix-ui/react-switch';
 import * as Toast from '@radix-ui/react-toast';
+import * as Slider from '@radix-ui/react-slider';
 import * as Accordion from '@radix-ui/react-accordion';
 import IconButton from './IconButton';
 
@@ -348,8 +349,7 @@ export default function Pomodoro() {
     };
   }, [brownNoise, noiseVolume]);
 
-  function handleVolumeChange(event: { target: { value: string } }) {
-    const newVolume = parseFloat(event.target.value);
+  function handleVolumeChange(newVolume: number) {
     setBnVolume(newVolume);
     if (noiseVolume.current) {
       noiseVolume.current.volume.value = newVolume;
@@ -588,7 +588,7 @@ export default function Pomodoro() {
               <form>
                 <div className="switch">
                   <label className="Label" htmlFor="sound">
-                    Sound
+                    Notification Sound
                   </label>
                   <Switch.Root
                     className="SwitchRoot"
@@ -613,16 +613,25 @@ export default function Pomodoro() {
                   </Switch.Root>
                 </div>
                 <div className="volume-control">
-                  <label htmlFor="volume">Volume</label>
-                  <input
-                    type="range"
+                  <label htmlFor="volume">Noise Volume</label>
+                  <Slider.Root
+                    className="SliderRoot"
                     id="volume"
-                    min="-60"
-                    max="0"
-                    step="1"
-                    value={bnVolume}
-                    onChange={handleVolumeChange}
-                  />
+                    defaultValue={[-20]}
+                    min={-50}
+                    max={0}
+                    step={1}
+                    onValueChange={(values) => {
+                      const newVolume = values[0];
+                      handleVolumeChange(newVolume);
+                    }}
+                    aria-label="Volume"
+                  >
+                    <Slider.Track className="SliderTrack">
+                      <Slider.Range className="SliderRange" />
+                    </Slider.Track>
+                    <Slider.Thumb className="SliderThumb" />
+                  </Slider.Root>
                 </div>
               </form>
 
