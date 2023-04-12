@@ -24,6 +24,7 @@ body {
   color: black;
   background: white;
   height: 100dvh;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
