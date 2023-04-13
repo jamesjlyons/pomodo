@@ -415,9 +415,12 @@ export default function Pomodoro() {
       .findIndex((digit, i) => digit !== prevTimerSeconds[i]);
 
   const slideVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -20 },
+    hidden: { opacity: 0, y: 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+    exit: { opacity: 0, y: -16, transition: { duration: 0.1 } },
   };
 
   const dialItems = {
@@ -468,7 +471,7 @@ export default function Pomodoro() {
                   <div className="digit-group">
                     {timerMinutes.split('').map((digit, index) => (
                       <div key={index} className="digit-container">
-                        <AnimatePresence mode="wait">
+                        <AnimatePresence mode="sync">
                           {prevTimerMinutes &&
                             prevTimerMinutes[index] !== digit && (
                               <motion.span
@@ -501,7 +504,7 @@ export default function Pomodoro() {
                   <div className="digit-group">
                     {timerSeconds.split('').map((digit, index) => (
                       <div key={index} className="digit-container">
-                        <AnimatePresence mode="wait">
+                        <AnimatePresence mode="sync">
                           {prevTimerSeconds &&
                             prevTimerSeconds[index] !== digit && (
                               <motion.span
