@@ -358,8 +358,18 @@ export default function Pomodoro() {
   }
 
   //   add 0 to minutes and seconds if less than 10
-  const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
-  const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
+  // const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  // const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
+  const timerMinutes: string =
+    minutes < 10 ? `0${minutes}` : minutes.toString();
+  const timerSeconds: string =
+    seconds < 10 ? `0${seconds}` : seconds.toString();
+
+  //generate array of digits
+  // const getDigitsArray = (num: string | number) =>
+  //   String(num).split('').map(Number);
+  // const timerMinutesArray = getDigitsArray(timerMinutes);
+  // const timerSecondsArray = getDigitsArray(timerSeconds);
 
   //framer
   const dialRow = {
@@ -378,9 +388,44 @@ export default function Pomodoro() {
     },
   };
 
+  //digit animation
+
+  function usePrevious(value: any) {
+    const ref = useRef();
+
+    useEffect(() => {
+      ref.current = value;
+    });
+
+    return ref.current;
+  }
+
+  const prevTimerMinutes = usePrevious(timerMinutes);
+  const prevTimerSeconds = usePrevious(timerSeconds);
+
+  const changingMinuteIndex =
+    prevTimerMinutes &&
+    timerMinutes
+      .split('')
+      .findIndex((digit, i) => digit !== prevTimerMinutes[i]);
+  const changingSecondIndex =
+    prevTimerSeconds &&
+    timerSeconds
+      .split('')
+      .findIndex((digit, i) => digit !== prevTimerSeconds[i]);
+
+  const slideVariants = {
+    hidden: { opacity: 0, y: 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+    },
+    exit: { opacity: 0, y: -16, transition: { duration: 0.1 } },
+  };
+
   const dialItems = {
     visible: { opacity: 1, y: 0 },
-    hidden: { opacity: 0, y: 8 },
+    hidden: { opacity: 0, y: 20 },
   };
 
   return (
@@ -418,8 +463,76 @@ export default function Pomodoro() {
                   }
                 />
 
-                <h1 className="timer">
+                {/* <h1 className="timer">
                   {timerMinutes}:{timerSeconds}
+                </h1> */}
+
+                <h1 className="timer">
+                  <div className="digit-group">
+                    {timerMinutes.split('').map((digit, index) => (
+                      <div key={index} className="digit-container">
+                        <AnimatePresence mode="sync">
+                          {prevTimerMinutes &&
+                            prevTimerMinutes[index] !== digit && (
+                              <motion.span
+                                key={prevTimerMinutes[index]}
+                                variants={slideVariants}
+                                initial="visible"
+                                animate="exit"
+                              >
+                                {prevTimerMinutes[index]}
+                              </motion.span>
+                            )}
+                          <motion.span
+                            key={digit}
+                            variants={slideVariants}
+                            initial={
+                              prevTimerMinutes &&
+                              prevTimerMinutes[index] !== digit
+                                ? 'hidden'
+                                : 'visible'
+                            }
+                            animate="visible"
+                          >
+                            {digit}
+                          </motion.span>
+                        </AnimatePresence>
+                      </div>
+                    ))}
+                  </div>
+                  :
+                  <div className="digit-group">
+                    {timerSeconds.split('').map((digit, index) => (
+                      <div key={index} className="digit-container">
+                        <AnimatePresence mode="sync">
+                          {prevTimerSeconds &&
+                            prevTimerSeconds[index] !== digit && (
+                              <motion.span
+                                key={prevTimerSeconds[index]}
+                                variants={slideVariants}
+                                initial="visible"
+                                animate="exit"
+                              >
+                                {prevTimerSeconds[index]}
+                              </motion.span>
+                            )}
+                          <motion.span
+                            key={digit}
+                            variants={slideVariants}
+                            initial={
+                              prevTimerSeconds &&
+                              prevTimerSeconds[index] !== digit
+                                ? 'hidden'
+                                : 'visible'
+                            }
+                            animate="visible"
+                          >
+                            {digit}
+                          </motion.span>
+                        </AnimatePresence>
+                      </div>
+                    ))}
+                  </div>
                 </h1>
 
                 <IconButton
