@@ -187,11 +187,35 @@ export default function Pomodoro() {
           break;
         case 'ArrowUp':
           handleAdd();
-          showToast('Minute Added');
+          showToast('Minute added');
           break;
         case 'ArrowDown':
           handleSubtract();
-          showToast('Minute Subtracted');
+          showToast('Minute Ssubtracted');
+          break;
+        case 'KeyB':
+          setBrownNoise(!brownNoise);
+          if (brownNoise) {
+            showToast('Brown noise stopped');
+          } else {
+            showToast('Brown noise started');
+          }
+          break;
+        case 'KeyV':
+          setSound(!sound);
+          if (sound) {
+            showToast('Notification sounds off');
+          } else {
+            showToast('Notification sounds on');
+          }
+          break;
+        case 'KeyN':
+          setNotifEnabled(!notifEnabled)
+          if (notifEnabled) {
+            showToast('Notifications off');
+          } else {
+            showToast('Notifications on');
+          }
           break;
         default:
           break;
@@ -293,7 +317,7 @@ export default function Pomodoro() {
           100 -
           ((event.data.minutes * 60 + event.data.seconds) /
             (timer.pomodoro * 60)) *
-            100;
+          100;
         updateDials(event.data.pmdrCount, progress);
       }
       if (event.data.newSession) {
@@ -488,7 +512,7 @@ export default function Pomodoro() {
                             variants={slideVariants}
                             initial={
                               prevTimerMinutes &&
-                              prevTimerMinutes[index] !== digit
+                                prevTimerMinutes[index] !== digit
                                 ? 'hidden'
                                 : 'visible'
                             }
@@ -521,7 +545,7 @@ export default function Pomodoro() {
                             variants={slideVariants}
                             initial={
                               prevTimerSeconds &&
-                              prevTimerSeconds[index] !== digit
+                                prevTimerSeconds[index] !== digit
                                 ? 'hidden'
                                 : 'visible'
                             }
@@ -700,7 +724,7 @@ export default function Pomodoro() {
               whileTap={{ scale: 0.9 }}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              // transition={{ duration: 0.5, delay: 0.5 }}
+            // transition={{ duration: 0.5, delay: 0.5 }}
             >
               {!settingsOpen && (
                 <svg
