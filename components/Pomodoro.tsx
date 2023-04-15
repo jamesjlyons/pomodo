@@ -303,6 +303,13 @@ export default function Pomodoro() {
         setSessionType(event.data.sessionType);
         setNewSession(event.data.newSession);
         setTotalPomodoros(event.data.totalPomodoros);
+
+        const timerMinutes: string =
+          event.data.minutes < 10 ? `0${event.data.minutes}` : event.data.minutes;
+        const timerSeconds: string =
+          event.data.seconds < 10 ? `0${event.data.seconds}` : event.data.seconds;
+        document.title = `${timerMinutes}:${timerSeconds} - ${sessionType}`;
+
       } else if (event.data.type === 'reset') {
         setMinutes(timer.pomodoro);
         setSeconds(0);
@@ -311,6 +318,9 @@ export default function Pomodoro() {
         setTotalPomodoros(event.data.totalPomodoros);
         setNewSession(event.data.newSession);
         resetDials();
+
+        document.title = `25:00 - work`;
+
       }
       if (event.data.type === 'tick' && event.data.sessionType === 'work') {
         const progress =
@@ -352,6 +362,9 @@ export default function Pomodoro() {
       }
     }
   }, [timerRunning]);
+
+
+
 
   useEffect(() => {
     const noise = new Tone.Noise('brown');
