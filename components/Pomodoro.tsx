@@ -595,17 +595,17 @@ export default function Pomodoro() {
 
               <div className='messageContainter'>
                 <AnimatePresence mode='wait'>
-                  {sessionType === 'work' && <motion.span key="work" initial={{ y: 4, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -4, opacity: 0 }} className="message">Work</motion.span>}
+                  {sessionType === 'work' && <motion.span key="work" initial={{ scale: 0.8, filter: "blur(4px)", opacity: 0 }}
+                    animate={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
+                    exit={{ scale: 1.1, filter: "blur(4px)", opacity: 0 }} className="message">Work</motion.span>}
 
-                  {sessionType === 'shortBreak' && <motion.span key="break" initial={{ x: 4, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -4, opacity: 0 }} className="message">Break</motion.span>}
+                  {sessionType === 'shortBreak' && <motion.span key="break" initial={{ scale: 0.8, filter: "blur(4px)", opacity: 0 }}
+                    animate={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
+                    exit={{ scale: 1.1, filter: "blur(4px)", opacity: 0 }} className="message">Break</motion.span>}
 
-                  {sessionType === 'longBreak' && <motion.span key="longBreak" initial={{ y: 4, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -4, opacity: 0 }} className="message">Long Break</motion.span>}
+                  {sessionType === 'longBreak' && <motion.span key="longBreak" initial={{ scale: 0.8, filter: "blur(4px)", opacity: 0 }}
+                    animate={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
+                    exit={{ scale: 1.1, filter: "blur(4px)", opacity: 0 }} className="message">Long Break</motion.span>}
                 </AnimatePresence>
               </div>
 
