@@ -127,12 +127,19 @@
   left: 0;
 }
 
+.messageContainer {
+    height: 16px;
+}
+
 .message {
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
   letter-spacing: -0.04px;
   color: var(--gray9);
+
+  position: relative;
+  display: inline-block;
 }
 
 .dials-container {

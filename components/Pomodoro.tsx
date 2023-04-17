@@ -210,7 +210,7 @@ export default function Pomodoro() {
           }
           break;
         case 'KeyN':
-          setNotifEnabled(!notifEnabled)
+          setNotifEnabled(!notifEnabled);
           if (notifEnabled) {
             showToast('Notifications off');
           } else {
@@ -305,11 +305,14 @@ export default function Pomodoro() {
         setTotalPomodoros(event.data.totalPomodoros);
 
         const timerMinutes: string =
-          event.data.minutes < 10 ? `0${event.data.minutes}` : event.data.minutes;
+          event.data.minutes < 10
+            ? `0${event.data.minutes}`
+            : event.data.minutes;
         const timerSeconds: string =
-          event.data.seconds < 10 ? `0${event.data.seconds}` : event.data.seconds;
+          event.data.seconds < 10
+            ? `0${event.data.seconds}`
+            : event.data.seconds;
         document.title = `${timerMinutes}:${timerSeconds} - ${sessionType}`;
-
       } else if (event.data.type === 'reset') {
         setMinutes(timer.pomodoro);
         setSeconds(0);
@@ -320,7 +323,6 @@ export default function Pomodoro() {
         resetDials();
 
         document.title = `25:00 - work`;
-
       }
       if (event.data.type === 'tick' && event.data.sessionType === 'work') {
         const progress =
@@ -362,9 +364,6 @@ export default function Pomodoro() {
       }
     }
   }, [timerRunning]);
-
-
-
 
   useEffect(() => {
     const noise = new Tone.Noise('brown');
@@ -594,11 +593,23 @@ export default function Pomodoro() {
                 />
               </div>
 
-              <span className="message">
-                {sessionType === 'work' && ' Work'}
-                {sessionType === 'shortBreak' && ' Break'}
-                {sessionType === 'longBreak' && ' Long Break'}
-              </span>
+              <div className='messageContainter'>
+                <AnimatePresence mode='wait'>
+                  {sessionType === 'work' && <motion.span key="work" initial={{ y: 4, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -4, opacity: 0 }} className="message">Work</motion.span>}
+
+                  {sessionType === 'shortBreak' && <motion.span key="break" initial={{ x: 4, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -4, opacity: 0 }} className="message">Break</motion.span>}
+
+                  {sessionType === 'longBreak' && <motion.span key="longBreak" initial={{ y: 4, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -4, opacity: 0 }} className="message">Long Break</motion.span>}
+                </AnimatePresence>
+              </div>
+
+
             </div>
             <div className="controls">
               <IconButton
