@@ -867,9 +867,9 @@ export default function Pomodoro() {
                 <div className="shortcuts">
                   <h4>Keyboard shortcuts</h4>
                   <p>
-                    Start/Pause: space <br />
-                    Reset: ← <br />
-                    Skip: → <br /> Add minute: ↑ <br /> Subtract minute: ↓
+                    Start/Pause: space or p <br />
+                    Reset: ← or r <br />
+                    Skip: → or s <br /> Add minute: ↑<br /> Subtract minute: ↓
                   </p>
                 </div>
               </motion.div>
