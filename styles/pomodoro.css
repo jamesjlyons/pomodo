@@ -195,11 +195,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: 32px;
+  max-width: 90vw;
 }
 
 .shortcuts > h4,
-.soundAndNotif > h4 {
+.sound > h4,
+.notif > h4{
   margin: 0;
+  margin-bottom: 8px;
 }
 
 .soundAndNotif {

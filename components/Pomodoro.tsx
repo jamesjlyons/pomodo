@@ -798,62 +798,70 @@ export default function Pomodoro() {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 16, opacity: 0 }}
               >
-                <div className="soundAndNotif">
-                  <h4>Sound/Notifications</h4>
-                  <form>
-                    <div className="switch">
-                      <label className="Label" htmlFor="sound">
-                        Notification Sound
-                      </label>
-                      <Switch.Root
-                        className="SwitchRoot"
-                        id="sound"
-                        checked={sound}
-                        onCheckedChange={() => setSound(!sound)}
-                      >
-                        <Switch.Thumb className="SwitchThumb" />
-                      </Switch.Root>
-                    </div>
-                    <div className="switch">
-                      <label className="Label" htmlFor="brown">
-                        Brown Noise
-                      </label>
-                      <Switch.Root
-                        className="SwitchRoot"
-                        id="sound"
-                        checked={brownNoise}
-                        onCheckedChange={() => setBrownNoise(!brownNoise)}
-                      >
-                        <Switch.Thumb className="SwitchThumb" />
-                      </Switch.Root>
-                    </div>
-                    <div className="volume-control">
-                      <label htmlFor="volume">Noise Volume</label>
-                      <Slider.Root
-                        className="SliderRoot"
-                        id="volume"
-                        defaultValue={[-20]}
-                        min={-50}
-                        max={0}
-                        step={1}
-                        onValueChange={(values) => {
-                          const newVolume = values[0];
-                          handleVolumeChange(newVolume);
-                        }}
-                        aria-label="Volume"
-                      >
-                        <Slider.Track className="SliderTrack">
-                          <Slider.Range className="SliderRange" />
-                        </Slider.Track>
-                        <Slider.Thumb className="SliderThumb" />
-                      </Slider.Root>
-                    </div>
-                  </form>
+                <div className='soundAndNotif'>
+                  <div className="notif">
+                    <h4>Notifications</h4>
+                    <form>
+                      <div className="switch">
+                        <label className="Label" htmlFor="sound">
+                          Notification Sound
+                        </label>
+                        <Switch.Root
+                          className="SwitchRoot"
+                          id="sound"
+                          checked={sound}
+                          onCheckedChange={() => setSound(!sound)}
+                        >
+                          <Switch.Thumb className="SwitchThumb" />
+                        </Switch.Root>
+                      </div>
+                    </form>
 
-                  <NotificationControls
-                    notifEnabled={notifEnabled}
-                    setNotifEnabled={setNotifEnabled}
-                  />
+                    <NotificationControls
+                      notifEnabled={notifEnabled}
+                      setNotifEnabled={setNotifEnabled}
+                    />
+                  </div>
+
+                  <div className="sound">
+                    <h4>Background Noise</h4>
+                    <form>
+                      <div className="switch">
+                        <label className="Label" htmlFor="brown">
+                          Brown Noise
+                        </label>
+                        <Switch.Root
+                          className="SwitchRoot"
+                          id="sound"
+                          checked={brownNoise}
+                          onCheckedChange={() => setBrownNoise(!brownNoise)}
+                        >
+                          <Switch.Thumb className="SwitchThumb" />
+                        </Switch.Root>
+                      </div>
+                      <div className="volume-control">
+                        <label htmlFor="volume">Noise Volume</label>
+                        <Slider.Root
+                          className="SliderRoot"
+                          id="volume"
+                          defaultValue={[-20]}
+                          min={-50}
+                          max={0}
+                          step={1}
+                          onValueChange={(values) => {
+                            const newVolume = values[0];
+                            handleVolumeChange(newVolume);
+                          }}
+                          aria-label="Volume"
+                        >
+                          <Slider.Track className="SliderTrack">
+                            <Slider.Range className="SliderRange" />
+                          </Slider.Track>
+                          <Slider.Thumb className="SliderThumb" />
+                        </Slider.Root>
+                      </div>
+                    </form>
+                  </div>
                 </div>
 
                 <div className="shortcuts">
