@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { ThemeProvider } from 'next-themes';
 import '../styles/globals.css';
-
+import PlausibleProvider from 'next-plausible';
 
 function printAsciiArt() {
   const asciiArt = `
@@ -12,15 +12,16 @@ function printAsciiArt() {
   console.log(asciiArt);
 }
 
-
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     printAsciiArt();
   }, []);
   return (
-    <ThemeProvider>
-      <Component {...pageProps} />
-    </ThemeProvider>
-  )
+    <PlausibleProvider domain="pomodo-timer.vercel.app/">
+      <ThemeProvider>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </PlausibleProvider>
+  );
 }
