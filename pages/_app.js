@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { ThemeProvider } from 'next-themes';
 import '../styles/globals.css';
 import PlausibleProvider from 'next-plausible';
+import { Analytics } from '@vercel/analytics/react';
 
 function printAsciiArt() {
   const asciiArt = `
@@ -18,10 +19,14 @@ export default function MyApp({ Component, pageProps }) {
     printAsciiArt();
   }, []);
   return (
-    <PlausibleProvider domain="pomodo-timer.vercel.app/">
-      <ThemeProvider>
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </PlausibleProvider>
+    <>
+      <PlausibleProvider domain="pomodo-timer.vercel.app/">
+        <ThemeProvider>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </PlausibleProvider>
+
+      <Analytics />
+    </>
   );
 }
