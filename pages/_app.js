@@ -19,11 +19,9 @@ export default function MyApp({ Component, pageProps }) {
     printAsciiArt();
   }, []);
   return (
-    <>
-      <ThemeProvider>
-        <Component {...pageProps} />
-      </ThemeProvider>
+    <ThemeProvider>
+      <Component {...pageProps} />
       <Analytics />
-    </>
+    </ThemeProvider>
   );
 }
