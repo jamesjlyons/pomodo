@@ -86,7 +86,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 24px;
-  gap: 12px;
+  gap: 4px;
 }
 
 .time {
@@ -106,6 +106,7 @@
 
   display: flex;
   align-items: center;
+  transform: translateY(-6px);
 }
 
 .digit-group {
