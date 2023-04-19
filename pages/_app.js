@@ -20,12 +20,11 @@ export default function MyApp({ Component, pageProps }) {
   }, []);
   return (
     <>
-      <PlausibleProvider domain="pomodo-timer.vercel.app/">
-        <ThemeProvider>
+      <ThemeProvider>
+        <PlausibleProvider domain="pomodo-timer.vercel.app/">
           <Component {...pageProps} />
-        </ThemeProvider>
-      </PlausibleProvider>
-
+        </PlausibleProvider>
+      </ThemeProvider>
       <Analytics />
     </>
   );
