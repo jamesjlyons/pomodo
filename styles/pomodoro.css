@@ -128,7 +128,7 @@
 }
 
 .messageContainer {
-    height: 16px;
+  height: 16px;
 }
 
 .message {
@@ -201,7 +201,7 @@
 .shortcuts > h4,
 .sound > h4,
 .notif > h4,
-.theme > h4{
+.theme > h4 {
   margin: 0;
   margin-bottom: 8px;
 }
@@ -218,16 +218,18 @@
   align-items: center;
 }
 
-.themeButtons {
+/* .themeButtons {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
-}
+} */
 
 /* select from radix */
-
-
 .SelectTrigger {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 4px;
   padding: 0 15px;
   font-size: 13px;
@@ -239,30 +241,75 @@
   box-shadow: 0 2px 10px var(--blackA7);
 }
 .SelectTrigger:hover {
-  background-color: var(--mauve3);
+  background-color: var(--gray3);
 }
 .SelectTrigger:focus {
-  box-shadow: 0 0 0 2px black;
-}
-.SelectTrigger[data-placeholder] {
-  color: var(--violet9);
+  box-shadow: 0 0 0 2px var(--grayA12);
 }
 
+.SelectIcon {
+  color: Var(--grayA11);
+}
+
+.SelectContent {
+  overflow: hidden;
+  background-color: var(--gray1);
+  border-radius: 6px;
+  box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35),
+    0px 10px 20px -15px rgba(22, 23, 24, 0.2);
+}
 
 .SelectViewport {
   padding: 5px;
 }
 
+.SelectItem {
+  font-size: 13px;
+  line-height: 1;
+  color: var(--gray12);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  height: 25px;
+  padding: 0 35px 0 25px;
+  position: relative;
+  user-select: none;
+}
+.SelectItem[data-disabled] {
+  color: var(--gray9);
+  pointer-events: none;
+}
 .SelectItem[data-highlighted] {
   outline: none;
-  background-color: var(--violet9);
-  color: var(--violet1);
+  background-color: var(--gray11);
+  color: var(--gray1);
 }
 
+.SelectLabel {
+  padding: 0 25px;
+  font-size: 12px;
+  line-height: 25px;
+  color: var(--mauve11);
+}
 
+.SelectItemIndicator {
+  position: absolute;
+  left: 0;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
-
-
+.SelectScrollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  background-color: white;
+  color: var(--violet11);
+  cursor: default;
+}
 /* media query screen size under 450px */
 @media (max-width: 450px) {
   .pomodoro {

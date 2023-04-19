@@ -332,7 +332,7 @@ export default function Pomodoro() {
           100 -
           ((event.data.minutes * 60 + event.data.seconds) /
             (timer.pomodoro * 60)) *
-          100;
+            100;
         updateDials(event.data.pmdrCount, progress);
       }
       if (event.data.newSession) {
@@ -527,7 +527,7 @@ export default function Pomodoro() {
                             variants={slideVariants}
                             initial={
                               prevTimerMinutes &&
-                                prevTimerMinutes[index] !== digit
+                              prevTimerMinutes[index] !== digit
                                 ? 'hidden'
                                 : 'visible'
                             }
@@ -560,7 +560,7 @@ export default function Pomodoro() {
                             variants={slideVariants}
                             initial={
                               prevTimerSeconds &&
-                                prevTimerSeconds[index] !== digit
+                              prevTimerSeconds[index] !== digit
                                 ? 'hidden'
                                 : 'visible'
                             }
@@ -596,23 +596,45 @@ export default function Pomodoro() {
                 />
               </div>
 
-              <div className='messageContainter'>
-                <AnimatePresence mode='wait'>
-                  {sessionType === 'work' && <motion.span key="work" initial={{ scale: 0.8, filter: "blur(4px)", opacity: 0 }}
-                    animate={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
-                    exit={{ scale: 1.1, filter: "blur(4px)", opacity: 0 }} className="message">Work</motion.span>}
+              <div className="messageContainter">
+                <AnimatePresence mode="wait">
+                  {sessionType === 'work' && (
+                    <motion.span
+                      key="work"
+                      initial={{ scale: 0.8, filter: 'blur(4px)', opacity: 0 }}
+                      animate={{ scale: 1, filter: 'blur(0px)', opacity: 1 }}
+                      exit={{ scale: 1.1, filter: 'blur(4px)', opacity: 0 }}
+                      className="message"
+                    >
+                      Work
+                    </motion.span>
+                  )}
 
-                  {sessionType === 'shortBreak' && <motion.span key="break" initial={{ scale: 0.8, filter: "blur(4px)", opacity: 0 }}
-                    animate={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
-                    exit={{ scale: 1.1, filter: "blur(4px)", opacity: 0 }} className="message">Break</motion.span>}
+                  {sessionType === 'shortBreak' && (
+                    <motion.span
+                      key="break"
+                      initial={{ scale: 0.8, filter: 'blur(4px)', opacity: 0 }}
+                      animate={{ scale: 1, filter: 'blur(0px)', opacity: 1 }}
+                      exit={{ scale: 1.1, filter: 'blur(4px)', opacity: 0 }}
+                      className="message"
+                    >
+                      Break
+                    </motion.span>
+                  )}
 
-                  {sessionType === 'longBreak' && <motion.span key="longBreak" initial={{ scale: 0.8, filter: "blur(4px)", opacity: 0 }}
-                    animate={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
-                    exit={{ scale: 1.1, filter: "blur(4px)", opacity: 0 }} className="message">Long Break</motion.span>}
+                  {sessionType === 'longBreak' && (
+                    <motion.span
+                      key="longBreak"
+                      initial={{ scale: 0.8, filter: 'blur(4px)', opacity: 0 }}
+                      animate={{ scale: 1, filter: 'blur(0px)', opacity: 1 }}
+                      exit={{ scale: 1.1, filter: 'blur(4px)', opacity: 0 }}
+                      className="message"
+                    >
+                      Long Break
+                    </motion.span>
+                  )}
                 </AnimatePresence>
               </div>
-
-
             </div>
             <div className="controls">
               <IconButton
@@ -751,7 +773,7 @@ export default function Pomodoro() {
               whileTap={{ scale: 0.9 }}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-            // transition={{ duration: 0.5, delay: 0.5 }}
+              // transition={{ duration: 0.5, delay: 0.5 }}
             >
               {!settingsOpen && (
                 <svg
@@ -801,7 +823,7 @@ export default function Pomodoro() {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 16, opacity: 0 }}
               >
-                <div className='soundAndNotif'>
+                <div className="soundAndNotif">
                   <div className="notif">
                     <h4>Notifications</h4>
                     <form>
@@ -866,50 +888,53 @@ export default function Pomodoro() {
                     </form>
                   </div>
 
-                  <div className='theme'>
+                  <div className="theme">
                     <h4>Theme</h4>
 
-                    The current theme is: {theme}
-                    <div className='themeButtons'>
-                      <button onClick={() => setTheme('light')}>Light Mode</button>
-                      <button onClick={() => setTheme('dark')}>Dark Mode</button>
-                      <button onClick={() => setTheme('system')}>System</button>
-                    </div>
-
-                    {/* <Select.Root value={theme} onValueChange={(value) => setTheme(value)}>
-                      <Select.Trigger className="SelectTrigger" aria-label="Food">
+                    <Select.Root
+                      defaultValue={theme}
+                      onValueChange={(value) => setTheme(value)}
+                    >
+                      <Select.Trigger className="SelectTrigger">
                         <Select.Value />
                         <Select.Icon className="SelectIcon">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 10L10.9393 12.9393C11.5251 13.5251 12.4749 13.5251 13.0607 12.9393L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M8 10L10.9393 12.9393C11.5251 13.5251 12.4749 13.5251 13.0607 12.9393L16 10"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
                           </svg>
-
                         </Select.Icon>
                       </Select.Trigger>
+
                       <Select.Portal>
                         <Select.Content className="SelectContent">
-                          <Select.ScrollUpButton className="SelectScrollButton">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M8 13.9998L10.9393 11.0604C11.5251 10.4746 12.4749 10.4746 13.0607 11.0604L16 13.9998" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-
-                          </Select.ScrollUpButton>
-                          <Select.Viewport className="SelectViewport">
-                            <Select.Item value="system">System</Select.Item>
-                            <Select.Item value="light">Light</Select.Item>
-                            <Select.Item value="dark">Dark</Select.Item>
-
-
+                          <Select.ScrollUpButton />
+                          <Select.Viewport className="SelectViewPort">
+                            <Select.Item value="system" className="SelectItem">
+                              <Select.ItemText>System</Select.ItemText>
+                            </Select.Item>
+                            <Select.Item value="light" className="SelectItem">
+                              <Select.ItemText>Light</Select.ItemText>
+                            </Select.Item>
+                            <Select.Item value="dark" className="SelectItem">
+                              <Select.ItemText>Dark</Select.ItemText>
+                            </Select.Item>
                           </Select.Viewport>
-                          <Select.ScrollDownButton className="SelectScrollButton">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M8 10L10.9393 12.9393C11.5251 13.5251 12.4749 13.5251 13.0607 12.9393L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                          </Select.ScrollDownButton>
+                          <Select.ScrollDownButton />
+                          <Select.Arrow />
                         </Select.Content>
                       </Select.Portal>
-                    </Select.Root> */}
-
+                    </Select.Root>
                   </div>
                 </div>
 
