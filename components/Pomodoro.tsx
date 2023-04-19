@@ -7,7 +7,8 @@ import * as Switch from '@radix-ui/react-switch';
 import * as Toast from '@radix-ui/react-toast';
 import * as Slider from '@radix-ui/react-slider';
 import * as Popover from '@radix-ui/react-popover';
-import * as Accordion from '@radix-ui/react-accordion';
+import * as Select from '@radix-ui/react-select';
+import { useTheme } from 'next-themes';
 import IconButton from './IconButton';
 
 export default function Pomodoro() {
@@ -38,6 +39,8 @@ export default function Pomodoro() {
   const [brownNoise, setBrownNoise] = useState(false);
   const [bnVolume, setBnVolume] = useState(-20); // The initial volume in decibels
   const noiseVolume = useRef<Tone.Volume | null>(null);
+
+  const { theme, setTheme } = useTheme();
 
   const timerWorkerRef = useRef<Worker | null>();
   const toastTimeRef = useRef(0);
@@ -861,6 +864,52 @@ export default function Pomodoro() {
                         </Slider.Root>
                       </div>
                     </form>
+                  </div>
+
+                  <div className='theme'>
+                    <h4>Theme</h4>
+
+                    The current theme is: {theme}
+                    <div className='themeButtons'>
+                      <button onClick={() => setTheme('light')}>Light Mode</button>
+                      <button onClick={() => setTheme('dark')}>Dark Mode</button>
+                      <button onClick={() => setTheme('system')}>System</button>
+                    </div>
+
+                    {/* <Select.Root value={theme} onValueChange={(value) => setTheme(value)}>
+                      <Select.Trigger className="SelectTrigger" aria-label="Food">
+                        <Select.Value />
+                        <Select.Icon className="SelectIcon">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 10L10.9393 12.9393C11.5251 13.5251 12.4749 13.5251 13.0607 12.9393L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+
+                        </Select.Icon>
+                      </Select.Trigger>
+                      <Select.Portal>
+                        <Select.Content className="SelectContent">
+                          <Select.ScrollUpButton className="SelectScrollButton">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M8 13.9998L10.9393 11.0604C11.5251 10.4746 12.4749 10.4746 13.0607 11.0604L16 13.9998" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+
+                          </Select.ScrollUpButton>
+                          <Select.Viewport className="SelectViewport">
+                            <Select.Item value="system">System</Select.Item>
+                            <Select.Item value="light">Light</Select.Item>
+                            <Select.Item value="dark">Dark</Select.Item>
+
+
+                          </Select.Viewport>
+                          <Select.ScrollDownButton className="SelectScrollButton">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M8 10L10.9393 12.9393C11.5251 13.5251 12.4749 13.5251 13.0607 12.9393L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                          </Select.ScrollDownButton>
+                        </Select.Content>
+                      </Select.Portal>
+                    </Select.Root> */}
+
                   </div>
                 </div>
 

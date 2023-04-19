@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
+import { ThemeProvider } from 'next-themes';
 import '../styles/globals.css';
+
 
 function printAsciiArt() {
   const asciiArt = `
@@ -16,5 +18,9 @@ export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     printAsciiArt();
   }, []);
-  return <Component {...pageProps} />;
+  return (
+    <ThemeProvider>
+      <Component {...pageProps} />
+    </ThemeProvider>
+  )
 }
