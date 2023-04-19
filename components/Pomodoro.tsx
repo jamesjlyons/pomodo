@@ -7,7 +7,7 @@ import * as Switch from '@radix-ui/react-switch';
 import * as Toast from '@radix-ui/react-toast';
 import * as Slider from '@radix-ui/react-slider';
 import * as Popover from '@radix-ui/react-popover';
-import * as Accordion from '@radix-ui/react-accordion';
+import { useTheme } from 'next-themes';
 import IconButton from './IconButton';
 
 export default function Pomodoro() {
@@ -38,6 +38,8 @@ export default function Pomodoro() {
   const [brownNoise, setBrownNoise] = useState(false);
   const [bnVolume, setBnVolume] = useState(-20); // The initial volume in decibels
   const noiseVolume = useRef<Tone.Volume | null>(null);
+
+  const { theme, setTheme } = useTheme();
 
   const timerWorkerRef = useRef<Worker | null>();
   const toastTimeRef = useRef(0);
@@ -861,6 +863,16 @@ export default function Pomodoro() {
                         </Slider.Root>
                       </div>
                     </form>
+                  </div>
+
+                  <div className='theme'>
+                    <h4>Theme</h4>
+
+                    The current theme is: {theme}
+                    <button onClick={() => setTheme('light')}>Light Mode</button>
+                    <button onClick={() => setTheme('dark')}>Dark Mode</button>
+                    <button onClick={() => setTheme('system')}>System</button>
+
                   </div>
                 </div>
 

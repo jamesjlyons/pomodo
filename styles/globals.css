@@ -82,16 +82,16 @@ a {
   transform: translateX(16px);
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
+
+  [data-theme='dark'] html {
     color-scheme: dark;
   }
-  html,
-  body {
+  [data-theme='dark'] html,
+  [data-theme='dark'] body {
     color: white;
     background: black;
   }
-}
+
 
 /* TOAST */
 .ToastViewport {
