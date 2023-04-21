@@ -332,7 +332,7 @@ export default function Pomodoro() {
           100 -
           ((event.data.minutes * 60 + event.data.seconds) /
             (timer.pomodoro * 60)) *
-            100;
+          100;
         updateDials(event.data.pmdrCount, progress);
       }
       if (event.data.newSession) {
@@ -454,12 +454,13 @@ export default function Pomodoro() {
       .findIndex((digit, i) => digit !== prevTimerSeconds[i]);
 
   const slideVariants = {
-    hidden: { opacity: 0, y: 16 },
+    hidden: { opacity: 0, y: 16, filter: 'blur(8px)' },
     visible: {
       opacity: 1,
       y: 0,
+      filter: 'blur(0px)'
     },
-    exit: { opacity: 0, y: -16, transition: { duration: 0.1 } },
+    exit: { opacity: 0, y: -16, filter: 'blur(2px)', transition: { duration: 0.1 } },
   };
 
   const dialItems = {
@@ -527,7 +528,7 @@ export default function Pomodoro() {
                             variants={slideVariants}
                             initial={
                               prevTimerMinutes &&
-                              prevTimerMinutes[index] !== digit
+                                prevTimerMinutes[index] !== digit
                                 ? 'hidden'
                                 : 'visible'
                             }
@@ -560,7 +561,7 @@ export default function Pomodoro() {
                             variants={slideVariants}
                             initial={
                               prevTimerSeconds &&
-                              prevTimerSeconds[index] !== digit
+                                prevTimerSeconds[index] !== digit
                                 ? 'hidden'
                                 : 'visible'
                             }
@@ -773,7 +774,7 @@ export default function Pomodoro() {
               whileTap={{ scale: 0.9 }}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              // transition={{ duration: 0.5, delay: 0.5 }}
+            // transition={{ duration: 0.5, delay: 0.5 }}
             >
               {!settingsOpen && (
                 <svg
