@@ -17,6 +17,12 @@
   -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
 }
 
+[data-theme='arc'] .container-outer {
+    border: 1px solid var(--arc-palette-focus);
+    background-color: var(--arc-palette-backgroundExtra);
+    -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
+}
+
 .container-outer:before {
   content: '';
   position: fixed;
@@ -52,6 +58,19 @@
   /* transition: opacity 0.4s ease; */
 }
 
+[data-theme='arc'] .container-outer.active:before {
+
+  background: conic-gradient(
+      from 0deg at 50% 50%,
+      var(--arc-palette-backgroundExtra) 0deg,
+      var(--arc-palette-cutoutColor) 180deg,
+      var(--arc-palette-backgroundExtra) 232.5deg,
+      var(--arc-palette-backgroundExtra) 358.13deg,
+      var(--arc-palette-backgroundExtra) 360deg
+    ),
+    var(--arc-palette-background);
+}
+
 @keyframes rotate {
   0% {
     transform: translateX(0) rotate(0deg);
@@ -80,6 +99,11 @@
   align-items: center;
 }
 
+[data-theme='arc'] .container-inner {
+  border: 1px solid var(--arc-palette-focus);
+  background-color: var(--arc-palette-background);
+}
+
 .session {
   display: flex;
   flex-direction: column;
@@ -94,6 +118,7 @@
   align-items: center;
   justify-content: center;
   gap: 30px;
+  margin: 12px 0;
 }
 
 .timer {
@@ -107,6 +132,39 @@
   display: flex;
   align-items: center;
   transform: translateY(-6px);
+
+  height: 0.85em;
+  padding-bottom: 0.22em;
+
+  --background: #FFFFFF;
+  --color: rgba(0, 0, 0, 0.5);
+  --height: 0.85em;
+  --width: 5px;
+  --fade-stop: 90%;
+  /* Bleed in or out from the container */
+  --offset: 0px;
+
+  width: calc(100% + var(--offset));
+  height: var(--height);
+  left: calc(var(--offset) / 2 * -1);
+
+  mask-composite: exclude;
+    -webkit-mask:
+      linear-gradient(
+        to bottom,
+        var(--background) var(--fade-stop),
+        transparent
+      ),
+      linear-gradient(
+        to top,
+        var(--background) var(--fade-stop),
+        transparent
+      ),
+      linear-gradient(black, black);
+}
+
+[data-theme='arc'] .timer {
+    color: var(--arc-palette-title);
 }
 
 .digit-group {
@@ -120,6 +178,8 @@
   width: 1ch;
   height: 1em;
   overflow: hidden;
+
+
 }
 
 .digit-container > span {

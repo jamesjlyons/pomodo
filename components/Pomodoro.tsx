@@ -454,13 +454,13 @@ export default function Pomodoro() {
       .findIndex((digit, i) => digit !== prevTimerSeconds[i]);
 
   const slideVariants = {
-    hidden: { opacity: 0, y: 16, filter: 'blur(8px)' },
+    hidden: { opacity: 1, y: `100%`, },
     visible: {
       opacity: 1,
       y: 0,
-      filter: 'blur(0px)'
+      transition: { type: "spring", duration: 0.25, bounce: 0.25 }
     },
-    exit: { opacity: 0, y: -16, filter: 'blur(2px)', transition: { duration: 0.1 } },
+    exit: { opacity: 1, y: `-100%`, transition: { type: "spring", duration: 0.25, bounce: 0 } },
   };
 
   const dialItems = {
@@ -930,6 +930,9 @@ export default function Pomodoro() {
                             <Select.Item value="dark" className="SelectItem">
                               <Select.ItemText>Dark</Select.ItemText>
                             </Select.Item>
+                            {/* <Select.Item value="arc" className="SelectItem">
+                              <Select.ItemText>Arc</Select.ItemText>
+                            </Select.Item> */}
                           </Select.Viewport>
                           <Select.ScrollDownButton />
                           <Select.Arrow />
