@@ -27,6 +27,19 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+[data-theme='arc'] html,
+[data-theme='arc'] body {
+      color: var(--arc-palette-title);
+
+      background: linear-gradient(
+        90deg,
+        var(--arc-background-gradient-color1) 0%,
+        var(--arc-background-gradient-color0) 100%
+      );
+
+       background-color: var(--arc-background-simple-color);
+}
+
 body {
   display: grid;
   place-items: center;
