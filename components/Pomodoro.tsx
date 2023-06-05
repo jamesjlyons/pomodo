@@ -930,9 +930,9 @@ export default function Pomodoro() {
                             <Select.Item value="dark" className="SelectItem">
                               <Select.ItemText>Dark</Select.ItemText>
                             </Select.Item>
-                            {/* <Select.Item value="arc" className="SelectItem">
+                            <Select.Item value="arc" className="SelectItem">
                               <Select.ItemText>Arc</Select.ItemText>
-                            </Select.Item> */}
+                            </Select.Item>
                           </Select.Viewport>
                           <Select.ScrollDownButton />
                           <Select.Arrow />
