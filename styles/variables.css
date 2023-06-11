@@ -1,39 +1,38 @@
-[data-theme="light"] {
-    /* base tokens */
-    --gray0: hsl(0, 0%, 100%);
-    --gray1: hsl(0, 0%, 99%);
-    --gray2: hsl(0, 0%, 97.3%);
-    --gray3: hsl(0, 0%, 95.1%);
-    --gray4: hsl(0, 0%, 93%);
-    --gray5: hsl(0, 0%, 90.9%);
-    --gray6: hsl(0, 0%, 88.7%);
-    --gray7: hsl(0, 0%, 85.8%);
-    --gray8: hsl(0, 0%, 78%);
-    --gray9: hsl(0, 0%, 56.1%);
-    --gray10: hsl(0, 0%, 52.3%);
-    --gray11: hsl(0, 0%, 43.5%);
-    --gray12: hsl(0, 0%, 9%);
+[data-theme='light'] {
+  /* base tokens */
+  --gray0: hsl(0, 0%, 100%);
+  --gray1: hsl(0, 0%, 99%);
+  --gray2: hsl(0, 0%, 97.3%);
+  --gray3: hsl(0, 0%, 95.1%);
+  --gray4: hsl(0, 0%, 93%);
+  --gray5: hsl(0, 0%, 90.9%);
+  --gray6: hsl(0, 0%, 88.7%);
+  --gray7: hsl(0, 0%, 85.8%);
+  --gray8: hsl(0, 0%, 78%);
+  --gray9: hsl(0, 0%, 56.1%);
+  --gray10: hsl(0, 0%, 52.3%);
+  --gray11: hsl(0, 0%, 43.5%);
+  --gray12: hsl(0, 0%, 9%);
 
-    --gray100: hsl(0, 0%, 0%);
-    --glow: hsla(0, 0%, 0%, 0.25);
-    --vibrance: hsla(0, 0%, 100%, 0.8);
+  --gray100: hsl(0, 0%, 0%);
+  --glow: hsla(0, 0%, 0%, 0.25);
+  --vibrance: hsla(0, 0%, 100%, 0.8);
 
-    --grayA0: hsla(0, 0%, 0%, 0);
-    --grayA1: hsla(0, 0%, 0%, 0.012);
-    --grayA2: hsla(0, 0%, 0%, 0.027);
-    --grayA3: hsla(0, 0%, 0%, 0.047);
-    --grayA4: hsla(0, 0%, 0%, 0.071);
-    --grayA5: hsla(0, 0%, 0%, 0.09);
-    --grayA6: hsla(0, 0%, 0%, 0.114);
-    --grayA7: hsla(0, 0%, 0%, 0.141);
-    --grayA8: hsla(0, 0%, 0%, 0.22);
-    --grayA9: hsla(0, 0%, 0%, 0.439);
-    --grayA10: hsla(0, 0%, 0%, 0.478);
-    --grayA11: hsla(0, 0%, 0%, 0.565);
-    --grayA12: hsla(0, 0%, 0%, 0.91);
+  --grayA0: hsla(0, 0%, 0%, 0);
+  --grayA1: hsla(0, 0%, 0%, 0.012);
+  --grayA2: hsla(0, 0%, 0%, 0.027);
+  --grayA3: hsla(0, 0%, 0%, 0.047);
+  --grayA4: hsla(0, 0%, 0%, 0.071);
+  --grayA5: hsla(0, 0%, 0%, 0.09);
+  --grayA6: hsla(0, 0%, 0%, 0.114);
+  --grayA7: hsla(0, 0%, 0%, 0.141);
+  --grayA8: hsla(0, 0%, 0%, 0.22);
+  --grayA9: hsla(0, 0%, 0%, 0.439);
+  --grayA10: hsla(0, 0%, 0%, 0.478);
+  --grayA11: hsla(0, 0%, 0%, 0.565);
+  --grayA12: hsla(0, 0%, 0%, 0.91);
 
-
-    /* semantic tokens */
+  /* semantic tokens */
 
   --background: white;
 
@@ -42,11 +41,72 @@
   --timer-fg: var(--vibrance);
   --timer-fg-border: var(--gray3);
 
-  --timer-accent: #FFC107;
+  --timer-accent: #ffc107;
 
   --timer-text: var(--gray12);
   --timer-subtext: var(--gray9);
-  --timer-controls: #9E9E9E;
+  --timer-controls: #9e9e9e;
+  --dial-bg-inactive: var(--gray3);
+  --dial-bg-active: var(--gray100);
+  --dial-border: var(--dial-bg-active);
+  --dial-shadow: var(--glow);
+  --button-bg: var(--gray1);
+  --button-icon: var(--gray9);
+  --button-text: var(--gray9);
+
+  --overlay-bg: var(--grayA3);
+  --overlay-border: var(--grayA4);
+  --overlay-text: var(--gray11);
+  --overlay-subtext: var(--gray9);
+}
+
+[data-theme='dark'] {
+  /* base tokens */
+  --gray0: hsl(0, 0%, 0%);
+  --gray1: hsl(0, 0%, 8.5%);
+  --gray2: hsl(0, 0%, 11%);
+  --gray3: hsl(0, 0%, 13.6%);
+  --gray4: hsl(0, 0%, 15.8%);
+  --gray5: hsl(0, 0%, 17.9%);
+  --gray6: hsl(0, 0%, 20.5%);
+  --gray7: hsl(0, 0%, 24.3%);
+  --gray8: hsl(0, 0%, 31.2%);
+  --gray9: hsl(0, 0%, 43.9%);
+  --gray10: hsl(0, 0%, 49.4%);
+  --gray11: hsl(0, 0%, 62.8%);
+  --gray12: hsl(0, 0%, 93%);
+
+  --gray100: hsl(0, 0%, 100%);
+  --glow: hsla(0, 0%, 100%, 0.25);
+  --vibrance: hsla(0, 0%, 3%, 0.8);
+
+  --grayA0: hsla(0, 0%, 100%, 0);
+  --grayA1: hsla(0, 0%, 100%, 0);
+  --grayA2: hsla(0, 0%, 100%, 0.026);
+  --grayA3: hsla(0, 0%, 100%, 0.056);
+  --grayA4: hsla(0, 0%, 100%, 0.077);
+  --grayA5: hsla(0, 0%, 100%, 0.103);
+  --grayA6: hsla(0, 0%, 100%, 0.129);
+  --grayA7: hsla(0, 0%, 100%, 0.172);
+  --grayA8: hsla(0, 0%, 100%, 0.249);
+  --grayA9: hsla(0, 0%, 100%, 0.386);
+  --grayA10: hsla(0, 0%, 100%, 0.446);
+  --grayA11: hsla(0, 0%, 100%, 0.592);
+  --grayA12: hsla(0, 0%, 100%, 0.923);
+
+  /* semantic tokens */
+  --background: black;
+
+  --timer-bg: var(--grayA1);
+  --timer-bg-border: var(--gray2);
+  --timer-fg: var(--vibrance);
+  --timer-fg-border: var(--gray3);
+
+  --timer-accent: #ffc107;
+
+  --timer-text: var(--gray12);
+  --timer-subtext: var(--gray9);
+  --timer-controls: #9e9e9e;
   --dial-bg-inactive: var(--gray3);
   --dial-bg-active: var(--gray100);
   --dial-border: var(--dial-bg-active);
@@ -60,83 +120,33 @@
   --overlay-text: var(--gray11);
   --overlay-subtext: var(--gray9);
 
+  --switch-bg: var(--gray4);
+  --switch-border: var(--gray8);
+  --switch-thumb: white;
+  --switch-thumb-shadow: var(--gray1);
+  --switch-tap-highlight: var(--gray11);
+  --switch-focus: var(--gray12);
+  --switch-bg-checked: var(--switch-tap-highlight);
+  --switch-border-checked: var(--switch-bg-checked);
+
+  --toast-bg: var(--gray1);
+  --toast-border: var(--gray3);
+  --toast-text: var(--gray12);
+
+  --slider-track: var(--grayA5);
+  --slider-thumb: var(--switch-thumb);
+  --slider-focus: var(--grayA8);
+  --slider-range: var(--gray11);
+  --slider-hover: var(--gray2);
 }
 
-[data-theme='dark'] {
-    /* base tokens */
-    --gray0: hsl(0, 0%, 0%);
-    --gray1: hsl(0, 0%, 8.5%);
-    --gray2: hsl(0, 0%, 11%);
-    --gray3: hsl(0, 0%, 13.6%);
-    --gray4: hsl(0, 0%, 15.8%);
-    --gray5: hsl(0, 0%, 17.9%);
-    --gray6: hsl(0, 0%, 20.5%);
-    --gray7: hsl(0, 0%, 24.3%);
-    --gray8: hsl(0, 0%, 31.2%);
-    --gray9: hsl(0, 0%, 43.9%);
-    --gray10: hsl(0, 0%, 49.4%);
-    --gray11: hsl(0, 0%, 62.8%);
-    --gray12: hsl(0, 0%, 93%);
+[data-theme='arc'] {
+  /* background defined in global.css */
 
-    --gray100: hsl(0, 0%, 100%);
-    --glow: hsla(0, 0%, 100%, 0.25);
-    --vibrance: hsla(0, 0%, 3%, 0.8);
-
-    --grayA0: hsla(0, 0%, 100%, 0);
-    --grayA1: hsla(0, 0%, 100%, 0);
-    --grayA2: hsla(0, 0%, 100%, 0.026);
-    --grayA3: hsla(0, 0%, 100%, 0.056);
-    --grayA4: hsla(0, 0%, 100%, 0.077);
-    --grayA5: hsla(0, 0%, 100%, 0.103);
-    --grayA6: hsla(0, 0%, 100%, 0.129);
-    --grayA7: hsla(0, 0%, 100%, 0.172);
-    --grayA8: hsla(0, 0%, 100%, 0.249);
-    --grayA9: hsla(0, 0%, 100%, 0.386);
-    --grayA10: hsla(0, 0%, 100%, 0.446);
-    --grayA11: hsla(0, 0%, 100%, 0.592);
-    --grayA12: hsla(0, 0%, 100%, 0.923);
-
-    /* semantic tokens */
-    --background: black;
-
-    --timer-bg: var(--grayA1);
-    --timer-bg-border: var(--gray2);
-    --timer-fg: var(--vibrance);
-    --timer-fg-border: var(--gray3);
-
-    --timer-accent: #FFC107;
-
-    --timer-text: var(--gray12);
-    --timer-subtext: var(--gray9);
-    --timer-controls: #9E9E9E;
-    --dial-bg-inactive: var(--gray3);
-    --dial-bg-active: var(--gray100);
-    --dial-border: var(--dial-bg-active);
-    --dial-shadow: var(--glow);
-    --button-bg: var(--gray1);
-    --button-icon: var(--gray9);
-    --button-text: var(--gray9);
-
-    --overlay-bg: var(--grayA3);
-    --overlay-border: var(--grayA4);
-    --overlay-text: var(--gray11);
-    --overlay-subtext: var(--gray9);
-
-
-    --switch-bg: #BDBDBD;
-    --switch-bg-active: #4CAF50;
-    --switch-thumb: #FFFFFF;
-
-}
-
-
-[data-theme='arc']  {
-/* background defined in global.css */
-
-    --timer-bg: var(--arc-palette-backgroundExtra);
-    --timer-bg-border: var(--arc-palette-focus);
+  --timer-bg: var(--arc-palette-backgroundExtra);
+  --timer-bg-border: var(--arc-palette-focus);
   --timer-fg: var(--arc-palette-background);
   --timer-fg-border: var(--arc-palette-focus);
---timer-text: var(--arc-palette-title);
---button-bg: var(--arc-palette-background);
+  --timer-text: var(--arc-palette-title);
+  --button-bg: var(--arc-palette-background);
 }
