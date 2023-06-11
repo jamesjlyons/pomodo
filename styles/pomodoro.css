@@ -230,7 +230,7 @@
 .settings {
   color: var(--overlay-text);
   background-color: var(--overlay-bg);
-  border: 1px solid var(--grayA4);
+  border: 1px solid var(--overlay-border);
   backdrop-filter: blur(10px);
   padding: 16px 20px;
   border-radius: 24px;

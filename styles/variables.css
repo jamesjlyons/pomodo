@@ -15,7 +15,7 @@
   --gray12: hsl(0, 0%, 9%);
 
   --gray100: hsl(0, 0%, 0%);
-  --glow: hsla(0, 0%, 0%, 0.25);
+  --glow: hsla(0, 0%, 0%, 0.15);
   --vibrance: hsla(0, 0%, 100%, 0.8);
 
   --grayA0: hsla(0, 0%, 0%, 0);
@@ -56,7 +56,7 @@
   --settings-button-text: var(--gray9);
 
   --overlay-bg: var(--grayA2);
-  --overlay-border: var(--grayA5);
+  --overlay-border: var(--grayA4);
   --overlay-text: var(--gray11);
   --overlay-subtext: var(--gray9);
 
