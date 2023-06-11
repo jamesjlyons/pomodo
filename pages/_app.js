@@ -19,7 +19,7 @@ export default function MyApp({ Component, pageProps }) {
     printAsciiArt();
   }, []);
   return (
-    <ThemeProvider themes={['light', 'dark', 'arc']}>
+    <ThemeProvider themes={['light', 'dark', 'arc']} defaultTheme="dark">
       <Component {...pageProps} />
       <Analytics />
     </ThemeProvider>

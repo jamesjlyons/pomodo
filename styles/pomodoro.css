@@ -10,17 +10,11 @@
 }
 
 .container-outer {
-  border: 1px solid var(--gray2);
+  border: 1px solid var(--timer-bg-border);
   padding: 4px;
   border-radius: 28px;
-  background-color: var(--grayA1);
+  background-color: var(--timer-bg);
   -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
-}
-
-[data-theme='arc'] .container-outer {
-    border: 1px solid var(--arc-palette-focus);
-    background-color: var(--arc-palette-backgroundExtra);
-    -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
 }
 
 .container-outer:before {
@@ -59,7 +53,6 @@
 }
 
 [data-theme='arc'] .container-outer.active:before {
-
   background: conic-gradient(
       from 0deg at 50% 50%,
       var(--arc-palette-backgroundExtra) 0deg,
@@ -87,9 +80,9 @@
 }
 
 .container-inner {
-  border: 1px solid var(--gray3);
+  border: 1px solid var(--timer-fg-border);
   border-radius: 24px;
-  background-color: var(--vibrance);
+  background-color: var(--timer-fg);
   backdrop-filter: blur(100px);
   min-width: 430px;
   padding: 24px;
@@ -97,11 +90,6 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-}
-
-[data-theme='arc'] .container-inner {
-  border: 1px solid var(--arc-palette-focus);
-  background-color: var(--arc-palette-background);
 }
 
 .session {
@@ -127,7 +115,7 @@
   letter-spacing: -1.43px;
   font-feature-settings: 'tnum' on, 'lnum' on, 'ss01' on;
   margin: 0;
-  color: var(--gray12);
+  color: var(--timer-text);
 
   display: flex;
   align-items: center;
@@ -136,7 +124,8 @@
   height: 0.85em;
   padding-bottom: 0.23em;
 
-  --background: #FFFFFF;
+  /* number contaner fade */
+  --background: #ffffff;
   --color: rgba(0, 0, 0, 0.5);
   --height: 0.85em;
   --width: 5px;
@@ -149,22 +138,13 @@
   left: calc(var(--offset) / 2 * -1);
 
   mask-composite: exclude;
-    -webkit-mask:
-      linear-gradient(
-        to bottom,
-        var(--background) var(--fade-stop),
-        transparent
-      ),
-      linear-gradient(
-        to top,
-        var(--background) var(--fade-stop),
-        transparent
-      ),
-      linear-gradient(black, black);
-}
-
-[data-theme='arc'] .timer {
-    color: var(--arc-palette-title);
+  -webkit-mask: linear-gradient(
+      to bottom,
+      var(--background) var(--fade-stop),
+      transparent
+    ),
+    linear-gradient(to top, var(--background) var(--fade-stop), transparent),
+    linear-gradient(black, black);
 }
 
 .digit-group {
@@ -178,8 +158,6 @@
   width: 1ch;
   height: 1em;
   overflow: hidden;
-
-
 }
 
 .digit-container > span {
@@ -197,7 +175,7 @@
   font-size: 13px;
   line-height: 16px;
   letter-spacing: -0.04px;
-  color: var(--gray9);
+  color: var(--timer-subtext);
 
   position: relative;
   display: inline-block;
@@ -215,7 +193,10 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: conic-gradient(var(--gray3) 0%, var(--gray3) 100%);
+  background: conic-gradient(
+    var(--dial-bg-inactive) 0%,
+    var(--dial-bg-inactive) 100%
+  );
   scale: 1;
   transition: border 0.15s ease-out, box-shadow 0.15s ease-out,
     scale 0.15s ease-out;
@@ -223,21 +204,21 @@
 }
 
 .dial[data-active='true'] {
-  background: conic-gradient(var(--gray100) 0%, var(--grayA0));
-  box-shadow: 0px 0px 8px 3px var(--glow);
-  border: 1px solid var(--gray100);
+  background: conic-gradient(var(--dial-bg-active) 0%, transparent);
+  box-shadow: 0px 0px 8px 3px var(--dial-shadow);
+  border: 1px solid var(--dial-border);
   scale: 1.1;
 }
 
 .settingsButton {
   display: flex;
   align-items: center;
-  padding: 4px 16px 4px 8px;
+  padding: 4px 12px 4px 4px;
   gap: 5px;
   margin-bottom: 48px;
 
-  background: var(--gray1);
-  color: var(--gray9);
+  background: var(--settings-button-bg);
+  color: var(--settings-button-text);
   border: none;
   border-radius: 24px;
   font-size: 16px;
@@ -247,9 +228,9 @@
 }
 
 .settings {
-  color: var(--gray11);
-  background-color: var(--grayA3);
-  border: 1px solid var(--grayA4);
+  color: var(--overlay-text);
+  background-color: var(--overlay-bg);
+  border: 1px solid var(--overlay-border);
   backdrop-filter: blur(10px);
   padding: 16px 20px;
   border-radius: 24px;
@@ -291,18 +272,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 0 15px;
   font-size: 13px;
   line-height: 1;
   height: 35px;
   gap: 5px;
-  background-color: var(--gray2);
-  color: var(--violet11);
+  background-color: var(--button-bg);
+  border: 1px solid var(--button-border);
+  color: var(--button-text);
   box-shadow: 0 2px 10px var(--blackA7);
 }
 .SelectTrigger:hover {
-  background-color: var(--gray3);
+  background-color: var(--button-bg-hover);
 }
 .SelectTrigger:focus {
   box-shadow: 0 0 0 2px var(--grayA12);
@@ -310,12 +292,15 @@
 
 .SelectIcon {
   color: Var(--grayA11);
+  transform: translateY(2px);
 }
 
 .SelectContent {
   overflow: hidden;
-  background-color: var(--gray1);
+  background-color: var(--select-content-bg);
   border-radius: 6px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35),
     0px 10px 20px -15px rgba(22, 23, 24, 0.2);
 }
@@ -327,7 +312,7 @@
 .SelectItem {
   font-size: 13px;
   line-height: 1;
-  color: var(--gray12);
+  color: var(--select-text);
   border-radius: 3px;
   display: flex;
   align-items: center;
@@ -337,20 +322,19 @@
   user-select: none;
 }
 .SelectItem[data-disabled] {
-  color: var(--gray9);
+  color: var(--select-text-disabled);
   pointer-events: none;
 }
 .SelectItem[data-highlighted] {
   outline: none;
-  background-color: var(--gray11);
-  color: var(--gray1);
+  background-color: var(--select-bg-highlighted);
+  color: var(--select-text-highlighted);
 }
 
 .SelectLabel {
   padding: 0 25px;
   font-size: 12px;
   line-height: 25px;
-  color: var(--mauve11);
 }
 
 .SelectItemIndicator {
