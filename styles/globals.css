@@ -215,7 +215,7 @@ a {
   width: 20px;
   height: 20px;
   background-color: var(--slider-thumb);
-  box-shadow: 0 2px 10px var(--grayA7);
+  box-shadow: 0 0.5px 1px var(--switch-thumb-shadow);
   border-radius: 10px;
 }
 .SliderThumb:hover {

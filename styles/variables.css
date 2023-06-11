@@ -63,7 +63,7 @@
   --switch-bg: var(--gray4);
   --switch-border: var(--gray8);
   --switch-thumb: white;
-  --switch-thumb-shadow: var(--gray1);
+  --switch-thumb-shadow: var(--gray11);
   --switch-tap-highlight: var(--gray11);
   --switch-focus: var(--gray12);
   --switch-bg-checked: var(--switch-tap-highlight);
