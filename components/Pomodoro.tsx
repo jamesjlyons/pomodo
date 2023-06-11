@@ -332,7 +332,7 @@ export default function Pomodoro() {
           100 -
           ((event.data.minutes * 60 + event.data.seconds) /
             (timer.pomodoro * 60)) *
-          100;
+            100;
         updateDials(event.data.pmdrCount, progress);
       }
       if (event.data.newSession) {
@@ -454,13 +454,17 @@ export default function Pomodoro() {
       .findIndex((digit, i) => digit !== prevTimerSeconds[i]);
 
   const slideVariants = {
-    hidden: { opacity: 1, y: `100%`, },
+    hidden: { opacity: 1, y: `100%` },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: "spring", duration: 0.25, bounce: 0.25 }
+      transition: { type: 'spring', duration: 0.25, bounce: 0.25 },
     },
-    exit: { opacity: 1, y: `-100%`, transition: { type: "spring", duration: 0.25, bounce: 0 } },
+    exit: {
+      opacity: 1,
+      y: `-100%`,
+      transition: { type: 'spring', duration: 0.25, bounce: 0 },
+    },
   };
 
   const dialItems = {
@@ -528,7 +532,7 @@ export default function Pomodoro() {
                             variants={slideVariants}
                             initial={
                               prevTimerMinutes &&
-                                prevTimerMinutes[index] !== digit
+                              prevTimerMinutes[index] !== digit
                                 ? 'hidden'
                                 : 'visible'
                             }
@@ -561,7 +565,7 @@ export default function Pomodoro() {
                             variants={slideVariants}
                             initial={
                               prevTimerSeconds &&
-                                prevTimerSeconds[index] !== digit
+                              prevTimerSeconds[index] !== digit
                                 ? 'hidden'
                                 : 'visible'
                             }
@@ -774,7 +778,7 @@ export default function Pomodoro() {
               whileTap={{ scale: 0.9 }}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-            // transition={{ duration: 0.5, delay: 0.5 }}
+              // transition={{ duration: 0.5, delay: 0.5 }}
             >
               {!settingsOpen && (
                 <svg
@@ -930,9 +934,9 @@ export default function Pomodoro() {
                             <Select.Item value="dark" className="SelectItem">
                               <Select.ItemText>Dark</Select.ItemText>
                             </Select.Item>
-                            <Select.Item value="arc" className="SelectItem">
+                            {/* <Select.Item value="arc" className="SelectItem">
                               <Select.ItemText>Arc</Select.ItemText>
-                            </Select.Item>
+                            </Select.Item> */}
                           </Select.Viewport>
                           <Select.ScrollDownButton />
                           <Select.Arrow />
