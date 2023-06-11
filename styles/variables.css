@@ -83,6 +83,12 @@
   --button-border: var(--gray5);
   --button-text: var(--gray12);
   --button-bg-hover: var(--gray4);
+
+  --select-text: var(--button-text);
+  --select-text-disabled: var(--gray9);
+  --select-text-highlighted: var(--gray1);
+  --select-bg-highlighted: var(--gray11);
+  --select-content-bg: var(--button-bg);
 }
 
 [data-theme='dark'] {
@@ -169,6 +175,12 @@
   --button-border: var(--gray5);
   --button-text: var(--gray12);
   --button-bg-hover: var(--gray4);
+
+  --select-text: var(--button-text);
+  --select-text-disabled: var(--gray9);
+  --select-text-highlighted: var(--gray1);
+  --select-bg-highlighted: var(--gray11);
+  --select-content-bg: var(--button-bg);
 }
 
 [data-theme='arc'] {
