@@ -72,7 +72,7 @@ export default function NotificationControls({
         </span>
       )}
       {notifPerm === 'default' && (
-        <button onClick={handleNotificationPermissions}>
+        <button className="button" onClick={handleNotificationPermissions}>
           Enable notifications
         </button>
       )}

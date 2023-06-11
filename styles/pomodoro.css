@@ -17,7 +17,6 @@
   -webkit-mask-image: -webkit-radial-gradient(#fff, #000);
 }
 
-
 .container-outer:before {
   content: '';
   position: fixed;
@@ -54,7 +53,6 @@
 }
 
 [data-theme='arc'] .container-outer.active:before {
-
   background: conic-gradient(
       from 0deg at 50% 50%,
       var(--arc-palette-backgroundExtra) 0deg,
@@ -94,7 +92,6 @@
   align-items: center;
 }
 
-
 .session {
   display: flex;
   flex-direction: column;
@@ -128,7 +125,7 @@
   padding-bottom: 0.22em;
 
   /* number contaner fade */
-  --background: #FFFFFF;
+  --background: #ffffff;
   --color: rgba(0, 0, 0, 0.5);
   --height: 0.85em;
   --width: 5px;
@@ -141,18 +138,13 @@
   left: calc(var(--offset) / 2 * -1);
 
   mask-composite: exclude;
-    -webkit-mask:
-      linear-gradient(
-        to bottom,
-        var(--background) var(--fade-stop),
-        transparent
-      ),
-      linear-gradient(
-        to top,
-        var(--background) var(--fade-stop),
-        transparent
-      ),
-      linear-gradient(black, black);
+  -webkit-mask: linear-gradient(
+      to bottom,
+      var(--background) var(--fade-stop),
+      transparent
+    ),
+    linear-gradient(to top, var(--background) var(--fade-stop), transparent),
+    linear-gradient(black, black);
 }
 
 .digit-group {
@@ -166,8 +158,6 @@
   width: 1ch;
   height: 1em;
   overflow: hidden;
-
-
 }
 
 .digit-container > span {
@@ -203,7 +193,10 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: conic-gradient(var(--dial-bg-inactive) 0%, var(--dial-bg-inactive) 100%);
+  background: conic-gradient(
+    var(--dial-bg-inactive) 0%,
+    var(--dial-bg-inactive) 100%
+  );
   scale: 1;
   transition: border 0.15s ease-out, box-shadow 0.15s ease-out,
     scale 0.15s ease-out;
@@ -220,12 +213,12 @@
 .settingsButton {
   display: flex;
   align-items: center;
-  padding: 4px 16px 4px 8px;
+  padding: 4px 12px 4px 4px;
   gap: 5px;
   margin-bottom: 48px;
 
-  background: var(--button-bg);
-  color: var(--button-text);
+  background: var(--settings-button-bg);
+  color: var(--settings-button-text);
   border: none;
   border-radius: 24px;
   font-size: 16px;
@@ -279,18 +272,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 0 15px;
   font-size: 13px;
   line-height: 1;
   height: 35px;
   gap: 5px;
-  background-color: var(--gray2);
-  color: var(--violet11);
+  background-color: var(--button-bg);
+  border: 1px solid var(--button-border);
+  color: var(--button-text);
   box-shadow: 0 2px 10px var(--blackA7);
 }
 .SelectTrigger:hover {
-  background-color: var(--gray3);
+  background-color: var(--button-bg-hover);
 }
 .SelectTrigger:focus {
   box-shadow: 0 0 0 2px var(--grayA12);
@@ -298,6 +292,7 @@
 
 .SelectIcon {
   color: Var(--grayA11);
+  transform: translateY(2px);
 }
 
 .SelectContent {
@@ -315,7 +310,7 @@
 .SelectItem {
   font-size: 13px;
   line-height: 1;
-  color: var(--gray12);
+  color: var(--button-text);
   border-radius: 3px;
   display: flex;
   align-items: center;
@@ -338,7 +333,6 @@
   padding: 0 25px;
   font-size: 12px;
   line-height: 25px;
-  color: var(--mauve11);
 }
 
 .SelectItemIndicator {

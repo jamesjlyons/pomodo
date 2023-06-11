@@ -226,4 +226,21 @@ a {
   box-shadow: 0 0 0 1px var(--slider-focus);
 }
 
+.button {
+  all: unset;
+  background-color: var(--button-bg);
+  padding: 0 15px;
+  font-size: 0.8125rem;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid var(--button-border);
+  cursor: pointer;
+  color: var(--button-text);
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: var(--button-bg-hover);
+}
+
 @import './pomodoro.css';

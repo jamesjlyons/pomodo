@@ -50,14 +50,39 @@
   --dial-bg-active: var(--gray100);
   --dial-border: var(--dial-bg-active);
   --dial-shadow: var(--glow);
-  --button-bg: var(--gray1);
-  --button-icon: var(--gray9);
-  --button-text: var(--gray9);
 
-  --overlay-bg: var(--grayA3);
-  --overlay-border: var(--grayA4);
+  --settings-button-bg: var(--gray1);
+  --settings-button-icon: var(--gray9);
+  --settings-button-text: var(--gray9);
+
+  --overlay-bg: var(--grayA2);
+  --overlay-border: var(--grayA5);
   --overlay-text: var(--gray11);
   --overlay-subtext: var(--gray9);
+
+  --switch-bg: var(--gray4);
+  --switch-border: var(--gray8);
+  --switch-thumb: white;
+  --switch-thumb-shadow: var(--gray1);
+  --switch-tap-highlight: var(--gray11);
+  --switch-focus: var(--gray12);
+  --switch-bg-checked: var(--switch-tap-highlight);
+  --switch-border-checked: var(--switch-bg-checked);
+
+  --toast-bg: var(--gray1);
+  --toast-border: var(--gray3);
+  --toast-text: var(--gray12);
+
+  --slider-track: var(--grayA5);
+  --slider-thumb: var(--switch-thumb);
+  --slider-focus: var(--grayA8);
+  --slider-range: var(--gray11);
+  --slider-hover: var(--gray2);
+
+  --button-bg: var(--gray3);
+  --button-border: var(--gray5);
+  --button-text: var(--gray12);
+  --button-bg-hover: var(--gray4);
 }
 
 [data-theme='dark'] {
@@ -111,9 +136,10 @@
   --dial-bg-active: var(--gray100);
   --dial-border: var(--dial-bg-active);
   --dial-shadow: var(--glow);
-  --button-bg: var(--gray1);
-  --button-icon: var(--gray9);
-  --button-text: var(--gray9);
+
+  --settings-button-bg: var(--gray1);
+  --settings-button-icon: var(--gray9);
+  --settings-button-text: var(--gray9);
 
   --overlay-bg: var(--grayA3);
   --overlay-border: var(--grayA4);
@@ -138,6 +164,11 @@
   --slider-focus: var(--grayA8);
   --slider-range: var(--gray11);
   --slider-hover: var(--gray2);
+
+  --button-bg: var(--gray3);
+  --button-border: var(--gray5);
+  --button-text: var(--gray12);
+  --button-bg-hover: var(--gray4);
 }
 
 [data-theme='arc'] {
