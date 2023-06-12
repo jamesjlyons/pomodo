@@ -119,7 +119,7 @@
 
   display: flex;
   align-items: center;
-/*   transform: translateY(-6px); */
+  /*   transform: translateY(-6px); */
 
   height: 0.85em;
   padding-bottom: 0.23em;
@@ -236,8 +236,10 @@
   border-radius: 24px;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   gap: 32px;
   max-width: 90vw;
+  min-width: 300px;
 }
 
 .shortcuts > h4,
@@ -245,19 +247,45 @@
 .notif > h4,
 .theme > h4 {
   margin: 0;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .soundAndNotif {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px;
+}
+
+.settingsRight {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.shortcuts > p {
+  line-height: 1.5;
+  font-size: 13px;
 }
 
 .switch {
   display: flex;
   gap: 8px;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sound > form,
+.soundAndNotifItems {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.volume-control {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 /* .themeButtons {

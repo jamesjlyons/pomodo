@@ -65,7 +65,7 @@ export default function NotificationControls({
   }, []);
 
   return (
-    <div className="notificationControls" style={{ marginTop: 8 }}>
+    <div className="notificationControls">
       {notifPerm === 'unknown' && (
         <span style={{ fontSize: 12, opacity: 0.5 }}>
           Checking notification permissions...

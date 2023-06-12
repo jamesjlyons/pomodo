@@ -831,26 +831,27 @@ export default function Pomodoro() {
                 <div className="soundAndNotif">
                   <div className="notif">
                     <h4>Notifications</h4>
-                    <form>
-                      <div className="switch">
-                        <label className="Label" htmlFor="sound">
-                          Notification Sound
-                        </label>
-                        <Switch.Root
-                          className="SwitchRoot"
-                          id="sound"
-                          checked={sound}
-                          onCheckedChange={() => setSound(!sound)}
-                        >
-                          <Switch.Thumb className="SwitchThumb" />
-                        </Switch.Root>
-                      </div>
-                    </form>
-
-                    <NotificationControls
-                      notifEnabled={notifEnabled}
-                      setNotifEnabled={setNotifEnabled}
-                    />
+                    <div className="soundAndNotifItems">
+                      <NotificationControls
+                        notifEnabled={notifEnabled}
+                        setNotifEnabled={setNotifEnabled}
+                      />
+                      <form>
+                        <div className="switch">
+                          <label className="Label" htmlFor="sound">
+                            Notification Sound
+                          </label>
+                          <Switch.Root
+                            className="SwitchRoot"
+                            id="sound"
+                            checked={sound}
+                            onCheckedChange={() => setSound(!sound)}
+                          >
+                            <Switch.Thumb className="SwitchThumb" />
+                          </Switch.Root>
+                        </div>
+                      </form>
+                    </div>
                   </div>
 
                   <div className="sound">
@@ -892,9 +893,11 @@ export default function Pomodoro() {
                       </div>
                     </form>
                   </div>
+                </div>
 
+                <div className="settingsRight">
                   <div className="theme">
-                    <h4>Theme</h4>
+                    <h4>Appearance</h4>
 
                     <Select.Root
                       defaultValue={theme}
@@ -944,15 +947,17 @@ export default function Pomodoro() {
                       </Select.Portal>
                     </Select.Root>
                   </div>
-                </div>
 
-                <div className="shortcuts">
-                  <h4>Keyboard shortcuts</h4>
-                  <p>
-                    Start/Pause: space or p <br />
-                    Reset: ← or r <br />
-                    Skip: → or s <br /> Add minute: ↑<br /> Subtract minute: ↓
-                  </p>
+                  <div className="shortcuts">
+                    <h4>Keyboard shortcuts</h4>
+                    <p>
+                      Start/Pause: space or p <br />
+                      Reset: ← or r <br />
+                      Skip: → or s <br />
+                      Add minute: ↑<br />
+                      Subtract minute: ↓
+                    </p>
+                  </div>
                 </div>
               </motion.div>
 
