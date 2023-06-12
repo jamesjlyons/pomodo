@@ -256,18 +256,27 @@ export default function Pomodoro() {
 
     const playSoundForSessionType = (sessionType: String) => {
       if (sessionType === 'work') {
-        playSound('C4', '8n', Tone.now());
-        playSound('F4', '8n', Tone.now() + 0.15);
-        playSound('E4', '8n', Tone.now() + 0.3);
+        // playSound('C4', '8n', Tone.now());
+        // playSound('F4', '8n', Tone.now() + 0.15);
+        // playSound('E4', '8n', Tone.now() + 0.3);
+        const player = new Tone.Player('/sounds/Alert 5.m4a').toDestination();
+        // play as soon as the buffer is loaded
+        player.autostart = true;
       } else if (sessionType === 'shortBreak') {
-        playSound('C4', '8n', Tone.now());
-        playSound('A4', '8n', Tone.now() + 0.15);
-        playSound('B4', '8n', Tone.now() + 0.3);
+        // playSound('C4', '8n', Tone.now());
+        // playSound('A4', '8n', Tone.now() + 0.15);
+        // playSound('B4', '8n', Tone.now() + 0.3);
+        const player = new Tone.Player('/sounds/Alert 1.m4a').toDestination();
+        // play as soon as the buffer is loaded
+        player.autostart = true;
       } else if (sessionType === 'longBreak') {
-        playSound('C4', '8n', Tone.now());
-        playSound('E4', '8n', Tone.now() + 0.15);
-        playSound('G4', '8n', Tone.now() + 0.3);
-        playSound('B4', '8n', Tone.now() + 0.45);
+        // playSound('C4', '8n', Tone.now());
+        // playSound('E4', '8n', Tone.now() + 0.15);
+        // playSound('G4', '8n', Tone.now() + 0.3);
+        // playSound('B4', '8n', Tone.now() + 0.45);
+        const player = new Tone.Player('/sounds/Success 2.m4a').toDestination();
+        // play as soon as the buffer is loaded
+        player.autostart = true;
       }
     };
 
