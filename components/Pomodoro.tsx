@@ -960,11 +960,15 @@ export default function Pomodoro() {
                   <div className="shortcuts">
                     <h4>Keyboard shortcuts</h4>
                     <p>
-                      Start/Pause: space or p <br />
-                      Reset: ← or r <br />
-                      Skip: → or s <br />
-                      Add minute: ↑<br />
-                      Subtract minute: ↓
+                      <span>
+                        Start/Pause: space or p <br />
+                        Reset: ← or r <br />
+                        Skip: → or s <br />
+                      </span>
+                      <span>
+                        Add minute: ↑<br />
+                        Subtract minute: ↓
+                      </span>
                     </p>
                   </div>
                 </div>

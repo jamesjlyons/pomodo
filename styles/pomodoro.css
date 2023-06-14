@@ -265,6 +265,9 @@
 .shortcuts > p {
   line-height: 1.5;
   font-size: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
 }
 
 .switch {
