@@ -32,7 +32,7 @@ export default function Pomodoro() {
   const [sound, setSound] = useState(true);
   const [prevSessionType, setPrevSessionType] = useState('work');
   const [newSession, setNewSession] = useState(true);
-  const [notifEnabled, setNotifEnabled] = useState<boolean>(false);
+  const [notifEnabled, setNotifEnabled] = useState<boolean>(true);
   const [toastContent, setToastContent] = useState('');
   const [toastOpen, setToastOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -341,7 +341,7 @@ export default function Pomodoro() {
           100 -
           ((event.data.minutes * 60 + event.data.seconds) /
             (timer.pomodoro * 60)) *
-            100;
+          100;
         updateDials(event.data.pmdrCount, progress);
       }
       if (event.data.newSession) {
@@ -541,7 +541,7 @@ export default function Pomodoro() {
                             variants={slideVariants}
                             initial={
                               prevTimerMinutes &&
-                              prevTimerMinutes[index] !== digit
+                                prevTimerMinutes[index] !== digit
                                 ? 'hidden'
                                 : 'visible'
                             }
@@ -574,7 +574,7 @@ export default function Pomodoro() {
                             variants={slideVariants}
                             initial={
                               prevTimerSeconds &&
-                              prevTimerSeconds[index] !== digit
+                                prevTimerSeconds[index] !== digit
                                 ? 'hidden'
                                 : 'visible'
                             }
@@ -787,7 +787,7 @@ export default function Pomodoro() {
               whileTap={{ scale: 0.9 }}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              // transition={{ duration: 0.5, delay: 0.5 }}
+            // transition={{ duration: 0.5, delay: 0.5 }}
             >
               {!settingsOpen && (
                 <svg
