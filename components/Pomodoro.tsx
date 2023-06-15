@@ -10,6 +10,7 @@ import * as Popover from '@radix-ui/react-popover';
 import * as Select from '@radix-ui/react-select';
 import { useTheme } from 'next-themes';
 import IconButton from './IconButton';
+import { usePlausible } from 'next-plausible'
 
 export default function Pomodoro() {
   let timer = {
@@ -45,6 +46,8 @@ export default function Pomodoro() {
   const timerWorkerRef = useRef<Worker | null>();
   const toastTimeRef = useRef(0);
 
+  const plausible = usePlausible()
+
   function handleStart() {
     if (!timerRunning) {
       setTimerRunning(true);
@@ -56,6 +59,7 @@ export default function Pomodoro() {
       if (newSession) {
         // update dial styles immediately on new session. This is to prevent the first dial not showing in progress until the first 'tick' is recieved from the worker a second later.
         updateDials(pmdrCount, 0);
+        plausible('newSessionStarted');
       }
     } else {
       setTimerRunning(false);
@@ -70,6 +74,7 @@ export default function Pomodoro() {
         const progress =
           100 - ((minutes * 60 + seconds) / (timer.pomodoro * 60)) * 100;
         updateDials(pmdrCount, progress);
+        plausible('skipped');
       }
     } else {
       timerWorkerRef.current?.postMessage({ action: 'skip' });
@@ -78,6 +83,7 @@ export default function Pomodoro() {
 
   const handleReset = () => {
     timerWorkerRef.current?.postMessage({ action: 'reset' });
+    plausible('reset');
   };
 
   const handleSubtract = () => {
@@ -86,6 +92,7 @@ export default function Pomodoro() {
 
       // Update the minutes immediately
       setMinutes((prevMinutes) => prevMinutes - 1);
+      plausible('subtract');
     }
   };
 
@@ -94,6 +101,7 @@ export default function Pomodoro() {
 
     // Update the minutes immediately
     setMinutes((prevMinutes) => prevMinutes + 1);
+    plausible('add');
   };
 
   function spawnNotification(body: string, title: string) {
