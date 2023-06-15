@@ -20,8 +20,10 @@ export default function MyApp({ Component, pageProps }) {
   }, []);
   return (
     <ThemeProvider themes={['light', 'dark', 'arc']} defaultTheme="dark">
-      <Component {...pageProps} />
-      <Analytics />
+      <PlausibleProvider domain="pomodoro.jameslyons.design">
+        <Component {...pageProps} />
+        <Analytics />
+      </PlausibleProvider>
     </ThemeProvider>
   );
 }
