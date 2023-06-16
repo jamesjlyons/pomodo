@@ -31,6 +31,7 @@ function HomePage() {
         <meta name="msapplication-tap-highlight" content="no" />
         {/* <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" /> */}
+        <meta name="theme-color" content="#000000" />
 
         <link rel="apple-touch-icon" href="/icons/72.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/icons/152.png" />
