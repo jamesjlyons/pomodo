@@ -57,6 +57,7 @@
 
   --overlay-bg: var(--grayA2);
   --overlay-border: var(--grayA4);
+  --overlay-heading: var(--gray12);
   --overlay-text: var(--gray11);
   --overlay-subtext: var(--gray9);
 
@@ -149,6 +150,7 @@
 
   --overlay-bg: var(--grayA3);
   --overlay-border: var(--grayA4);
+  --overlay-heading: var(--gray12);
   --overlay-text: var(--gray11);
   --overlay-subtext: var(--gray9);
 

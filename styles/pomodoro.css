@@ -248,6 +248,7 @@
 .theme > h4 {
   margin: 0;
   margin-bottom: 12px;
+  color: var(--overlay-heading);
 }
 
 .soundAndNotif {
