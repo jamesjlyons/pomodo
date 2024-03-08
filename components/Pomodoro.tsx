@@ -202,7 +202,7 @@ export default function Pomodoro() {
           break;
         case 'ArrowDown':
           handleSubtract();
-          showToast('Minute Ssubtracted');
+          showToast('Minute Subtracted');
           break;
         case 'KeyB':
           setBrownNoise(!brownNoise);
