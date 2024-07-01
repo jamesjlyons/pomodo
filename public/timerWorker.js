@@ -103,12 +103,15 @@ self.onmessage = (event) => {
       seconds = data.seconds;
       break;
     case 'start':
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
       minutes = data.minutes;
       seconds = data.seconds;
       intervalId = setInterval(tick, 1000);
       break;
     case 'pause':
       clearInterval(intervalId);
+      clearTimeout(timeoutId);
       break;
     case 'reset':
       clearInterval(intervalId);
@@ -118,28 +121,23 @@ self.onmessage = (event) => {
       break;
     case 'skip':
       clearInterval(intervalId);
-
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      clearTimeout(timeoutId);
 
       if (sessionType === 'work') {
         if ((pmdrCount + 1) % longBreakInterval === 0) {
           sessionType = 'longBreak';
           minutes = longBreak;
-          seconds = 0;
         } else {
           sessionType = 'shortBreak';
           minutes = shortBreak;
-          seconds = 0;
         }
       } else if (sessionType === 'shortBreak' || sessionType === 'longBreak') {
         sessionType = 'work';
         minutes = pomodoro;
-        seconds = 0;
       }
-      // if pmdrCount is larger than 8, reset it to 1
-      if (pmdrCount === 8) {
+      seconds = 0;
+
+      if (pmdrCount === longBreakInterval) {
         pmdrCount = 1;
         newSession = true;
         totalPomodoros += 1;
@@ -147,6 +145,7 @@ self.onmessage = (event) => {
         pmdrCount += 1;
         newSession = false;
       }
+
       postMessage({
         type: 'tick',
         minutes: minutes,
@@ -157,11 +156,12 @@ self.onmessage = (event) => {
         totalPomodoros: totalPomodoros,
       });
 
-      timeoutId = setTimeout(() => {
-        tick(); // Call the tick function immediately
+      if (data.isRunning) {
+        tick();
         intervalId = setInterval(tick, 1000);
-      }, 1000);
+      }
       break;
+
     case 'skipPaused':
       if (sessionType === 'work') {
         if ((pmdrCount + 1) % longBreakInterval === 0) {

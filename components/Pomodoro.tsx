@@ -10,7 +10,7 @@ import * as Popover from '@radix-ui/react-popover';
 import * as Select from '@radix-ui/react-select';
 import { useTheme } from 'next-themes';
 import IconButton from './IconButton';
-import { usePlausible } from 'next-plausible'
+import { usePlausible } from 'next-plausible';
 
 export default function Pomodoro() {
   let timer = {
@@ -46,7 +46,7 @@ export default function Pomodoro() {
   const timerWorkerRef = useRef<Worker | null>();
   const toastTimeRef = useRef(0);
 
-  const plausible = usePlausible()
+  const plausible = usePlausible();
 
   function handleStart() {
     if (!timerRunning) {
@@ -68,16 +68,12 @@ export default function Pomodoro() {
   }
 
   const handleSkip = () => {
-    if (!timerRunning) {
-      timerWorkerRef.current?.postMessage({ action: 'skipPaused' });
-      if (sessionType === 'work') {
-        const progress =
-          100 - ((minutes * 60 + seconds) / (timer.pomodoro * 60)) * 100;
-        updateDials(pmdrCount, progress);
-        plausible('skipped');
-      }
-    } else {
-      timerWorkerRef.current?.postMessage({ action: 'skip' });
+    timerWorkerRef.current?.postMessage({
+      action: 'skip',
+      isRunning: timerRunning,
+    });
+    if (sessionType === 'work') {
+      plausible('skipped');
     }
   };
 
@@ -349,7 +345,7 @@ export default function Pomodoro() {
           100 -
           ((event.data.minutes * 60 + event.data.seconds) /
             (timer.pomodoro * 60)) *
-          100;
+            100;
         updateDials(event.data.pmdrCount, progress);
       }
       if (event.data.newSession) {
@@ -549,7 +545,7 @@ export default function Pomodoro() {
                             variants={slideVariants}
                             initial={
                               prevTimerMinutes &&
-                                prevTimerMinutes[index] !== digit
+                              prevTimerMinutes[index] !== digit
                                 ? 'hidden'
                                 : 'visible'
                             }
@@ -582,7 +578,7 @@ export default function Pomodoro() {
                             variants={slideVariants}
                             initial={
                               prevTimerSeconds &&
-                                prevTimerSeconds[index] !== digit
+                              prevTimerSeconds[index] !== digit
                                 ? 'hidden'
                                 : 'visible'
                             }
@@ -795,7 +791,7 @@ export default function Pomodoro() {
               whileTap={{ scale: 0.9 }}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-            // transition={{ duration: 0.5, delay: 0.5 }}
+              // transition={{ duration: 0.5, delay: 0.5 }}
             >
               {!settingsOpen && (
                 <svg
