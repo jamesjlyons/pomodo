@@ -62,7 +62,9 @@ function HomePage() {
         />
       </Head>
       {/* <Script src="/timer-worker.js" strategy="worker" /> */}
-      <Pomodoro />
+      <main role="main">
+        <Pomodoro />
+      </main>
     </div>
   );
 }
