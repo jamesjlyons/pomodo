@@ -1,9 +1,0 @@
-{
-  "actions" : {
-    "run" : {
-      "enabled" : true,
-      "script" : "bun run dev"
-    }
-  },
-  "persistent" : true
-}
