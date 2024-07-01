@@ -5,7 +5,6 @@ import Head from 'next/head';
 
 import Pomodoro from 'components/Pomodoro';
 
-
 function HomePage() {
   return (
     <div className="App">
@@ -13,8 +12,8 @@ function HomePage() {
         <title>Pomodoro</title>
         {/* <meta content="width=device-width, initial-scale=1" name="viewport" /> */}
         <meta
-          name='viewport'
-          content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=yes, viewport-fit=cover"
         />
         <meta name="description" content="⏲️" />
         <link rel="icon" href="/icons/favicon.ico" />
@@ -51,11 +50,16 @@ function HomePage() {
         <meta name="twitter:creator" content="@DavidWShadow" /> */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Pomodoro" />
-        <meta property="og:description" content="A performant pomodoro timer for the web" />
+        <meta
+          property="og:description"
+          content="A performant pomodoro timer for the web"
+        />
         <meta property="og:site_name" content="Pomodoro" />
         <meta property="og:url" content="https://pomodoro.jameslyons.design/" />
-        <meta property="og:image" content="https://pomodoro.jameslyons.design/icons/apple-touch-icon.png" />
-
+        <meta
+          property="og:image"
+          content="https://pomodoro.jameslyons.design/icons/apple-touch-icon.png"
+        />
       </Head>
       {/* <Script src="/timer-worker.js" strategy="worker" /> */}
       <Pomodoro />
