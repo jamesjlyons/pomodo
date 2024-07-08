@@ -3,7 +3,7 @@ import { ThemeProvider } from 'next-themes';
 import '../styles/globals.css';
 // import PlausibleProvider from 'next-plausible';
 import { Analytics } from '@vercel/analytics/react';
-import { Toaster, toast } from 'sonner';
+// import { Toaster, toast } from 'sonner';
 
 function printAsciiArt() {
   const asciiArt = `
@@ -22,7 +22,7 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider themes={['light', 'dark', 'arc']} defaultTheme="dark">
       {/* <PlausibleProvider domain="pomodoro.jameslyons.design"> */}
-      <Toaster />
+      {/* <Toaster /> */}
       <Component {...pageProps} />
       <Analytics />
       {/* </PlausibleProvider> */}
