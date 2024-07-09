@@ -43,6 +43,11 @@ export default function Pomodoro() {
   const noiseVolume = useRef<Tone.Volume | null>(null);
 
   const { theme, setTheme } = useTheme();
+  // Map the current theme to one of the expected values
+  const toasterTheme = ['light', 'dark', 'system'].includes(theme || '')
+    ? theme
+    : undefined;
+  type ToasterTheme = 'light' | 'dark' | 'system';
 
   const timerWorkerRef = useRef<Worker | null>();
   const toastTimeRef = useRef(0);
@@ -1006,9 +1011,16 @@ export default function Pomodoro() {
         </Toast.Provider> */}
 
         <Toaster
+          theme={toasterTheme as ToasterTheme}
+          dir="rtl"
           toastOptions={{
+            duration: 2000,
             style: {
-              background: 'var(--toast-bg)',
+              color: 'var(--toast-text)',
+              fontFamily: 'Inter',
+              width: 'auto',
+              borderRadius: 16,
+              boxShadow: 'none',
             },
             // className: 'class',
           }}
