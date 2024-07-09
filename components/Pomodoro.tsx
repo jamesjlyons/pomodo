@@ -10,7 +10,8 @@ import * as Popover from '@radix-ui/react-popover';
 import * as Select from '@radix-ui/react-select';
 import { useTheme } from 'next-themes';
 import IconButton from './IconButton';
-import { usePlausible } from 'next-plausible';
+// import { usePlausible } from 'next-plausible';
+import { Toaster, toast } from 'sonner';
 
 export default function Pomodoro() {
   let timer = {
@@ -42,11 +43,16 @@ export default function Pomodoro() {
   const noiseVolume = useRef<Tone.Volume | null>(null);
 
   const { theme, setTheme } = useTheme();
+  // Map the current theme to one of the expected values
+  const toasterTheme = ['light', 'dark', 'system'].includes(theme || '')
+    ? theme
+    : undefined;
+  type ToasterTheme = 'light' | 'dark' | 'system';
 
   const timerWorkerRef = useRef<Worker | null>();
   const toastTimeRef = useRef(0);
 
-  const plausible = usePlausible();
+  // const plausible = usePlausible();
 
   function handleStart() {
     if (!timerRunning) {
@@ -59,7 +65,7 @@ export default function Pomodoro() {
       if (newSession) {
         // update dial styles immediately on new session. This is to prevent the first dial not showing in progress until the first 'tick' is recieved from the worker a second later.
         updateDials(pmdrCount, 0);
-        plausible('newSessionStarted');
+        // plausible('newSessionStarted');
       }
     } else {
       setTimerRunning(false);
@@ -73,13 +79,13 @@ export default function Pomodoro() {
       isRunning: timerRunning,
     });
     if (sessionType === 'work') {
-      plausible('skipped');
+      // plausible('skipped');
     }
   };
 
   const handleReset = () => {
     timerWorkerRef.current?.postMessage({ action: 'reset' });
-    plausible('reset');
+    // plausible('reset');
   };
 
   const handleSubtract = () => {
@@ -88,7 +94,7 @@ export default function Pomodoro() {
 
       // Update the minutes immediately
       setMinutes((prevMinutes) => prevMinutes - 1);
-      plausible('subtract');
+      // plausible('subtract');
     }
   };
 
@@ -97,7 +103,7 @@ export default function Pomodoro() {
 
     // Update the minutes immediately
     setMinutes((prevMinutes) => prevMinutes + 1);
-    plausible('add');
+    // plausible('add');
   };
 
   function spawnNotification(body: string, title: string) {
@@ -108,15 +114,15 @@ export default function Pomodoro() {
     }
   }
 
-  const showToast = (title: any) => {
-    setToastContent(title);
-    setToastOpen(true);
-    window.clearTimeout(toastTimeRef.current);
-    toastTimeRef.current = window.setTimeout(() => {
-      setToastOpen(true);
-      // setToastContent('');
-    }, 100);
-  };
+  // const showToast = (title: any) => {
+  //   setToastContent(title);
+  //   setToastOpen(true);
+  //   window.clearTimeout(toastTimeRef.current);
+  //   toastTimeRef.current = window.setTimeout(() => {
+  //     setToastOpen(true);
+  //     // setToastContent('');
+  //   }, 100);
+  // };
 
   const updateDials = (pmdrCount: number, progress: number) => {
     if (
@@ -163,65 +169,65 @@ export default function Pomodoro() {
           event.preventDefault();
           handleStart();
           if (timerRunning) {
-            showToast('Timer Paused');
+            toast('Timer Paused');
           } else {
-            showToast('Timer Started');
+            toast('Timer Started');
           }
           break;
         case 'KeyP':
           handleStart();
           if (timerRunning) {
-            showToast('Timer Paused');
+            toast('Timer Paused');
           } else {
-            showToast('Timer Started');
+            toast('Timer Started');
           }
           break;
         case 'ArrowRight':
           handleSkip();
-          showToast('Skipped');
+          toast('Skipped');
           break;
         case 'KeyS':
           handleSkip();
-          showToast('Skipped');
+          toast('Skipped');
           break;
         case 'ArrowLeft':
           handleReset();
-          showToast('Reset');
+          toast('Reset');
           break;
         case 'KeyR':
           handleReset();
-          showToast('Reset');
+          toast('Reset');
           break;
         case 'ArrowUp':
           handleAdd();
-          showToast('Minute added');
+          toast('Minute added');
           break;
         case 'ArrowDown':
           handleSubtract();
-          showToast('Minute Subtracted');
+          toast('Minute Subtracted');
           break;
         case 'KeyB':
           setBrownNoise(!brownNoise);
           if (brownNoise) {
-            showToast('Brown noise stopped');
+            toast('Brown noise stopped');
           } else {
-            showToast('Brown noise started');
+            toast('Brown noise started');
           }
           break;
         case 'KeyV':
           setSound(!sound);
           if (sound) {
-            showToast('Notification sounds off');
+            toast('Notification sounds off');
           } else {
-            showToast('Notification sounds on');
+            toast('Notification sounds on');
           }
           break;
         case 'KeyN':
           setNotifEnabled(!notifEnabled);
           if (notifEnabled) {
-            showToast('Notifications off');
+            toast('Notifications off');
           } else {
-            showToast('Notifications on');
+            toast('Notifications on');
           }
           break;
         default:
@@ -992,7 +998,7 @@ export default function Pomodoro() {
         {!timerRunning && 'no'}, <br /> pmdrCount: {pmdrCount} <br />
         total pomodoros: {totalPomodoros}
       </div> */}
-
+        {/* 
         <Toast.Provider duration={1000}>
           <Toast.Root
             className="ToastRoot"
@@ -1002,7 +1008,23 @@ export default function Pomodoro() {
             <Toast.Title>{toastContent}</Toast.Title>
           </Toast.Root>
           <Toast.Viewport />
-        </Toast.Provider>
+        </Toast.Provider> */}
+
+        <Toaster
+          theme={toasterTheme as ToasterTheme}
+          dir="rtl"
+          toastOptions={{
+            duration: 2000,
+            style: {
+              color: 'var(--toast-text)',
+              fontFamily: 'Inter',
+              width: 'auto',
+              borderRadius: 16,
+              boxShadow: 'none',
+            },
+            // className: 'class',
+          }}
+        />
       </div>
     </div>
   );
