@@ -10,7 +10,7 @@ import * as Popover from '@radix-ui/react-popover';
 import * as Select from '@radix-ui/react-select';
 import { useTheme } from 'next-themes';
 import IconButton from './IconButton';
-// import { usePlausible } from 'next-plausible';
+import { useOpenPanel } from '@openpanel/nextjs';
 import { Toaster, toast } from 'sonner';
 
 export default function Pomodoro() {
@@ -53,6 +53,7 @@ export default function Pomodoro() {
   const toastTimeRef = useRef(0);
 
   // const plausible = usePlausible();
+  const op = useOpenPanel();
 
   function handleStart() {
     if (!timerRunning) {
@@ -65,7 +66,7 @@ export default function Pomodoro() {
       if (newSession) {
         // update dial styles immediately on new session. This is to prevent the first dial not showing in progress until the first 'tick' is recieved from the worker a second later.
         updateDials(pmdrCount, 0);
-        // plausible('newSessionStarted');
+        op.track('new_session_started');
       }
     } else {
       setTimerRunning(false);
@@ -79,13 +80,13 @@ export default function Pomodoro() {
       isRunning: timerRunning,
     });
     if (sessionType === 'work') {
-      // plausible('skipped');
+      op.track('skip');
     }
   };
 
   const handleReset = () => {
     timerWorkerRef.current?.postMessage({ action: 'reset' });
-    // plausible('reset');
+    op.track('reset');
   };
 
   const handleSubtract = () => {
@@ -94,7 +95,7 @@ export default function Pomodoro() {
 
       // Update the minutes immediately
       setMinutes((prevMinutes) => prevMinutes - 1);
-      // plausible('subtract');
+      op.track('subtract');
     }
   };
 
@@ -103,7 +104,7 @@ export default function Pomodoro() {
 
     // Update the minutes immediately
     setMinutes((prevMinutes) => prevMinutes + 1);
-    // plausible('add');
+    op.track('add');
   };
 
   function spawnNotification(body: string, title: string) {
@@ -998,7 +999,7 @@ export default function Pomodoro() {
         {!timerRunning && 'no'}, <br /> pmdrCount: {pmdrCount} <br />
         total pomodoros: {totalPomodoros}
       </div> */}
-        {/* 
+        {/*
         <Toast.Provider duration={1000}>
           <Toast.Root
             className="ToastRoot"
